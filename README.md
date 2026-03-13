@@ -12,7 +12,6 @@
 - ☀️ **光伏功率预测** — pvlib 物理建模、ModelChain 仿真、跟踪器模型
 - 🔬 **跨行业算法借鉴** — 金融量化、气象 AI、IoT 边缘推理 → 光伏预测
 - 📋 **代码一键复制** — 悬浮 Copy 按钮，复制即用
-- 🛡️ **多层反爬保护** — Bot 检测 / 零宽水印 / 蜜罐陷阱
 - 🎨 **Apple 风格暗色主题** — 渐变文字、毛玻璃卡片、滚动动画
 
 ## 🛠️ 技术栈
@@ -39,7 +38,6 @@ python-ship/
 │   ├── components/
 │   │   ├── Header.astro
 │   │   ├── LangSwitcher.astro  ← 语言切换 + 翻译字典
-│   │   ├── AntiScrape.astro    ← 反爬组件
 │   │   ├── BaseHead.astro      ← 全局 meta + 代码复制脚本
 │   │   └── ...
 │   ├── layouts/
@@ -132,14 +130,6 @@ npx wrangler deploy
 - 首页 / 博客列表：自动筛选对应语言文章
 - 文章详情页：自动跳转到对应语言版本
 - UI 文字：通过 `data-i18n` 属性实时替换
-
-## 🛡️ 反爬机制
-
-1. **Bot 检测** — WebDriver / Headless Chrome / WebGL 软件渲染器指纹
-2. **内容水印** — 零宽 Unicode 字符追踪泄露源
-3. **蜜罐陷阱** — `/trap` + `/secret-content` 隐藏链接
-4. **复制保护** — 非代码区域复制 >50 字自动附加来源
-5. **robots.txt** — 阻止 GPTBot / CCBot / Bytespider 等 AI 训练爬虫
 
 ## 🪁 关于作者
 
