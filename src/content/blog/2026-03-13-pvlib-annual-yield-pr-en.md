@@ -7,6 +7,7 @@ lang: en
 tags: ["pvlib", "光伏", "PR计算", "发电量评估", "技术干货"]
 ---
 
+> ⚠️ **Data Disclaimer**: All simulation data in this article is calculated using **pvlib clearsky models**, not real power plant measurements. Clearsky models assume no clouds or haze year-round, so GHI, energy yield, and PR values will be higher than actual. Please refer to measured data for real-world applications.
 
 ## Why Does Your PV System Always Generate Less Than Expected?
 

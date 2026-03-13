@@ -7,6 +7,8 @@ lang: en
 tags: ["pvlib", "损耗链", "PR", "系统效率", "光伏设计"]
 ---
 
+> ⚠️ **Data Disclaimer**: All simulation data in this article is calculated using **pvlib clearsky models**, not real power plant measurements. Clearsky models assume no clouds or haze year-round, so GHI, energy yield, and PR values will be higher than actual. Please refer to measured data for real-world applications.
+
 ## How much is lost between a ray of sunlight and a kilowatt-hour of electricity?
 
 This is the most fundamental question in the solar industry. The answer: **14%–46%**.
