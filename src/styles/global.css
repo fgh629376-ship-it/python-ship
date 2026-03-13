@@ -132,6 +132,8 @@ main {
 	max-width: 800px;
 	margin: 0 auto;
 	padding: 2rem 1.5rem;
+	padding-left: max(1.5rem, env(safe-area-inset-left));
+	padding-right: max(1.5rem, env(safe-area-inset-right));
 }
 
 /* Header */
@@ -139,6 +141,8 @@ header {
 	background: var(--bg-card);
 	border-bottom: 1px solid var(--border);
 	padding: 0.8rem 1.5rem;
+	padding-left: max(1.5rem, env(safe-area-inset-left));
+	padding-right: max(1.5rem, env(safe-area-inset-right));
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
