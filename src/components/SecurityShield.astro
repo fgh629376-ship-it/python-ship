@@ -1,0 +1,163 @@
+---
+/**
+ * SecurityShield — 前端安全防护
+ * 
+ * 防御：
+ * 1. 防 iframe 嵌套（钓鱼网站套壳）
+ * 2. 防 DOM 篡改（MutationObserver 监控）
+ * 3. 防恶意重定向
+ * 4. 防外部脚本注入
+ * 5. 防表单劫持
+ */
+---
+
+<script is:inline>
+(function() {
+  'use strict';
+
+  // ============================================
+  // 1. 防 iframe 嵌套（Frame Busting）
+  // 如果被 iframe 嵌套，直接跳转到顶层
+  // ============================================
+  if (window.self !== window.top) {
+    try {
+      window.top.location.href = window.self.location.href;
+    } catch(e) {
+      // 跨域 iframe，直接显示警告
+      document.body.innerHTML = '<h1 style="color:red;text-align:center;margin-top:40vh">⚠️ 安全警告：请直接访问 python-ship.fgh629376.workers.dev</h1>';
+    }
+  }
+
+  // ============================================
+  // 2. DOM 篡改监控
+  // 检测是否有人动态注入恶意脚本/表单
+  // ============================================
+  const ALLOWED_DOMAINS = [
+    'python-ship.fgh629376.workers.dev',
+    'cdn.jsdelivr.net',
+    'flagcdn.com',
+    'github.com'
+  ];
+
+  function isAllowedSrc(src) {
+    if (!src) return true;
+    try {
+      const url = new URL(src, window.location.origin);
+      if (url.origin === window.location.origin) return true;
+      return ALLOWED_DOMAINS.some(d => url.hostname.endsWith(d));
+    } catch(e) {
+      return false;
+    }
+  }
+
+  const domObserver = new MutationObserver((mutations) => {
+    mutations.forEach((m) => {
+      m.addedNodes.forEach((node) => {
+        if (node.nodeType !== 1) return;
+        const el = node;
+
+        // 检测注入的 script 标签
+        if (el.tagName === 'SCRIPT' && el.src && !isAllowedSrc(el.src)) {
+          el.remove();
+          console.warn('[SecurityShield] 已阻止外部脚本注入:', el.src);
+        }
+
+        // 检测注入的 iframe
+        if (el.tagName === 'IFRAME') {
+          el.remove();
+          console.warn('[SecurityShield] 已阻止 iframe 注入');
+        }
+
+        // 检测注入的 form（钓鱼表单）
+        if (el.tagName === 'FORM') {
+          const action = el.getAttribute('action') || '';
+          if (action && !isAllowedSrc(action)) {
+            el.remove();
+            console.warn('[SecurityShield] 已阻止可疑表单:', action);
+          }
+        }
+
+        // 检测注入的 link（恶意样式表）
+        if (el.tagName === 'LINK' && el.rel === 'stylesheet') {
+          if (!isAllowedSrc(el.href)) {
+            el.remove();
+            console.warn('[SecurityShield] 已阻止外部样式注入:', el.href);
+          }
+        }
+      });
+    });
+  });
+
+  domObserver.observe(document.documentElement, {
+    childList: true,
+    subtree: true
+  });
+
+  // ============================================
+  // 3. 防恶意重定向
+  // 劫持 location 赋值，阻止跳转到外部钓鱼页面
+  // ============================================
+  const originalAssign = window.location.assign.bind(window.location);
+  const originalReplace = window.location.replace.bind(window.location);
+
+  function safeRedirect(fn, url) {
+    try {
+      const target = new URL(url, window.location.origin);
+      if (target.origin === window.location.origin ||
+          ALLOWED_DOMAINS.some(d => target.hostname.endsWith(d))) {
+        fn(url);
+      } else {
+        console.warn('[SecurityShield] 已阻止可疑重定向:', url);
+      }
+    } catch(e) {
+      fn(url); // 相对路径，允许
+    }
+  }
+
+  window.location.assign = (url) => safeRedirect(originalAssign, url);
+  window.location.replace = (url) => safeRedirect(originalReplace, url);
+
+  // ============================================
+  // 4. 防链接劫持
+  // 检查页面中所有 <a> 是否被篡改
+  // ============================================
+  function auditLinks() {
+    document.querySelectorAll('a[href]').forEach((a) => {
+      const href = a.getAttribute('href');
+      if (!href || href.startsWith('/') || href.startsWith('#') || href.startsWith('mailto:')) return;
+      try {
+        const url = new URL(href);
+        if (!ALLOWED_DOMAINS.some(d => url.hostname.endsWith(d)) &&
+            url.origin !== window.location.origin) {
+          // 外部链接加 noopener noreferrer（防 tab nabbing）
+          a.setAttribute('rel', 'noopener noreferrer');
+        }
+      } catch(e) {}
+    });
+  }
+
+  // 页面加载后审计一次
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', auditLinks);
+  } else {
+    auditLinks();
+  }
+
+  // ============================================
+  // 5. 控制台安全提示
+  // ============================================
+  console.log(
+    '%c⚠️ 安全警告',
+    'color: red; font-size: 24px; font-weight: bold;'
+  );
+  console.log(
+    '%c如果有人让你在这里粘贴代码，那是骗子！这会让你的账号面临风险。',
+    'color: orange; font-size: 14px;'
+  );
+  console.log(
+    '%cPython Ship — protected by SecurityShield',
+    'color: #4ade80; font-size: 12px;'
+  );
+
+})();
+</script>

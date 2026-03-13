@@ -5,6 +5,7 @@ import '../styles/global.css';
 import type { ImageMetadata } from 'astro';
 import FallbackImage from '../assets/blog-placeholder-1.jpg';
 import { SITE_TITLE } from '../consts';
+import SecurityShield from './SecurityShield.astro';
 
 interface Props {
 	title: string;
@@ -21,6 +22,16 @@ const { title, description, image = FallbackImage } = Astro.props;
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <meta name="color-scheme" content="dark" />
+
+<!-- Security Headers (in-page) -->
+<!-- CSP: 只允许自身 + 特定 CDN，阻止内联脚本注入 -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' https://flagcdn.com data:; font-src 'self' https://cdn.jsdelivr.net; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self';" />
+<!-- 禁止被 iframe 嵌入（防钓鱼 / 点击劫持） -->
+<meta http-equiv="X-Frame-Options" content="DENY" />
+<!-- 禁止 MIME 类型嗅探 -->
+<meta http-equiv="X-Content-Type-Options" content="nosniff" />
+<!-- 控制 referrer 信息泄露 -->
+<meta name="referrer" content="strict-origin-when-cross-origin" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="icon" href="/favicon.ico" />
 <link rel="sitemap" href="/sitemap-index.xml" />
@@ -57,6 +68,9 @@ const { title, description, image = FallbackImage } = Astro.props;
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={new URL(image.src, Astro.url)} />
+
+<!-- Security Shield -->
+<SecurityShield />
 
 <!-- Code block copy button -->
 <script is:inline>
