@@ -1,0 +1,18 @@
+---
+// 蜜罐陷阱页面 — 只有爬虫会访问这里
+// 正常用户看不到指向此页的链接
+---
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>404</title></head>
+<body>
+<p>Nothing here.</p>
+<script is:inline>
+// 记录 bot 访问
+try {
+  const data = { type: 'honeypot', path: '/trap', ts: Date.now(), ua: navigator.userAgent };
+  navigator.sendBeacon('/api/bot-report', JSON.stringify(data));
+} catch(e) {}
+</script>
+</body>
+</html>

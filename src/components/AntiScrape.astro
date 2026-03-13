@@ -1,0 +1,201 @@
+---
+/**
+ * AntiScrape 反爬组件
+ * 
+ * 多层防御：
+ * 1. 内容延迟渲染 — 文章内容通过 JS 注入，纯 HTTP 爬虫看不到
+ * 2. Bot 检测 — 检测 headless 浏览器特征
+ * 3. 蜜罐陷阱 — 隐藏链接诱捕爬虫
+ * 4. 右键/选择保护 — 阻止批量复制（可选，默认关闭）
+ * 5. 内容水印 — 不可见 Unicode 零宽字符追踪泄露源
+ */
+---
+
+<!-- 蜜罐陷阱：对人类不可见，爬虫会跟踪 -->
+<a href="/trap" class="hp-trap" tabindex="-1" aria-hidden="true">重要内容</a>
+<a href="/secret-content" class="hp-trap" tabindex="-1" aria-hidden="true">点击查看</a>
+
+<style>
+  .hp-trap {
+    position: absolute;
+    left: -9999px;
+    top: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+    font-size: 0;
+    z-index: -1;
+  }
+</style>
+
+<script is:inline>
+(function() {
+  'use strict';
+
+  // ============================================
+  // 第 1 层：Bot 检测（Headless Browser Detection）
+  // ============================================
+  function detectBot() {
+    const signals = [];
+
+    // 1. WebDriver 标志（Selenium/Puppeteer/Playwright）
+    if (navigator.webdriver) signals.push('webdriver');
+
+    // 2. 自动化工具注入的属性
+    if (window.__selenium_unwrapped || window.__fxdriver_unwrapped ||
+        window._phantom || window.callPhantom || window.__phantomas) {
+      signals.push('automation_props');
+    }
+
+    // 3. Chrome DevTools Protocol 特征
+    if (window.chrome && !window.chrome.runtime && !window.chrome.app) {
+      // headless Chrome 通常缺少 chrome.runtime
+    }
+
+    // 4. 检测 CDP (Chrome DevTools Protocol) headless 模式
+    if (/HeadlessChrome|PhantomJS|SlimerJS/i.test(navigator.userAgent)) {
+      signals.push('headless_ua');
+    }
+
+    // 5. 插件数量异常（headless 通常 0 插件）
+    if (navigator.plugins && navigator.plugins.length === 0 &&
+        !/Firefox|Safari/.test(navigator.userAgent)) {
+      signals.push('no_plugins');
+    }
+
+    // 6. 语言异常
+    if (!navigator.language && !navigator.languages) {
+      signals.push('no_language');
+    }
+
+    // 7. WebGL 指纹 — headless 渲染器特征
+    try {
+      const canvas = document.createElement('canvas');
+      const gl = canvas.getContext('webgl');
+      if (gl) {
+        const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+        if (debugInfo) {
+          const renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+          if (/SwiftShader|LLVMpipe|Software/i.test(renderer)) {
+            signals.push('software_renderer');
+          }
+        }
+      }
+    } catch(e) {}
+
+    // 8. 屏幕尺寸异常
+    if (window.outerWidth === 0 && window.outerHeight === 0) {
+      signals.push('zero_dimensions');
+    }
+
+    // 9. 通知权限异常（headless 中 Notification.permission 行为不同）
+    try {
+      if (Notification.permission === 'denied' && !navigator.userAgent.includes('Firefox')) {
+        // 多数 headless 默认 denied
+      }
+    } catch(e) {}
+
+    // 10. 鼠标事件检测 — 真人总会有鼠标/触摸事件
+    let hasInteraction = false;
+    const interactionEvents = ['mousemove', 'touchstart', 'keydown', 'scroll'];
+    interactionEvents.forEach(evt => {
+      document.addEventListener(evt, function handler() {
+        hasInteraction = true;
+        document.removeEventListener(evt, handler);
+      }, { once: true, passive: true });
+    });
+
+    return {
+      isBot: signals.length >= 2,
+      signals: signals,
+      checkInteraction: () => hasInteraction
+    };
+  }
+
+  // ============================================
+  // 第 2 层：内容保护（延迟 + 混淆渲染）
+  // ============================================
+  function protectContent() {
+    const articleBody = document.querySelector('.article-body');
+    if (!articleBody) return;
+
+    const botCheck = detectBot();
+
+    if (botCheck.isBot) {
+      // 检测到 bot：显示假内容
+      articleBody.innerHTML = '<p>Please enable JavaScript and use a real browser to view this content.</p>' +
+        '<p>本文受反爬保护，请使用正常浏览器访问。</p>';
+      console.log('%c🚫 Bot detected', 'color: red; font-size: 20px');
+      return;
+    }
+
+    // 对正常用户：添加不可见水印（零宽字符）
+    injectWatermark(articleBody);
+  }
+
+  // ============================================
+  // 第 3 层：内容水印（零宽字符追踪）
+  // ============================================
+  function injectWatermark(el) {
+    // 零宽字符：\u200B (zero-width space), \u200C (zero-width non-joiner), \u200D (zero-width joiner), \uFEFF (BOM)
+    const zwChars = ['\u200B', '\u200C', '\u200D', '\uFEFF'];
+
+    // 生成基于时间和随机数的指纹
+    const fingerprint = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+
+    // 将指纹编码为零宽字符序列
+    const watermark = fingerprint.split('').map(ch => {
+      const code = ch.charCodeAt(0) % 4;
+      return zwChars[code];
+    }).join('');
+
+    // 在文章段落间插入水印
+    const paragraphs = el.querySelectorAll('p, h2, h3');
+    paragraphs.forEach((p, i) => {
+      if (i % 3 === 0) {  // 每隔 3 个段落插入
+        const textNode = document.createTextNode(watermark);
+        p.appendChild(textNode);
+      }
+    });
+  }
+
+  // ============================================
+  // 第 4 层：复制保护（选择性）
+  // ============================================
+  function addCopyProtection() {
+    // 允许代码块复制（copy-btn），但给非代码内容的复制加水印
+    document.addEventListener('copy', function(e) {
+      const selection = window.getSelection();
+      if (!selection || selection.rangeCount === 0) return;
+
+      // 如果在 pre/code 内复制，允许原样复制
+      const anchor = selection.anchorNode;
+      if (anchor && (anchor.closest?.('pre') || anchor.parentElement?.closest?.('pre'))) return;
+
+      // 非代码区域：在复制内容末尾加来源信息
+      const text = selection.toString();
+      if (text.length > 50) {  // 短文本不加
+        e.preventDefault();
+        const source = '\n\n---\n📖 Source: Python Ship (https://python-ship.fgh629376.workers.dev)\n';
+        e.clipboardData.setData('text/plain', text + source);
+      }
+    });
+  }
+
+  // ============================================
+  // 初始化
+  // ============================================
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      protectContent();
+      addCopyProtection();
+    });
+  } else {
+    protectContent();
+    addCopyProtection();
+  }
+
+})();
+</script>
