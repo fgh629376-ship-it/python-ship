@@ -158,11 +158,30 @@ header .logo {
 	text-decoration: none;
 }
 
+.header-right {
+	display: flex;
+	align-items: center;
+	gap: 0;
+}
+
+.header-divider {
+	width: 1px;
+	height: 16px;
+	background: var(--border);
+	margin: 0 0.6rem;
+}
+
+header nav {
+	display: flex;
+	align-items: center;
+}
+
 header nav a {
 	margin-left: 1.5rem;
 	color: var(--text-muted);
 	font-size: 0.9rem;
 }
+header nav a:first-child { margin-left: 0; }
 header nav a:hover { color: var(--accent); }
 
 /* Post card */
@@ -215,4 +234,6 @@ footer {
 	main { padding: 1rem; }
 	.hero h1 { font-size: 1.8rem; }
 	header { flex-direction: column; gap: 0.5rem; }
+	.header-right { width: 100%; justify-content: center; }
+	.header-divider { display: none; }
 }

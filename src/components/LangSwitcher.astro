@@ -2,21 +2,23 @@
 ---
 <div class="lang-switcher" id="langSwitcher">
   <button class="lang-btn" id="langBtn" aria-haspopup="true" aria-expanded="false">
-    <img id="currentFlag" class="flag-icon" src="https://flagcdn.com/w40/cn.png" alt="CN" width="20" height="15" />
+    <svg class="globe-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+    </svg>
     <span id="currentLang">简体中文</span>
-    <svg class="chevron" width="12" height="12" viewBox="0 0 12 12" fill="none">
+    <svg class="chevron" width="10" height="10" viewBox="0 0 12 12" fill="none">
       <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
   </button>
   <ul class="lang-menu" id="langMenu" role="menu">
     <li role="menuitem" data-lang="en" data-flag="https://flagcdn.com/w40/us.png" data-label="English">
-      <img class="flag-icon" src="https://flagcdn.com/w40/us.png" alt="US" width="20" height="15" /> English
+      <img class="flag-icon" src="https://flagcdn.com/w40/us.png" alt="US" width="20" height="14" /> English
     </li>
     <li role="menuitem" data-lang="zh" data-flag="https://flagcdn.com/w40/cn.png" data-label="简体中文" class="active">
-      <img class="flag-icon" src="https://flagcdn.com/w40/cn.png" alt="CN" width="20" height="15" /> 简体中文
+      <img class="flag-icon" src="https://flagcdn.com/w40/cn.png" alt="CN" width="20" height="14" /> 简体中文
     </li>
     <li role="menuitem" data-lang="ja" data-flag="https://flagcdn.com/w40/jp.png" data-label="日本語">
-      <img class="flag-icon" src="https://flagcdn.com/w40/jp.png" alt="JP" width="20" height="15" /> 日本語
+      <img class="flag-icon" src="https://flagcdn.com/w40/jp.png" alt="JP" width="20" height="14" /> 日本語
     </li>
   </ul>
 </div>
@@ -29,21 +31,26 @@
 .lang-btn {
   display: flex;
   align-items: center;
-  gap: 6px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 6px 10px;
-  color: var(--text);
+  gap: 5px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  padding: 4px 8px;
+  color: var(--text-muted);
   cursor: pointer;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-family: inherit;
-  transition: border-color 0.2s, background 0.2s;
+  transition: color 0.2s, background 0.2s;
   white-space: nowrap;
 }
 .lang-btn:hover {
-  border-color: var(--accent);
+  color: var(--accent);
   background: var(--tag-bg);
+}
+
+.globe-icon {
+  opacity: 0.7;
+  flex-shrink: 0;
 }
 
 .flag-icon {
@@ -314,15 +321,13 @@ function initSwitcher() {
   const switcher = document.getElementById('langSwitcher');
   const btn = document.getElementById('langBtn');
   const menu = document.getElementById('langMenu');
-  const currentFlag = document.getElementById('currentFlag');
   const currentLang = document.getElementById('currentLang');
   if (!switcher || !btn || !menu) return;
 
   let savedLang = 'zh';
   try { savedLang = localStorage.getItem('preferred-lang') || 'zh'; } catch(e) {}
   const savedItem = menu.querySelector(`[data-lang="${savedLang}"]`) as HTMLElement;
-  if (savedItem && currentFlag && currentLang) {
-    (currentFlag as HTMLImageElement).src = savedItem.dataset.flag || 'https://flagcdn.com/w40/cn.png';
+  if (savedItem && currentLang) {
     currentLang.textContent = savedItem.dataset.label || '简体中文';
     menu.querySelectorAll('li').forEach(li => li.classList.remove('active'));
     savedItem.classList.add('active');
@@ -338,9 +343,7 @@ function initSwitcher() {
   menu.querySelectorAll('li').forEach((item) => {
     item.addEventListener('click', () => {
       const lang = (item as HTMLElement).dataset.lang!;
-      const flag = (item as HTMLElement).dataset.flag!;
       const label = (item as HTMLElement).dataset.label!;
-      if (currentFlag) (currentFlag as HTMLImageElement).src = flag;
       if (currentLang) currentLang.textContent = label;
       menu.querySelectorAll('li').forEach(li => li.classList.remove('active'));
       item.classList.add('active');
