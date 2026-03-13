@@ -1,6 +1,7 @@
 ---
 title: 'pvlib 逆变器模型深度对比：Sandia vs ADR vs PVWatts'
 description: '三大逆变器模型的参数体系、效率曲线、电压敏感性全面对比，含真实数据库调用代码，助你在光伏仿真中选对模型'
+category: solar
 pubDate: '2026-03-13'
 tags: ["pvlib", "光伏", "逆变器", "技术干货", "仿真"]
 ---

@@ -1,6 +1,7 @@
 ---
 title: 'pvlib 单轴跟踪器建模实战：年增益15%背后的物理逻辑'
 description: '用pvlib.tracking.singleaxis对比固定支架与单轴跟踪器，揭示上海地区年增益+15.3%的来源，以及冬季跟踪器为何反而亏损的真实原因。含反向跟踪backtrack与GCR参数详解。'
+category: solar
 pubDate: '2026-03-13'
 tags: ["pvlib", "光伏", "单轴跟踪器", "跟踪增益", "技术干货"]
 ---

@@ -1,6 +1,7 @@
 ---
 title: 'pvlib 太阳位置与辐照度分解 — 光伏预测的物理基石'
 description: '深入理解 pvlib 太阳位置计算(SPA)和辐照度分解(GHI→DNI/DHI→POA)，附完整代码演示'
+category: solar
 pubDate: '2026-03-13'
 tags: ["pvlib", "光伏", "辐照度", "技术干货"]
 ---
