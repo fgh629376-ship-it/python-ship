@@ -11,9 +11,10 @@ const posts = (await getCollection('blog')).sort(
 );
 
 const CATEGORIES = [
-	{ id: 'all',    label: '全部',       emoji: '📚', i18n: 'catAll' },
-	{ id: 'python', label: 'Python 语法', emoji: '🐍', i18n: 'catTabPython' },
-	{ id: 'solar',  label: '光伏能源',    emoji: '☀️', i18n: 'catTabSolar' },
+	{ id: 'all',       label: '全部',         emoji: '📚', i18n: 'catAll' },
+	{ id: 'python',    label: 'Python 语法',  emoji: '🐍', i18n: 'catTabPython' },
+	{ id: 'solar',     label: '光伏能源',     emoji: '☀️', i18n: 'catTabSolar' },
+	{ id: 'algorithm', label: '跨行业算法',   emoji: '🔬', i18n: 'catTabAlgo' },
 ];
 ---
 
@@ -74,6 +75,11 @@ const CATEGORIES = [
 				background: rgba(255, 196, 0, 0.12);
 				color: #ffc400;
 				border: 1px solid rgba(255, 196, 0, 0.3);
+			}
+			.cat-badge.algorithm {
+				background: rgba(168, 85, 247, 0.12);
+				color: #a855f7;
+				border: 1px solid rgba(168, 85, 247, 0.3);
 			}
 
 			/* Post list */
@@ -161,8 +167,8 @@ const CATEGORIES = [
 				{posts.map((post) => (
 					<li data-category={post.data.category} data-lang={post.data.lang || 'zh'}>
 						<a class="post-card" href={`/blog/${post.id}/`}>
-							<span class={`cat-badge ${post.data.category}`} data-i18n={post.data.category === 'python' ? 'catPython' : 'catSolar'}>
-								{post.data.category === 'python' ? '🐍 Python' : '☀️ 光伏'}
+							<span class={`cat-badge ${post.data.category}`} data-i18n={post.data.category === 'python' ? 'catPython' : post.data.category === 'solar' ? 'catSolar' : 'catAlgo'}>
+								{post.data.category === 'python' ? '🐍 Python' : post.data.category === 'solar' ? '☀️ 光伏' : '🔬 算法'}
 							</span>
 							<h2>{post.data.title}</h2>
 							<p class="meta">
@@ -218,7 +224,7 @@ const CATEGORIES = [
 
 			// 读取 URL 参数自动筛选
 			const urlCat = new URLSearchParams(window.location.search).get('cat');
-			if (urlCat && ['python', 'solar'].includes(urlCat)) {
+			if (urlCat && ['python', 'solar', 'algorithm'].includes(urlCat)) {
 				activateTab(urlCat);
 			} else {
 				filter('all');

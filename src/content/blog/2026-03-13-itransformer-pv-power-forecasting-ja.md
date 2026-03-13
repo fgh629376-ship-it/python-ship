@@ -2,7 +2,7 @@
 title: '[定量金融] の iTransformer を太陽光発電量予測に応用する方法'
 description: '金融の多変量時系列予測から生まれた「逆転 Transformer」が、なぜ太陽光発電量予測に最適なアーキテクチャなのか。原理解説 + 完全な Python 実装'
 pubDate: '2026-03-13'
-category: solar
+category: algorithm
 lang: ja
 tags: ["Python", "算法借鉴", "光伏预测", "Transformer", "时序预测", "技术干货"]
 ---

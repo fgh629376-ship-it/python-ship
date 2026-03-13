@@ -2,7 +2,7 @@
 title: 'How the iTransformer from [Quantitative Finance] Applies to PV Power Forecasting'
 description: 'The "Inverted Transformer" from financial multivariate time series forecasting — why it is a natural architecture for PV power forecasting. Principle analysis + complete Python implementation'
 pubDate: '2026-03-13'
-category: solar
+category: algorithm
 lang: en
 tags: ["Python", "算法借鉴", "光伏预测", "Transformer", "时序预测", "技术干货"]
 ---

@@ -13,6 +13,7 @@ const allPosts = (await getCollection('blog'))
 const zhPosts = allPosts.filter(p => (p.data.lang || 'zh') === 'zh');
 const pythonPosts = zhPosts.filter(p => p.data.category === 'python');
 const solarPosts = zhPosts.filter(p => p.data.category === 'solar');
+const algoPosts = zhPosts.filter(p => p.data.category === 'algorithm');
 const totalPosts = zhPosts.length;
 
 // 首页最新文章：每篇取所有语言版本，按 slug 分组，每语言最多6篇
@@ -324,6 +325,11 @@ const latestPosts = allPosts.slice(0, 18); // 渲染所有语言，JS端筛选
         color: #ffc400;
         border: 1px solid rgba(255, 196, 0, 0.25);
       }
+      .post-cat.algorithm {
+        background: rgba(168, 85, 247, 0.12);
+        color: #a855f7;
+        border: 1px solid rgba(168, 85, 247, 0.25);
+      }
       .post-item h3 {
         font-size: 1.05rem;
         color: var(--text);
@@ -577,7 +583,7 @@ const latestPosts = allPosts.slice(0, 18); // 渲染所有语言，JS端筛选
           <p data-i18n="featureAutoDesc">每晚 22:00 AI 自动搜索、学习、生成、发布，保持知识库持续更新，永不断更</p>
           <span class="card-arrow" data-i18n="cardArrowAll">查看全部 →</span>
         </a>
-        <a href="/blog?cat=solar" class="feature-card open reveal">
+        <a href="/blog?cat=algorithm" class="feature-card open reveal">
           <span class="feature-icon">🔬</span>
           <h3 data-i18n="featureAlgoTitle">跨行业算法借鉴</h3>
           <p data-i18n="featureAlgoDesc">从金融量化、气象 AI、IoT 边缘推理中寻找灵感，迁移到光伏功率预测场景</p>
@@ -637,8 +643,8 @@ const latestPosts = allPosts.slice(0, 18); // 渲染所有语言，JS端筛选
       <div class="posts-grid">
         {latestPosts.map((post) => (
           <a class="post-item reveal" href={`/blog/${post.id}/`} data-lang={post.data.lang || 'zh'}>
-            <span class={`post-cat ${post.data.category}`} data-i18n={post.data.category === 'python' ? 'catPython' : 'catSolar'}>
-              {post.data.category === 'python' ? '🐍 Python' : '☀️ 光伏'}
+            <span class={`post-cat ${post.data.category}`} data-i18n={post.data.category === 'python' ? 'catPython' : post.data.category === 'solar' ? 'catSolar' : 'catAlgo'}>
+              {post.data.category === 'python' ? '🐍 Python' : post.data.category === 'solar' ? '☀️ 光伏' : '🔬 算法'}
             </span>
             <h3>{post.data.title}</h3>
             <p class="post-desc">{post.data.description}</p>
