@@ -193,13 +193,24 @@ const CATEGORIES = [
 				noPostsEl.classList.toggle('visible', visible === 0);
 			}
 
+			function activateTab(cat: string) {
+				tabs.forEach((b) => {
+					b.classList.toggle('active', b.dataset.cat === cat);
+				});
+				filter(cat);
+			}
+
 			tabs.forEach((btn) => {
 				btn.addEventListener('click', () => {
-					tabs.forEach((b) => b.classList.remove('active'));
-					btn.classList.add('active');
-					filter(btn.dataset.cat!);
+					activateTab(btn.dataset.cat!);
 				});
 			});
+
+			// 读取 URL 参数自动筛选
+			const urlCat = new URLSearchParams(window.location.search).get('cat');
+			if (urlCat && ['python', 'solar'].includes(urlCat)) {
+				activateTab(urlCat);
+			}
 		</script>
 	</body>
 </html>

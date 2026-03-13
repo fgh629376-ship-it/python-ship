@@ -246,6 +246,29 @@ const totalPosts = allPosts.length;
         line-height: 1.6;
         margin: 0;
       }
+      a.feature-card {
+        text-decoration: none;
+        color: inherit;
+        cursor: pointer;
+      }
+      a.feature-card:hover {
+        text-decoration: none;
+        color: inherit;
+      }
+      .card-arrow {
+        display: inline-block;
+        margin-top: 1rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--accent);
+        opacity: 0;
+        transform: translateX(-8px);
+        transition: all 0.3s;
+      }
+      .feature-card:hover .card-arrow {
+        opacity: 1;
+        transform: translateX(0);
+      }
       .feature-card.python { --card-accent: #3dd68c; }
       .feature-card.solar { --card-accent: #ffc400; }
       .feature-card.auto { --card-accent: #61afef; }
@@ -425,26 +448,30 @@ const totalPosts = allPosts.length;
         <p>Python 工程能力 × 光伏领域知识，双线并进</p>
       </div>
       <div class="features">
-        <div class="feature-card python reveal">
+        <a href="/blog?cat=python" class="feature-card python reveal">
           <span class="feature-icon">🐍</span>
           <h3>Python 深度教程</h3>
           <p>asyncio、装饰器、生成器、dataclass、Pydantic —— 从语法糖到工业级用法，每篇附完整可运行代码</p>
-        </div>
-        <div class="feature-card solar reveal">
+          <span class="card-arrow">查看 {pythonPosts.length} 篇文章 →</span>
+        </a>
+        <a href="/blog?cat=solar" class="feature-card solar reveal">
           <span class="feature-icon">☀️</span>
           <h3>光伏功率预测</h3>
           <p>pvlib 物理建模、ModelChain 仿真、温度/辐照度/跟踪器模型，为光伏项目打下坚实基础</p>
-        </div>
-        <div class="feature-card auto reveal">
+          <span class="card-arrow">查看 {solarPosts.length} 篇文章 →</span>
+        </a>
+        <a href="/blog" class="feature-card auto reveal">
           <span class="feature-icon">🤖</span>
           <h3>AI 自动输出</h3>
           <p>每晚 22:00 AI 自动搜索、学习、生成、发布，保持知识库持续更新，永不断更</p>
-        </div>
-        <div class="feature-card open reveal">
+          <span class="card-arrow">查看全部 →</span>
+        </a>
+        <a href="/blog?cat=solar" class="feature-card open reveal">
           <span class="feature-icon">🔬</span>
           <h3>跨行业算法借鉴</h3>
           <p>从金融量化、气象 AI、IoT 边缘推理中寻找灵感，迁移到光伏功率预测场景</p>
-        </div>
+          <span class="card-arrow">查看相关文章 →</span>
+        </a>
       </div>
     </section>
 
