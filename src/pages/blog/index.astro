@@ -248,7 +248,7 @@ const SERIES = [
 			</div>
 
 			<!-- Series tabs -->
-			<div class="series-tabs" id="seriesTabs">
+			<div class="series-tabs" id="seriesTabs" style="display:flex">
 				<span class="series-label" data-i18n="seriesLabel">系列：</span>
 				{SERIES.map((s) => (
 					<button
@@ -292,8 +292,17 @@ const SERIES = [
 		<script>
 			const catTabs = document.querySelectorAll<HTMLButtonElement>('.cat-tab');
 			const seriesTabs = document.querySelectorAll<HTMLButtonElement>('.series-tab');
+			const seriesBar = document.getElementById('seriesTabs')!;
 			const items = document.querySelectorAll<HTMLLIElement>('#postList li');
 			const noPostsEl = document.getElementById('noPosts')!;
+
+			// 分类→系列映射：每个分类下显示哪些系列
+			const CAT_SERIES: Record<string, string[]> = {
+				'all':       ['pvlib', 'solar-book', 'cross-industry', 'python-basics'],
+				'solar':     ['pvlib', 'solar-book'],
+				'algorithm': ['cross-industry'],
+				'python':    ['python-basics'],
+			};
 
 			function getCurrentLang(): string {
 				try { return localStorage.getItem('preferred-lang') || 'zh'; } catch(e) { return 'zh'; }
@@ -301,6 +310,31 @@ const SERIES = [
 
 			let currentCat = 'all';
 			let currentSeries = 'all';
+
+			// 根据当前分类，显示/隐藏对应的系列标签
+			function updateSeriesBar() {
+				const allowed = CAT_SERIES[currentCat] || [];
+				// 如果该分类只有 1 个系列，隐藏整个系列栏（没必要筛选）
+				if (allowed.length <= 1) {
+					seriesBar.style.display = 'none';
+					currentSeries = 'all';
+					return;
+				}
+				seriesBar.style.display = 'flex';
+				seriesTabs.forEach((btn) => {
+					const s = btn.dataset.series!;
+					if (s === 'all') {
+						btn.style.display = 'inline-flex';
+					} else {
+						btn.style.display = allowed.includes(s) ? 'inline-flex' : 'none';
+					}
+				});
+				// 如果当前选的系列不在允许列表里，重置为全部
+				if (currentSeries !== 'all' && !allowed.includes(currentSeries)) {
+					currentSeries = 'all';
+					seriesTabs.forEach((b) => b.classList.toggle('active', b.dataset.series === 'all'));
+				}
+			}
 
 			function filter() {
 				const lang = getCurrentLang();
@@ -320,6 +354,7 @@ const SERIES = [
 				btn.addEventListener('click', () => {
 					currentCat = btn.dataset.cat!;
 					catTabs.forEach((b) => b.classList.toggle('active', b.dataset.cat === currentCat));
+					updateSeriesBar();
 					filter();
 				});
 			});
@@ -344,6 +379,7 @@ const SERIES = [
 				currentSeries = urlSeries;
 				seriesTabs.forEach((b) => b.classList.toggle('active', b.dataset.series === currentSeries));
 			}
+			updateSeriesBar();
 			filter();
 
 			// 监听语言切换
