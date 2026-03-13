@@ -149,7 +149,7 @@ function applyLang(lang: string) {
     const key = (el as HTMLElement).dataset.i18n!;
     if (t[key]) el.textContent = t[key];
   });
-  localStorage.setItem('preferred-lang', lang);
+  try { localStorage.setItem('preferred-lang', lang); } catch(e) {}
 }
 
 function initSwitcher() {
@@ -160,7 +160,8 @@ function initSwitcher() {
   const currentLang = document.getElementById('currentLang');
   if (!switcher || !btn || !menu) return;
 
-  const savedLang = localStorage.getItem('preferred-lang') || 'zh';
+  let savedLang = 'zh';
+  try { savedLang = localStorage.getItem('preferred-lang') || 'zh'; } catch(e) {}
   const savedItem = menu.querySelector(`[data-lang="${savedLang}"]`) as HTMLElement;
   if (savedItem && currentFlag && currentLang) {
     currentFlag.textContent = savedItem.dataset.flag || '🇨🇳';
