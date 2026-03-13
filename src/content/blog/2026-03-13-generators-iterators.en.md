@@ -1,86 +1,86 @@
 ---
-title: 'Python 生成器与迭代器：懒加载的艺术'
-description: '深入理解 yield、生成器表达式、迭代器协议 — 处理大数据不爆内存的核心技巧'
-category: python
-lang: zh
+title: 'Python Generators and Iterators: The Art of Lazy Loading'
+description: 'Deep dive into yield, generator expressions, and the iterator protocol — the core technique for processing large data without blowing up memory'
 pubDate: '2026-03-13'
+category: python
+lang: en
 tags: ['生成器', '迭代器', 'Python进阶', '技术干货']
 ---
 
-## 为什么需要生成器？
+## Why Do We Need Generators?
 
-一个问题：读一个 10GB 的日志文件，你会怎么做？
+A question: how would you read a 10GB log file?
 
 ```python
-# ❌ 内存炸了
-lines = open("huge.log").readlines()  # 全部读入内存
+# ❌ Memory explodes
+lines = open("huge.log").readlines()  # Reads everything into memory
 
-# ✅ 生成器：一行一行读，内存恒定
+# ✅ Generator: reads line by line, constant memory usage
 def read_lines(path):
     with open(path) as f:
         for line in f:
-            yield line  # 每次只产出一行
+            yield line  # Yields one line at a time
 
 for line in read_lines("huge.log"):
     process(line)
 ```
 
-**生成器的核心价值：按需计算，不提前占内存。**
+**The core value of generators: compute on demand, no upfront memory allocation.**
 
 ---
 
-## yield 到底干了什么？
+## What Does yield Actually Do?
 
 ```python
 def countdown(n):
     while n > 0:
-        yield n      # 暂停，返回 n
-        n -= 1       # 下次 next() 从这里继续
+        yield n      # Pause, return n
+        n -= 1       # Next next() call resumes here
 
 gen = countdown(3)
-print(next(gen))  # 3  — 执行到 yield，暂停
-print(next(gen))  # 2  — 从上次暂停处继续
+print(next(gen))  # 3  — executes until yield, then pauses
+print(next(gen))  # 2  — resumes from the last pause point
 print(next(gen))  # 1
 print(next(gen))  # StopIteration!
 ```
 
-**`yield` = 暂停 + 返回**。函数状态被冻结，下次调用 `next()` 时解冻继续。
+**`yield` = pause + return**. The function state is frozen and thawed when `next()` is called again.
 
 ---
 
-## 生成器表达式
+## Generator Expressions
 
-列表推导式的惰性版本：
+The lazy version of list comprehensions:
 
 ```python
-# 列表推导 — 立刻计算，全部存内存
+# List comprehension — computes immediately, stores everything in memory
 squares_list = [x**2 for x in range(10_000_000)]  # ~80MB
 
-# 生成器表达式 — 惰性计算，几乎不占内存
+# Generator expression — lazy evaluation, almost no memory
 squares_gen = (x**2 for x in range(10_000_000))   # ~120B
 
-# 用法完全一样
+# Usage is identical
 for s in squares_gen:
     ...
 ```
 
-把 `[]` 换成 `()`，就从列表变成了生成器。
+Just replace `[]` with `()` to turn a list into a generator.
 
 ---
 
-## 迭代器协议
+## The Iterator Protocol
 
-Python 的 for 循环背后就是迭代器协议：
+Python's `for` loop is powered by the iterator protocol under the hood:
 
 ```python
 class Range:
-    """自己实现一个 range"""
+    """A custom implementation of range"""
     def __init__(self, start, end):
         self.current = start
         self.end = end
 
     def __iter__(self):
-        return self  # 返回自身作为迭代器
+        return self  # Return self as the iterator
 
     def __next__(self):
         if self.current >= self.end:
@@ -93,21 +93,21 @@ for i in Range(1, 4):
     print(i)  # 1, 2, 3
 ```
 
-**`__iter__` + `__next__` = 迭代器协议。** 生成器函数自动帮你实现了这两个方法。
+**`__iter__` + `__next__` = the iterator protocol.** Generator functions automatically implement both methods for you.
 
 ---
 
-## yield from — 委托生成器
+## yield from — Delegating to Sub-Generators
 
 ```python
 def chain(*iterables):
     for it in iterables:
-        yield from it  # 把子迭代器的值直接产出
+        yield from it  # Directly yields values from the sub-iterator
 
 list(chain([1, 2], [3, 4], [5]))
 # [1, 2, 3, 4, 5]
 
-# 等价于（但 yield from 更简洁高效）：
+# Equivalent to (but yield from is more concise and efficient):
 def chain_manual(*iterables):
     for it in iterables:
         for item in it:
@@ -116,38 +116,38 @@ def chain_manual(*iterables):
 
 ---
 
-## 双向通信：send() 方法
+## Two-Way Communication: The send() Method
 
-生成器不只能产出值，还能接收值：
+Generators can not only yield values, they can also receive them:
 
 ```python
 def accumulator():
     total = 0
     while True:
-        value = yield total  # 产出 total，接收 send 的值
+        value = yield total  # Yield total, receive the sent value
         if value is None:
             break
         total += value
 
 acc = accumulator()
-next(acc)          # 初始化，启动生成器 → 0
+next(acc)          # Initialize, start the generator → 0
 acc.send(10)       # → 10
 acc.send(20)       # → 30
 acc.send(5)        # → 35
 ```
 
-`send()` 在协程（async/await 的前身）中大量使用。
+`send()` is heavily used in coroutines (the predecessor of async/await).
 
 ---
 
-## 实战场景
+## Real-World Use Cases
 
-### 1. 流式处理管道
+### 1. Streaming Processing Pipeline
 
 ```python
 def read_csv(path):
     with open(path) as f:
-        next(f)  # 跳过表头
+        next(f)  # Skip header
         for line in f:
             yield line.strip().split(',')
 
@@ -160,13 +160,13 @@ def extract_emails(rows):
     for row in rows:
         yield row[2]
 
-# 管道组合 — 每一步都是惰性的，内存占用极低
+# Pipeline composition — every step is lazy, extremely low memory usage
 pipeline = extract_emails(filter_active(read_csv("users.csv")))
 for email in pipeline:
     send_notification(email)
 ```
 
-### 2. 无限序列
+### 2. Infinite Sequences
 
 ```python
 def fibonacci():
@@ -176,12 +176,12 @@ def fibonacci():
         a, b = b, a + b
 
 from itertools import islice
-# 取前 10 个斐波那契数
+# Get the first 10 Fibonacci numbers
 list(islice(fibonacci(), 10))
 # [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
 ```
 
-### 3. 滑动窗口
+### 3. Sliding Window
 
 ```python
 from collections import deque
@@ -199,13 +199,13 @@ list(sliding_window([1,2,3,4,5], 3))
 # [(1,2,3), (2,3,4), (3,4,5)]
 ```
 
-### 4. 分批处理
+### 4. Batch Processing
 
 ```python
 from itertools import islice
 
 def batched(iterable, n):
-    """Python 3.12 内置了 itertools.batched"""
+    """Python 3.12 has itertools.batched built-in"""
     it = iter(iterable)
     while batch := list(islice(it, n)):
         yield batch
@@ -220,53 +220,53 @@ for batch in batched(range(10), 3):
 
 ---
 
-## itertools 常用武器
+## Essential itertools Arsenal
 
 ```python
 import itertools
 
-# 无限计数
+# Infinite counting
 itertools.count(10, 2)       # 10, 12, 14, 16, ...
 
-# 循环重复
+# Cycling repetition
 itertools.cycle([1, 2, 3])   # 1, 2, 3, 1, 2, 3, ...
 
-# 笛卡尔积
+# Cartesian product
 itertools.product('AB', '12')  # A1, A2, B1, B2
 
-# 排列组合
+# Permutations and combinations
 itertools.permutations('ABC', 2)   # AB, AC, BA, BC, CA, CB
 itertools.combinations('ABC', 2)   # AB, AC, BC
 
-# 分组
+# Grouping
 for key, group in itertools.groupby('AAABBCCCC'):
     print(key, list(group))
 # A ['A','A','A']
 # B ['B','B']
 # C ['C','C','C','C']
 
-# 累积
+# Accumulation
 list(itertools.accumulate([1,2,3,4]))  # [1, 3, 6, 10]
 ```
 
 ---
 
-## 知识卡片 📌
+## Quick Reference Card 📌
 
 ```
-生成器核心：
-  yield = 暂停 + 返回值
-  惰性求值，按需计算，省内存
+Generator fundamentals:
+  yield = pause + return value
+  Lazy evaluation, on-demand computation, memory efficient
 
-生成器表达式：
-  (x for x in iterable)  ← 用圆括号
+Generator expression:
+  (x for x in iterable)  ← use parentheses
 
-迭代器协议：
+Iterator protocol:
   __iter__() + __next__() + StopIteration
 
-实战口诀：
-  大文件 → 生成器逐行读
-  管道处理 → 生成器串联
-  无限序列 → while True + yield
-  批量操作 → itertools.islice / batched
+Practical rules:
+  Large files → generator line-by-line reading
+  Pipeline processing → chaining generators
+  Infinite sequences → while True + yield
+  Batch operations → itertools.islice / batched
 ```

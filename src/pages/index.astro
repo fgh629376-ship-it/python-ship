@@ -9,10 +9,14 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 const allPosts = (await getCollection('blog'))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
-const pythonPosts = allPosts.filter(p => p.data.category === 'python');
-const solarPosts = allPosts.filter(p => p.data.category === 'solar');
-const latestPosts = allPosts.slice(0, 6);
-const totalPosts = allPosts.length;
+// 每种语言的文章（用于统计和展示）
+const zhPosts = allPosts.filter(p => (p.data.lang || 'zh') === 'zh');
+const pythonPosts = zhPosts.filter(p => p.data.category === 'python');
+const solarPosts = zhPosts.filter(p => p.data.category === 'solar');
+const totalPosts = zhPosts.length;
+
+// 首页最新文章：每篇取所有语言版本，按 slug 分组，每语言最多6篇
+const latestPosts = allPosts.slice(0, 18); // 渲染所有语言，JS端筛选
 ---
 
 <!doctype html>
@@ -407,18 +411,18 @@ const totalPosts = allPosts.length;
     <section class="hero">
       <div class="hero-badge">
         <span class="pulse"></span>
-        每晚 22:00 自动发布
+        <span data-i18n="heroBadge">每晚 22:00 自动发布</span>
       </div>
       <h1>
         <span class="gradient">Python Ship</span>
       </h1>
-      <p class="tagline">
+      <p class="tagline" data-i18n-html="heroTaglineNew">
         从 Python 语法到光伏功率预测<br />
         用代码驱动清洁能源
       </p>
-      <p class="sub">AI 自动生成 · 技术干货 · 完整可运行代码</p>
+      <p class="sub" data-i18n="heroSubNew">AI 自动生成 · 技术干货 · 完整可运行代码</p>
       <div class="hero-actions">
-        <a href="/blog" class="btn-primary">浏览全部文章 →</a>
+        <a href="/blog" class="btn-primary" data-i18n="heroBtnBlog">浏览全部文章 →</a>
         <a href="https://github.com/fgh629376-ship-it/python-ship" target="_blank" class="btn-secondary">
           GitHub ↗
         </a>
@@ -429,48 +433,48 @@ const totalPosts = allPosts.length;
     <div class="stats reveal">
       <div class="stat">
         <div class="stat-number">{totalPosts}</div>
-        <div class="stat-label">篇技术文章</div>
+        <div class="stat-label" data-i18n="statArticles">篇技术文章</div>
       </div>
       <div class="stat">
         <div class="stat-number">{pythonPosts.length}</div>
-        <div class="stat-label">Python 语法</div>
+        <div class="stat-label" data-i18n="statPython">Python 语法</div>
       </div>
       <div class="stat">
         <div class="stat-number">{solarPosts.length}</div>
-        <div class="stat-label">光伏能源</div>
+        <div class="stat-label" data-i18n="statSolar">光伏能源</div>
       </div>
     </div>
 
     <!-- FEATURES -->
     <section class="section">
       <div class="section-header reveal">
-        <h2>两大核心方向</h2>
-        <p>Python 工程能力 × 光伏领域知识，双线并进</p>
+        <h2 data-i18n="sectionFeatureTitle">两大核心方向</h2>
+        <p data-i18n="sectionFeatureDesc">Python 工程能力 × 光伏领域知识，双线并进</p>
       </div>
       <div class="features">
         <a href="/blog?cat=python" class="feature-card python reveal">
           <span class="feature-icon">🐍</span>
-          <h3>Python 深度教程</h3>
-          <p>asyncio、装饰器、生成器、dataclass、Pydantic —— 从语法糖到工业级用法，每篇附完整可运行代码</p>
-          <span class="card-arrow">查看 {pythonPosts.length} 篇文章 →</span>
+          <h3 data-i18n="featurePythonTitle">Python 深度教程</h3>
+          <p data-i18n="featurePythonDesc">asyncio、装饰器、生成器、dataclass、Pydantic —— 从语法糖到工业级用法，每篇附完整可运行代码</p>
+          <span class="card-arrow" data-i18n="cardArrowPython">查看 Python 文章 →</span>
         </a>
         <a href="/blog?cat=solar" class="feature-card solar reveal">
           <span class="feature-icon">☀️</span>
-          <h3>光伏功率预测</h3>
-          <p>pvlib 物理建模、ModelChain 仿真、温度/辐照度/跟踪器模型，为光伏项目打下坚实基础</p>
-          <span class="card-arrow">查看 {solarPosts.length} 篇文章 →</span>
+          <h3 data-i18n="featureSolarTitle">光伏功率预测</h3>
+          <p data-i18n="featureSolarDesc">pvlib 物理建模、ModelChain 仿真、温度/辐照度/跟踪器模型，为光伏项目打下坚实基础</p>
+          <span class="card-arrow" data-i18n="cardArrowSolar">查看光伏文章 →</span>
         </a>
         <a href="/blog" class="feature-card auto reveal">
           <span class="feature-icon">🤖</span>
-          <h3>AI 自动输出</h3>
-          <p>每晚 22:00 AI 自动搜索、学习、生成、发布，保持知识库持续更新，永不断更</p>
-          <span class="card-arrow">查看全部 →</span>
+          <h3 data-i18n="featureAutoTitle">AI 自动输出</h3>
+          <p data-i18n="featureAutoDesc">每晚 22:00 AI 自动搜索、学习、生成、发布，保持知识库持续更新，永不断更</p>
+          <span class="card-arrow" data-i18n="cardArrowAll">查看全部 →</span>
         </a>
         <a href="/blog?cat=solar" class="feature-card open reveal">
           <span class="feature-icon">🔬</span>
-          <h3>跨行业算法借鉴</h3>
-          <p>从金融量化、气象 AI、IoT 边缘推理中寻找灵感，迁移到光伏功率预测场景</p>
-          <span class="card-arrow">查看相关文章 →</span>
+          <h3 data-i18n="featureAlgoTitle">跨行业算法借鉴</h3>
+          <p data-i18n="featureAlgoDesc">从金融量化、气象 AI、IoT 边缘推理中寻找灵感，迁移到光伏功率预测场景</p>
+          <span class="card-arrow" data-i18n="cardArrowAlgo">查看相关文章 →</span>
         </a>
       </div>
     </section>
@@ -478,13 +482,13 @@ const totalPosts = allPosts.length;
     <!-- LATEST POSTS -->
     <section class="section">
       <div class="section-header reveal">
-        <h2>最新文章</h2>
-        <p>每一篇都包含完整代码示例和知识卡片</p>
+        <h2 data-i18n="sectionLatestTitle">最新文章</h2>
+        <p data-i18n="sectionLatestDesc">每一篇都包含完整代码示例和知识卡片</p>
       </div>
       <div class="posts-grid">
         {latestPosts.map((post) => (
-          <a class="post-item reveal" href={`/blog/${post.id}/`}>
-            <span class={`post-cat ${post.data.category}`}>
+          <a class="post-item reveal" href={`/blog/${post.id}/`} data-lang={post.data.lang || 'zh'}>
+            <span class={`post-cat ${post.data.category}`} data-i18n={post.data.category === 'python' ? 'catPython' : 'catSolar'}>
               {post.data.category === 'python' ? '🐍 Python' : '☀️ 光伏'}
             </span>
             <h3>{post.data.title}</h3>
@@ -496,15 +500,15 @@ const totalPosts = allPosts.length;
         ))}
       </div>
       <div class="view-all reveal">
-        <a href="/blog" class="btn-primary">查看全部 {totalPosts} 篇文章 →</a>
+        <a href="/blog" class="btn-primary" data-i18n="viewAllBtn" data-count={String(totalPosts)}>查看全部 {totalPosts} 篇文章 →</a>
       </div>
     </section>
 
     <!-- CTA -->
     <section class="cta-section reveal">
-      <h2>开源 · 免费 · 持续更新</h2>
-      <p>所有代码和文章均开源在 GitHub，欢迎 Star ⭐ 和贡献</p>
-      <a href="https://github.com/fgh629376-ship-it/python-ship" target="_blank" class="btn-secondary">
+      <h2 data-i18n="ctaTitle">开源 · 免费 · 持续更新</h2>
+      <p data-i18n="ctaDesc">所有代码和文章均开源在 GitHub，欢迎 Star ⭐ 和贡献</p>
+      <a href="https://github.com/fgh629376-ship-it/python-ship" target="_blank" class="btn-secondary" data-i18n="ctaBtn">
         GitHub 仓库 ↗
       </a>
     </section>
@@ -513,6 +517,7 @@ const totalPosts = allPosts.length;
 
     <!-- Scroll Reveal -->
     <script>
+      // Scroll reveal
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
@@ -524,6 +529,21 @@ const totalPosts = allPosts.length;
         { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
       );
       document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+      // 按语言筛选首页文章
+      function filterHomePosts() {
+        let lang = 'zh';
+        try { lang = localStorage.getItem('preferred-lang') || 'zh'; } catch(e) {}
+        let shown = 0;
+        document.querySelectorAll('.post-item[data-lang]').forEach((el) => {
+          const postLang = (el as HTMLElement).dataset.lang;
+          const show = postLang === lang && shown < 6;
+          (el as HTMLElement).style.display = show ? '' : 'none';
+          if (show) shown++;
+        });
+      }
+      filterHomePosts();
+      window.addEventListener('langchange', filterHomePosts);
     </script>
   </body>
 </html>

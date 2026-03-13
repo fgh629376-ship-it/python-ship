@@ -11,9 +11,9 @@ const posts = (await getCollection('blog')).sort(
 );
 
 const CATEGORIES = [
-	{ id: 'all',    label: '全部',       emoji: '📚' },
-	{ id: 'python', label: 'Python 语法', emoji: '🐍' },
-	{ id: 'solar',  label: '光伏能源',    emoji: '☀️' },
+	{ id: 'all',    label: '全部',       emoji: '📚', i18n: 'catAll' },
+	{ id: 'python', label: 'Python 语法', emoji: '🐍', i18n: 'catTabPython' },
+	{ id: 'solar',  label: '光伏能源',    emoji: '☀️', i18n: 'catTabSolar' },
 ];
 ---
 
@@ -140,8 +140,8 @@ const CATEGORIES = [
 		<Header />
 		<main>
 			<div class="page-header">
-				<h1>📖 博客</h1>
-				<p>Python 技术干货 · 光伏能源笔记 · 持续更新中</p>
+				<h1 data-i18n="blogPageTitle">📖 博客</h1>
+				<p data-i18n="blogPageDesc">Python 技术干货 · 光伏能源笔记 · 持续更新中</p>
 			</div>
 
 			<!-- Category tabs -->
@@ -151,7 +151,7 @@ const CATEGORIES = [
 						class={`cat-tab${c.id === 'all' ? ' active' : ''}`}
 						data-cat={c.id}
 					>
-						<span>{c.emoji}</span>{c.label}
+						<span>{c.emoji}</span><span data-i18n={c.i18n}>{c.label}</span>
 					</button>
 				))}
 			</div>
@@ -159,9 +159,9 @@ const CATEGORIES = [
 			<!-- Post list -->
 			<ul class="post-list" id="postList">
 				{posts.map((post) => (
-					<li data-category={post.data.category}>
+					<li data-category={post.data.category} data-lang={post.data.lang || 'zh'}>
 						<a class="post-card" href={`/blog/${post.id}/`}>
-							<span class={`cat-badge ${post.data.category}`}>
+							<span class={`cat-badge ${post.data.category}`} data-i18n={post.data.category === 'python' ? 'catPython' : 'catSolar'}>
 								{post.data.category === 'python' ? '🐍 Python' : '☀️ 光伏'}
 							</span>
 							<h2>{post.data.title}</h2>
@@ -174,7 +174,7 @@ const CATEGORIES = [
 				))}
 			</ul>
 
-			<p class="no-posts" id="noPosts">该分类暂无文章</p>
+			<p class="no-posts" id="noPosts" data-i18n="noPosts">该分类暂无文章</p>
 		</main>
 		<Footer />
 
@@ -183,17 +183,27 @@ const CATEGORIES = [
 			const items = document.querySelectorAll<HTMLLIElement>('#postList li');
 			const noPostsEl = document.getElementById('noPosts')!;
 
+			function getCurrentLang(): string {
+				try { return localStorage.getItem('preferred-lang') || 'zh'; } catch(e) { return 'zh'; }
+			}
+
 			function filter(cat: string) {
+				const lang = getCurrentLang();
 				let visible = 0;
 				items.forEach((li) => {
-					const match = cat === 'all' || li.dataset.category === cat;
-					li.hidden = !match;
-					if (match) visible++;
+					const catMatch = cat === 'all' || li.dataset.category === cat;
+					const langMatch = li.dataset.lang === lang;
+					const show = catMatch && langMatch;
+					li.hidden = !show;
+					if (show) visible++;
 				});
 				noPostsEl.classList.toggle('visible', visible === 0);
 			}
 
+			let currentCat = 'all';
+
 			function activateTab(cat: string) {
+				currentCat = cat;
 				tabs.forEach((b) => {
 					b.classList.toggle('active', b.dataset.cat === cat);
 				});
@@ -210,7 +220,12 @@ const CATEGORIES = [
 			const urlCat = new URLSearchParams(window.location.search).get('cat');
 			if (urlCat && ['python', 'solar'].includes(urlCat)) {
 				activateTab(urlCat);
+			} else {
+				filter('all');
 			}
+
+			// 监听语言切换事件，重新筛选
+			window.addEventListener('langchange', () => filter(currentCat));
 		</script>
 	</body>
 </html>

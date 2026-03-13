@@ -2,6 +2,7 @@
 title: 'pvlib 温度模型与 DC 功率计算 — 从辐照度到瓦特'
 description: '深入理解 pvlib 电池温度模型(SAPM/PVsyst/Faiman)和 DC 功率模型(SAPM/CEC/PVWatts)，含完整代码对比'
 category: solar
+lang: zh
 pubDate: '2026-03-13'
 tags: ["pvlib", "光伏", "温度模型", "DC功率", "技术干货"]
 ---

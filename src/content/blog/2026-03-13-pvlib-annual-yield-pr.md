@@ -2,6 +2,7 @@
 title: 'pvlib 年度发电量评估与 PR 计算 — 从公式到全年仿真'
 description: '用 pvlib 对上海 5kWp 系统做 8760 小时仿真，系统讲解 PR、比发电量、容量因子的计算方法，以及为什么夏天 PR 反而最低'
 category: solar
+lang: zh
 pubDate: '2026-03-13'
 tags: ["pvlib", "光伏", "PR计算", "发电量评估", "技术干货"]
 ---

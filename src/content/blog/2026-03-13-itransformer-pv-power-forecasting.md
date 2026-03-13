@@ -2,6 +2,7 @@
 title: '[金融量化] 的 iTransformer 如何借鉴到光伏功率预测'
 description: '来自金融多变量时序预测的「倒置 Transformer」，为什么是光伏功率预测的天然架构？原理解析 + 完整 Python 实现'
 category: solar
+lang: zh
 pubDate: '2026-03-13'
 tags: ["Python", "算法借鉴", "光伏预测", "Transformer", "时序预测", "技术干货"]
 ---

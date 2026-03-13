@@ -2,6 +2,7 @@
 title: 'Python asyncio 完全指南：从入门到实战'
 description: '彻底搞懂 Python 异步编程 — event loop、协程、Task、gather 一网打尽，附真实案例'
 category: python
+lang: zh
 pubDate: '2026-03-10'
 tags: ['asyncio', 'Python', '教程型']
 ---

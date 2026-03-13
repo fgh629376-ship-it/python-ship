@@ -1,39 +1,39 @@
 ---
-title: 'Python 装饰器：从语法糖到工业级用法'
-description: '彻底搞懂 Python decorator — 原理、函数装饰器、类装饰器、带参数装饰器、@functools.wraps、实战10个常用场景'
+title: 'Python Decorators: From Syntactic Sugar to Industrial-Grade Patterns'
+description: 'Master Python decorators — principles, function decorators, class decorators, parameterized decorators, @functools.wraps, and 10 real-world use cases'
 category: python
-lang: zh
+lang: en
 pubDate: '2026-03-13'
 tags: ['装饰器', 'Python进阶', '技术干货']
 ---
 
-## 装饰器是什么？
+## What Is a Decorator?
 
-装饰器的本质就一句话：**接收一个函数，返回另一个函数的函数**。
+A decorator boils down to one sentence: **a function that takes a function and returns another function**.
 
 ```python
-# 这两种写法完全等价
+# These two are exactly equivalent
 @my_decorator
 def hello():
     print("hello")
 
-# 等价于：
+# Same as:
 def hello():
     print("hello")
 hello = my_decorator(hello)
 ```
 
-`@` 只是语法糖，不神秘。
+`@` is just syntactic sugar — nothing magical.
 
 ---
 
-## 最简装饰器
+## The Simplest Decorator
 
 ```python
 def my_decorator(func):
     def wrapper(*args, **kwargs):
         print("before")
-        result = func(*args, **kwargs)  # 调用原函数
+        result = func(*args, **kwargs)  # call the original
         print("after")
         return result
     return wrapper
@@ -48,45 +48,45 @@ greet("Python")
 # after
 ```
 
-**`*args, **kwargs`** 是标配 — 让 wrapper 能接受任意参数，透明传给原函数。
+**`*args, **kwargs`** is the standard pattern — it lets the wrapper accept any arguments and pass them through transparently.
 
 ---
 
-## 必须加 `@functools.wraps`
+## Always Use `@functools.wraps`
 
-不加的话，被装饰的函数会"失去身份"：
+Without it, the decorated function loses its identity:
 
 ```python
 import functools
 
 def my_decorator(func):
-    @functools.wraps(func)  # ← 必须加这个！
+    @functools.wraps(func)  # ← always add this!
     def wrapper(*args, **kwargs):
         return func(*args, **kwargs)
     return wrapper
 
 @my_decorator
 def hello():
-    """这是 hello 函数"""
+    """This is the hello function"""
     pass
 
-print(hello.__name__)  # hello（加了 wraps 才正确）
-print(hello.__doc__)   # 这是 hello 函数
+print(hello.__name__)  # hello (correct with wraps)
+print(hello.__doc__)   # This is the hello function
 ```
 
 ---
 
-## 带参数的装饰器
+## Parameterized Decorators
 
-需要多套一层函数：
+You need one extra layer of nesting:
 
 ```python
 import functools
 
-def repeat(n):           # 最外层：接收参数
-    def decorator(func): # 中间层：接收函数
+def repeat(n):           # outer: receives parameters
+    def decorator(func): # middle: receives the function
         @functools.wraps(func)
-        def wrapper(*args, **kwargs):  # 最内层：执行逻辑
+        def wrapper(*args, **kwargs):  # inner: execution logic
             for _ in range(n):
                 result = func(*args, **kwargs)
             return result
@@ -105,9 +105,9 @@ say("hi")
 
 ---
 
-## 10 个工业级装饰器场景
+## 10 Industrial-Grade Decorator Patterns
 
-### 1. 计时器
+### 1. Timer
 
 ```python
 import time
@@ -119,7 +119,7 @@ def timer(func):
         start = time.perf_counter()
         result = func(*args, **kwargs)
         elapsed = time.perf_counter() - start
-        print(f"{func.__name__} 耗时 {elapsed:.4f}s")
+        print(f"{func.__name__} took {elapsed:.4f}s")
         return result
     return wrapper
 
@@ -128,7 +128,7 @@ def slow_func():
     time.sleep(0.1)
 ```
 
-### 2. 重试机制
+### 2. Retry Mechanism
 
 ```python
 import functools, time
@@ -144,17 +144,17 @@ def retry(max_attempts=3, delay=1.0):
                     if attempt == max_attempts - 1:
                         raise
                     time.sleep(delay)
-                    print(f"第 {attempt+1} 次失败，重试...")
+                    print(f"Attempt {attempt+1} failed, retrying...")
         return wrapper
     return decorator
 
 @retry(max_attempts=3, delay=0.5)
 def call_api():
-    # 可能失败的网络请求
+    # potentially failing network request
     ...
 ```
 
-### 3. 缓存（内置版）
+### 3. Caching (Built-in)
 
 ```python
 from functools import lru_cache, cache
@@ -165,13 +165,13 @@ def fibonacci(n):
         return n
     return fibonacci(n-1) + fibonacci(n-2)
 
-# Python 3.9+，无限缓存
+# Python 3.9+, unlimited cache
 @cache
 def expensive(n):
     return n ** 2
 ```
 
-### 4. 类型检查
+### 4. Type Checking
 
 ```python
 import functools
@@ -185,7 +185,7 @@ def type_check(func):
             if arg_name in hints:
                 expected = hints[arg_name]
                 if not isinstance(arg_val, expected):
-                    raise TypeError(f"{arg_name} 需要 {expected.__name__}，got {type(arg_val).__name__}")
+                    raise TypeError(f"{arg_name} expects {expected.__name__}, got {type(arg_val).__name__}")
         return func(*args, **kwargs)
     return wrapper
 
@@ -194,7 +194,7 @@ def add(a: int, b: int) -> int:
     return a + b
 ```
 
-### 5. 权限控制
+### 5. Access Control
 
 ```python
 from functools import wraps
@@ -204,9 +204,9 @@ def require_auth(role="user"):
         @wraps(func)
         def wrapper(request, *args, **kwargs):
             if not getattr(request, 'user', None):
-                raise PermissionError("未登录")
+                raise PermissionError("Not authenticated")
             if request.user.role != role:
-                raise PermissionError(f"需要 {role} 权限")
+                raise PermissionError(f"Requires {role} privileges")
             return func(request, *args, **kwargs)
         return wrapper
     return decorator
@@ -216,7 +216,7 @@ def delete_user(request, user_id):
     ...
 ```
 
-### 6. 日志记录
+### 6. Logging
 
 ```python
 import logging
@@ -227,15 +227,15 @@ def log_calls(logger=None):
         _logger = logger or logging.getLogger(func.__module__)
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
-            _logger.info(f"调用 {func.__name__}({args}, {kwargs})")
+            _logger.info(f"Calling {func.__name__}({args}, {kwargs})")
             result = func(*args, **kwargs)
-            _logger.info(f"{func.__name__} 返回 {result}")
+            _logger.info(f"{func.__name__} returned {result}")
             return result
         return wrapper
     return decorator
 ```
 
-### 7. 单例模式
+### 7. Singleton Pattern
 
 ```python
 def singleton(cls):
@@ -255,9 +255,9 @@ class Config:
 
 ---
 
-## 类装饰器
+## Class-Based Decorators
 
-用类实现装饰器，适合需要保存状态的场景：
+Implement decorators as classes when you need to maintain state:
 
 ```python
 import functools
@@ -270,51 +270,51 @@ class Counter:
 
     def __call__(self, *args, **kwargs):
         self.count += 1
-        print(f"调用次数：{self.count}")
+        print(f"Call count: {self.count}")
         return self.func(*args, **kwargs)
 
 @Counter
 def say_hello():
     print("Hello!")
 
-say_hello()  # 调用次数：1
-say_hello()  # 调用次数：2
+say_hello()  # Call count: 1
+say_hello()  # Call count: 2
 print(say_hello.count)  # 2
 ```
 
 ---
 
-## 装饰器叠加顺序
+## Stacking Order
 
-多个装饰器叠加时，**从下往上执行**：
+When multiple decorators are stacked, they execute **bottom to top**:
 
 ```python
-@decorator_A   # 最后执行（最外层）
-@decorator_B   # 先执行（最内层）
+@decorator_A   # executes last (outermost)
+@decorator_B   # executes first (innermost)
 def func():
     pass
 
-# 等价于：
+# Equivalent to:
 func = decorator_A(decorator_B(func))
 ```
 
 ---
 
-## 知识卡片 📌
+## Cheat Sheet 📌
 
 ```
-装饰器三件套：
-  1. *args, **kwargs — 透明传参
-  2. @functools.wraps — 保留函数元信息
-  3. return result — 别忘了返回值
+The Decorator Trifecta:
+  1. *args, **kwargs — transparent argument passing
+  2. @functools.wraps — preserve function metadata
+  3. return result — don't forget the return value
 
-带参数装饰器 = 3层嵌套函数
-  参数层 → 装饰器层 → wrapper 层
+Parameterized decorator = 3 nested functions
+  param layer → decorator layer → wrapper layer
 
-常用内置装饰器：
-  @property      — 属性访问
-  @staticmethod  — 静态方法
-  @classmethod   — 类方法
-  @functools.lru_cache — 缓存
-  @dataclasses.dataclass — 数据类
+Common built-in decorators:
+  @property      — property access
+  @staticmethod  — static method
+  @classmethod   — class method
+  @functools.lru_cache — caching
+  @dataclasses.dataclass — data classes
 ```

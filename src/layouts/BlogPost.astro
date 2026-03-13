@@ -85,7 +85,7 @@ const { title, description, pubDate, updatedDate, tags } = Astro.props;
 							<span class="tag">{tag}</span>
 						))}
 						{updatedDate && (
-							<span>· 更新于 <FormattedDate date={updatedDate} /></span>
+							<span>· <span data-i18n="updatedAt">更新于</span> <FormattedDate date={updatedDate} /></span>
 						)}
 					</div>
 					<h1>{title}</h1>

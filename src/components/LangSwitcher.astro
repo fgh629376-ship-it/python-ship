@@ -103,6 +103,7 @@
 <script>
 const TRANSLATIONS: Record<string, Record<string, string>> = {
   en: {
+    // Nav / site
     siteTitle: '🐍 Python Ship',
     siteTagline: 'Daily Python Knowledge Base — Tips · Tutorials · Quick Cards',
     navHome: 'Home',
@@ -114,8 +115,53 @@ const TRANSLATIONS: Record<string, Record<string, string>> = {
     recentPosts: 'Recent Posts',
     readMore: 'Read more →',
     footerText: '🐍 Python Ship · Daily Python Knowledge Base · Auto-updated',
+    // Hero
+    heroBadge: 'Auto-published daily at 10 PM',
+    heroTaglineNew: 'From Python syntax to solar power forecasting<br />Code-driven clean energy',
+    heroSubNew: 'AI-generated · Technical depth · Complete runnable code',
+    heroBtnBlog: 'Browse All Articles →',
+    // Stats
+    statArticles: 'Technical Articles',
+    statPython: 'Python Topics',
+    statSolar: 'Solar Energy',
+    // Features section
+    sectionFeatureTitle: 'Two Core Tracks',
+    sectionFeatureDesc: 'Python engineering × Solar domain knowledge, advancing in parallel',
+    featurePythonTitle: 'Python Deep Dives',
+    featurePythonDesc: 'asyncio, decorators, generators, dataclass, Pydantic — from syntactic sugar to production-grade usage, with complete runnable code',
+    featureSolarTitle: 'Solar Power Forecasting',
+    featureSolarDesc: 'pvlib physical modeling, ModelChain simulation, temperature/irradiance/tracker models — a solid foundation for solar projects',
+    featureAutoTitle: 'AI-Powered Output',
+    featureAutoDesc: 'Every night at 10 PM, AI automatically searches, learns, generates, and publishes — keeping the knowledge base fresh, never stale',
+    featureAlgoTitle: 'Cross-Industry Algorithms',
+    featureAlgoDesc: 'Drawing inspiration from quantitative finance, weather AI, and IoT edge inference, then applying them to solar power forecasting',
+    cardArrowPython: 'View Python Articles →',
+    cardArrowSolar: 'View Solar Articles →',
+    cardArrowAll: 'View All →',
+    cardArrowAlgo: 'View Related Articles →',
+    // Latest posts
+    sectionLatestTitle: 'Latest Articles',
+    sectionLatestDesc: 'Every post includes complete code examples and knowledge cards',
+    viewAllBtn: 'View All {n} Articles →',
+    // CTA
+    ctaTitle: 'Open Source · Free · Always Updated',
+    ctaDesc: 'All code and articles are open-sourced on GitHub. Star ⭐ and contribute!',
+    ctaBtn: 'GitHub Repository ↗',
+    // Category badges
+    catPython: '🐍 Python',
+    catSolar: '☀️ Solar',
+    // Blog page
+    blogPageTitle: '📖 Blog',
+    blogPageDesc: 'Python deep dives · Solar energy notes · Continuously updated',
+    catAll: 'All',
+    catTabPython: 'Python',
+    catTabSolar: 'Solar',
+    noPosts: 'No posts in this category',
+    // Article page
+    updatedAt: 'Updated',
   },
   zh: {
+    // Nav / site
     siteTitle: '🐍 Python Ship',
     siteTagline: '每日 Python 知识库 — 技术干货 · 教程 · 知识卡片',
     navHome: '首页',
@@ -127,8 +173,53 @@ const TRANSLATIONS: Record<string, Record<string, string>> = {
     recentPosts: '最近文章',
     readMore: '阅读全文 →',
     footerText: '🐍 Python Ship · 每日 Python 知识库 · 自动更新',
+    // Hero
+    heroBadge: '每晚 22:00 自动发布',
+    heroTaglineNew: '从 Python 语法到光伏功率预测<br />用代码驱动清洁能源',
+    heroSubNew: 'AI 自动生成 · 技术干货 · 完整可运行代码',
+    heroBtnBlog: '浏览全部文章 →',
+    // Stats
+    statArticles: '篇技术文章',
+    statPython: 'Python 语法',
+    statSolar: '光伏能源',
+    // Features section
+    sectionFeatureTitle: '两大核心方向',
+    sectionFeatureDesc: 'Python 工程能力 × 光伏领域知识，双线并进',
+    featurePythonTitle: 'Python 深度教程',
+    featurePythonDesc: 'asyncio、装饰器、生成器、dataclass、Pydantic —— 从语法糖到工业级用法，每篇附完整可运行代码',
+    featureSolarTitle: '光伏功率预测',
+    featureSolarDesc: 'pvlib 物理建模、ModelChain 仿真、温度/辐照度/跟踪器模型，为光伏项目打下坚实基础',
+    featureAutoTitle: 'AI 自动输出',
+    featureAutoDesc: '每晚 22:00 AI 自动搜索、学习、生成、发布，保持知识库持续更新，永不断更',
+    featureAlgoTitle: '跨行业算法借鉴',
+    featureAlgoDesc: '从金融量化、气象 AI、IoT 边缘推理中寻找灵感，迁移到光伏功率预测场景',
+    cardArrowPython: '查看 Python 文章 →',
+    cardArrowSolar: '查看光伏文章 →',
+    cardArrowAll: '查看全部 →',
+    cardArrowAlgo: '查看相关文章 →',
+    // Latest posts
+    sectionLatestTitle: '最新文章',
+    sectionLatestDesc: '每一篇都包含完整代码示例和知识卡片',
+    viewAllBtn: '查看全部 {n} 篇文章 →',
+    // CTA
+    ctaTitle: '开源 · 免费 · 持续更新',
+    ctaDesc: '所有代码和文章均开源在 GitHub，欢迎 Star ⭐ 和贡献',
+    ctaBtn: 'GitHub 仓库 ↗',
+    // Category badges
+    catPython: '🐍 Python',
+    catSolar: '☀️ 光伏',
+    // Blog page
+    blogPageTitle: '📖 博客',
+    blogPageDesc: 'Python 技术干货 · 光伏能源笔记 · 持续更新中',
+    catAll: '全部',
+    catTabPython: 'Python 语法',
+    catTabSolar: '光伏能源',
+    noPosts: '该分类暂无文章',
+    // Article page
+    updatedAt: '更新于',
   },
   ja: {
+    // Nav / site
     siteTitle: '🐍 Python Ship',
     siteTagline: '毎日 Python ナレッジベース — 技術 · チュートリアル · カード',
     navHome: 'ホーム',
@@ -140,16 +231,76 @@ const TRANSLATIONS: Record<string, Record<string, string>> = {
     recentPosts: '最近の記事',
     readMore: '続きを読む →',
     footerText: '🐍 Python Ship · 毎日 Python ナレッジベース · 自動更新',
+    // Hero
+    heroBadge: '毎晩 22:00 自動公開',
+    heroTaglineNew: 'Python 文法から太陽光発電予測まで<br />コードでクリーンエネルギーを動かす',
+    heroSubNew: 'AI 自動生成 · 技術コンテンツ · 完全実行可能なコード',
+    heroBtnBlog: '全記事を見る →',
+    // Stats
+    statArticles: '件の技術記事',
+    statPython: 'Python 文法',
+    statSolar: '太陽光エネルギー',
+    // Features section
+    sectionFeatureTitle: '2つのコアテーマ',
+    sectionFeatureDesc: 'Python エンジニアリング × 太陽光ドメイン知識、二軸で前進',
+    featurePythonTitle: 'Python 深掘りチュートリアル',
+    featurePythonDesc: 'asyncio、デコレーター、ジェネレーター、dataclass、Pydantic — 構文糖からプロダクション品質の使い方まで、完全実行可能なコード付き',
+    featureSolarTitle: '太陽光発電予測',
+    featureSolarDesc: 'pvlib 物理モデリング、ModelChain シミュレーション、温度/日射量/トラッカーモデル — 太陽光プロジェクトの基盤を固めます',
+    featureAutoTitle: 'AI 自動出力',
+    featureAutoDesc: '毎晩 22:00 に AI が自動検索・学習・生成・公開 — ナレッジベースを継続的に更新し続けます',
+    featureAlgoTitle: '業界横断アルゴリズム',
+    featureAlgoDesc: '金融クオンツ、気象 AI、IoT エッジ推論からインスピレーションを得て、太陽光発電予測へ応用します',
+    cardArrowPython: 'Python 記事を見る →',
+    cardArrowSolar: '太陽光記事を見る →',
+    cardArrowAll: '全て見る →',
+    cardArrowAlgo: '関連記事を見る →',
+    // Latest posts
+    sectionLatestTitle: '最新記事',
+    sectionLatestDesc: '全ての記事に完全なコード例と知識カードが含まれています',
+    viewAllBtn: '全 {n} 件の記事を見る →',
+    // CTA
+    ctaTitle: 'オープンソース · 無料 · 継続更新',
+    ctaDesc: 'すべてのコードと記事は GitHub でオープンソース化。Star ⭐ とコントリビューションをお待ちしています',
+    ctaBtn: 'GitHub リポジトリ ↗',
+    // Category badges
+    catPython: '🐍 Python',
+    catSolar: '☀️ 太陽光',
+    // Blog page
+    blogPageTitle: '📖 ブログ',
+    blogPageDesc: 'Python 技術コンテンツ · 太陽光エネルギーノート · 継続更新中',
+    catAll: 'すべて',
+    catTabPython: 'Python 文法',
+    catTabSolar: '太陽光エネルギー',
+    noPosts: 'このカテゴリには記事がありません',
+    // Article page
+    updatedAt: '更新日',
   },
 };
 
 function applyLang(lang: string) {
   const t = TRANSLATIONS[lang] || TRANSLATIONS.zh;
+  // Plain text replacement
   document.querySelectorAll('[data-i18n]').forEach((el) => {
     const key = (el as HTMLElement).dataset.i18n!;
-    if (t[key]) el.textContent = t[key];
+    if (t[key]) {
+      let text = t[key];
+      const count = (el as HTMLElement).dataset.count;
+      if (count !== undefined) {
+        text = text.replace('{n}', count);
+      }
+      el.textContent = text;
+    }
+  });
+  // HTML content replacement (supports <br> etc.)
+  document.querySelectorAll('[data-i18n-html]').forEach((el) => {
+    const key = (el as HTMLElement).dataset.i18nHtml!;
+    if (t[key]) el.innerHTML = t[key];
   });
   try { localStorage.setItem('preferred-lang', lang); } catch(e) {}
+  // 通知其他组件语言已切换
+  document.documentElement.setAttribute('data-lang', lang);
+  window.dispatchEvent(new CustomEvent('langchange', { detail: { lang } }));
 }
 
 function initSwitcher() {

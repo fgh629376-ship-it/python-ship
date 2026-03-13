@@ -1,57 +1,57 @@
 ---
-title: 'Python 上下文管理器：with 语句的真正力量'
-description: '彻底搞懂 with 语句 — __enter__/__exit__、contextlib、实战场景：文件、数据库、锁、临时修改'
-category: python
-lang: zh
+title: 'Python Context Managers: The Real Power of the with Statement'
+description: 'Master the with statement — __enter__/__exit__, contextlib, and real-world use cases: files, databases, locks, and temporary state changes'
 pubDate: '2026-03-13'
+category: python
+lang: en
 tags: ['上下文管理器', 'Python进阶', '技术干货']
 ---
 
-## with 语句在干什么？
+## What Does the `with` Statement Actually Do?
 
 ```python
 with open("file.txt") as f:
     data = f.read()
-# 文件一定会被关闭，即使中间报错
+# file is guaranteed to close, even if an exception occurs
 ```
 
-`with` 不是魔法，它只做两件事：
-1. **进入**时调用 `__enter__()` — 获取资源
-2. **退出**时调用 `__exit__()` — 释放资源（无论是否异常）
+`with` isn't magic — it does exactly two things:
+1. **On entry:** calls `__enter__()` — acquire the resource
+2. **On exit:** calls `__exit__()` — release the resource (regardless of exceptions)
 
 ---
 
-## 自己写一个上下文管理器
+## Writing Your Own Context Manager
 
 ```python
 class Timer:
     def __enter__(self):
         import time
         self.start = time.perf_counter()
-        return self  # as 后面的变量
+        return self  # the variable after `as`
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         import time
         self.elapsed = time.perf_counter() - self.start
-        print(f"耗时 {self.elapsed:.4f}s")
-        return False  # 不吞异常
+        print(f"Elapsed: {self.elapsed:.4f}s")
+        return False  # don't suppress exceptions
 
 with Timer() as t:
     sum(range(1_000_000))
-# 耗时 0.0234s
+# Elapsed: 0.0234s
 ```
 
-`__exit__` 的三个参数：
-- `exc_type` — 异常类型（无异常时为 None）
-- `exc_val` — 异常实例
+The three parameters of `__exit__`:
+- `exc_type` — exception type (None if no exception)
+- `exc_val` — exception instance
 - `exc_tb` — traceback
-- 返回 `True` = 吞掉异常，返回 `False` = 继续抛出
+- Return `True` = suppress the exception; return `False` = re-raise it
 
 ---
 
-## contextlib — 用生成器写上下文管理器
+## contextlib — Context Managers via Generators
 
-不想写类？用 `@contextmanager` 更简洁：
+Don't want to write a class? Use `@contextmanager` for something cleaner:
 
 ```python
 from contextlib import contextmanager
@@ -61,23 +61,23 @@ import time
 def timer(label=""):
     start = time.perf_counter()
     try:
-        yield  # 这里暂停，执行 with 块的代码
+        yield  # pause here; the with-block runs at this point
     finally:
         elapsed = time.perf_counter() - start
-        print(f"{label} 耗时 {elapsed:.4f}s")
+        print(f"{label} elapsed: {elapsed:.4f}s")
 
-with timer("计算"):
+with timer("Calculation"):
     sum(range(1_000_000))
-# 计算 耗时 0.0234s
+# Calculation elapsed: 0.0234s
 ```
 
-**`yield` 之前 = `__enter__`，`yield` 之后 = `__exit__`**
+**Everything before `yield` = `__enter__`; everything after `yield` = `__exit__`**
 
 ---
 
-## 10 个实战场景
+## 10 Real-World Use Cases
 
-### 1. 数据库连接
+### 1. Database Connections
 
 ```python
 @contextmanager
@@ -85,18 +85,18 @@ def db_connection(url):
     conn = create_connection(url)
     try:
         yield conn
-        conn.commit()  # 正常退出则提交
+        conn.commit()  # commit on normal exit
     except Exception:
-        conn.rollback()  # 异常则回滚
+        conn.rollback()  # rollback on exception
         raise
     finally:
-        conn.close()  # 一定关闭
+        conn.close()  # always close
 
 with db_connection("postgres://...") as conn:
     conn.execute("INSERT INTO ...")
 ```
 
-### 2. 临时改变工作目录
+### 2. Temporarily Change Working Directory
 
 ```python
 import os
@@ -113,10 +113,10 @@ def cd(path):
 
 with cd("/tmp"):
     print(os.getcwd())  # /tmp
-print(os.getcwd())  # 回到原来的目录
+print(os.getcwd())  # back to original directory
 ```
 
-### 3. 临时修改环境变量
+### 3. Temporarily Set Environment Variables
 
 ```python
 @contextmanager
@@ -133,23 +133,23 @@ def env_var(key, value):
 
 with env_var("DEBUG", "1"):
     assert os.environ["DEBUG"] == "1"
-# 自动恢复
+# automatically restored
 ```
 
-### 4. 线程锁
+### 4. Thread Locks
 
 ```python
 import threading
 
 lock = threading.Lock()
 
-# with 自动获取和释放锁
+# with automatically acquires and releases the lock
 with lock:
-    # 线程安全的代码
+    # thread-safe code
     shared_resource.update()
 ```
 
-### 5. 临时重定向输出
+### 5. Redirect Output Temporarily
 
 ```python
 from contextlib import redirect_stdout
@@ -162,23 +162,23 @@ with redirect_stdout(buffer):
 print(buffer.getvalue())  # "captured!\n"
 ```
 
-### 6. 忽略特定异常
+### 6. Suppress Specific Exceptions
 
 ```python
 from contextlib import suppress
 
-# 不 care 文件不存在
+# don't care if the file doesn't exist
 with suppress(FileNotFoundError):
     os.remove("maybe_exists.txt")
 
-# 等价于：
+# equivalent to:
 # try:
 #     os.remove("maybe_exists.txt")
 # except FileNotFoundError:
 #     pass
 ```
 
-### 7. 临时文件/目录
+### 7. Temporary Files and Directories
 
 ```python
 import tempfile
@@ -187,15 +187,15 @@ with tempfile.NamedTemporaryFile(suffix=".csv") as f:
     f.write(b"data")
     f.flush()
     process(f.name)
-# 自动删除
+# automatically deleted
 
 with tempfile.TemporaryDirectory() as tmpdir:
-    # 在临时目录里工作
+    # work inside the temp directory
     save_files(tmpdir)
-# 自动清理整个目录
+# automatically cleaned up
 ```
 
-### 8. 多资源同时管理
+### 8. Managing Multiple Resources at Once
 
 ```python
 # Python 3.1+
@@ -203,7 +203,7 @@ with open("input.txt") as fin, open("output.txt", "w") as fout:
     for line in fin:
         fout.write(line.upper())
 
-# Python 3.10+ 可以用括号换行
+# Python 3.10+ — parenthesized form for multi-line
 with (
     open("a.txt") as a,
     open("b.txt") as b,
@@ -212,7 +212,7 @@ with (
     ...
 ```
 
-### 9. 异步上下文管理器
+### 9. Async Context Managers
 
 ```python
 class AsyncDB:
@@ -227,7 +227,7 @@ async with AsyncDB() as conn:
     await conn.execute("SELECT 1")
 ```
 
-### 10. ExitStack — 动态管理多个上下文
+### 10. ExitStack — Dynamic Multi-Context Management
 
 ```python
 from contextlib import ExitStack
@@ -235,34 +235,34 @@ from contextlib import ExitStack
 def process_files(file_list):
     with ExitStack() as stack:
         files = [stack.enter_context(open(f)) for f in file_list]
-        # 所有文件都会在退出时关闭
+        # all files will be closed on exit
         for f in files:
             process(f)
 ```
 
 ---
 
-## 知识卡片 📌
+## Quick Reference Card 📌
 
 ```
-上下文管理器 = 资源的自动获取与释放
+Context manager = automatic resource acquisition and release
 
-类写法：
-  __enter__()  →  获取资源
-  __exit__()   →  释放资源
+Class-based approach:
+  __enter__()  →  acquire resource
+  __exit__()   →  release resource
 
-生成器写法（推荐）：
+Generator-based approach (recommended):
   @contextmanager
-  yield 之前 = enter
-  yield 之后 = exit
+  before yield = enter
+  after yield  = exit
 
-常用内置：
-  suppress()        — 忽略异常
-  redirect_stdout() — 重定向输出
-  ExitStack()       — 动态管理多个上下文
-  tempfile.*        — 临时文件/目录
+Useful built-ins:
+  suppress()        — ignore specific exceptions
+  redirect_stdout() — redirect output
+  ExitStack()       — dynamically manage multiple contexts
+  tempfile.*        — temporary files/directories
 
-记住：
-  with 不只是 try/finally 的语法糖
-  它是"资源生命周期管理"的 Python 范式
+Remember:
+  with is not just syntactic sugar for try/finally
+  it's the Python paradigm for "resource lifecycle management"
 ```

@@ -1,39 +1,39 @@
 ---
-title: 'Python 装饰器：从语法糖到工业级用法'
-description: '彻底搞懂 Python decorator — 原理、函数装饰器、类装饰器、带参数装饰器、@functools.wraps、实战10个常用场景'
+title: 'Python デコレータ：シンタックスシュガーから実務レベルの活用まで'
+description: 'Python decorator を完全理解 — 原理、関数デコレータ、クラスデコレータ、引数付きデコレータ、@functools.wraps、実践10パターン'
 category: python
-lang: zh
+lang: ja
 pubDate: '2026-03-13'
 tags: ['装饰器', 'Python进阶', '技术干货']
 ---
 
-## 装饰器是什么？
+## デコレータとは？
 
-装饰器的本质就一句话：**接收一个函数，返回另一个函数的函数**。
+デコレータの本質は一言で言えます：**関数を受け取り、別の関数を返す関数**です。
 
 ```python
-# 这两种写法完全等价
+# この2つは完全に同じ意味です
 @my_decorator
 def hello():
     print("hello")
 
-# 等价于：
+# これと同等：
 def hello():
     print("hello")
 hello = my_decorator(hello)
 ```
 
-`@` 只是语法糖，不神秘。
+`@` はシンタックスシュガーに過ぎません。特別なものではありません。
 
 ---
 
-## 最简装饰器
+## 最もシンプルなデコレータ
 
 ```python
 def my_decorator(func):
     def wrapper(*args, **kwargs):
         print("before")
-        result = func(*args, **kwargs)  # 调用原函数
+        result = func(*args, **kwargs)  # 元の関数を呼び出す
         print("after")
         return result
     return wrapper
@@ -48,45 +48,45 @@ greet("Python")
 # after
 ```
 
-**`*args, **kwargs`** 是标配 — 让 wrapper 能接受任意参数，透明传给原函数。
+**`*args, **kwargs`** は定番パターンです。wrapper が任意の引数を受け取り、元の関数に透過的に渡せるようにします。
 
 ---
 
-## 必须加 `@functools.wraps`
+## `@functools.wraps` は必須です
 
-不加的话，被装饰的函数会"失去身份"：
+付けないと、デコレートされた関数が「アイデンティティ」を失います：
 
 ```python
 import functools
 
 def my_decorator(func):
-    @functools.wraps(func)  # ← 必须加这个！
+    @functools.wraps(func)  # ← 必ずこれを付けましょう！
     def wrapper(*args, **kwargs):
         return func(*args, **kwargs)
     return wrapper
 
 @my_decorator
 def hello():
-    """这是 hello 函数"""
+    """これは hello 関数です"""
     pass
 
-print(hello.__name__)  # hello（加了 wraps 才正确）
-print(hello.__doc__)   # 这是 hello 函数
+print(hello.__name__)  # hello（wraps があるので正しい）
+print(hello.__doc__)   # これは hello 関数です
 ```
 
 ---
 
-## 带参数的装饰器
+## 引数付きデコレータ
 
-需要多套一层函数：
+もう一層ネストが必要です：
 
 ```python
 import functools
 
-def repeat(n):           # 最外层：接收参数
-    def decorator(func): # 中间层：接收函数
+def repeat(n):           # 最外層：引数を受け取る
+    def decorator(func): # 中間層：関数を受け取る
         @functools.wraps(func)
-        def wrapper(*args, **kwargs):  # 最内层：执行逻辑
+        def wrapper(*args, **kwargs):  # 最内層：実行ロジック
             for _ in range(n):
                 result = func(*args, **kwargs)
             return result
@@ -105,9 +105,9 @@ say("hi")
 
 ---
 
-## 10 个工业级装饰器场景
+## 実務で使える10のデコレータパターン
 
-### 1. 计时器
+### 1. タイマー
 
 ```python
 import time
@@ -119,7 +119,7 @@ def timer(func):
         start = time.perf_counter()
         result = func(*args, **kwargs)
         elapsed = time.perf_counter() - start
-        print(f"{func.__name__} 耗时 {elapsed:.4f}s")
+        print(f"{func.__name__} の実行時間: {elapsed:.4f}s")
         return result
     return wrapper
 
@@ -128,7 +128,7 @@ def slow_func():
     time.sleep(0.1)
 ```
 
-### 2. 重试机制
+### 2. リトライ機構
 
 ```python
 import functools, time
@@ -144,17 +144,17 @@ def retry(max_attempts=3, delay=1.0):
                     if attempt == max_attempts - 1:
                         raise
                     time.sleep(delay)
-                    print(f"第 {attempt+1} 次失败，重试...")
+                    print(f"第{attempt+1}回失敗、リトライ中...")
         return wrapper
     return decorator
 
 @retry(max_attempts=3, delay=0.5)
 def call_api():
-    # 可能失败的网络请求
+    # 失敗する可能性のあるネットワークリクエスト
     ...
 ```
 
-### 3. 缓存（内置版）
+### 3. キャッシュ（組み込み版）
 
 ```python
 from functools import lru_cache, cache
@@ -165,13 +165,13 @@ def fibonacci(n):
         return n
     return fibonacci(n-1) + fibonacci(n-2)
 
-# Python 3.9+，无限缓存
+# Python 3.9+、無制限キャッシュ
 @cache
 def expensive(n):
     return n ** 2
 ```
 
-### 4. 类型检查
+### 4. 型チェック
 
 ```python
 import functools
@@ -185,7 +185,7 @@ def type_check(func):
             if arg_name in hints:
                 expected = hints[arg_name]
                 if not isinstance(arg_val, expected):
-                    raise TypeError(f"{arg_name} 需要 {expected.__name__}，got {type(arg_val).__name__}")
+                    raise TypeError(f"{arg_name} は {expected.__name__} 型が必要ですが、{type(arg_val).__name__} が渡されました")
         return func(*args, **kwargs)
     return wrapper
 
@@ -194,7 +194,7 @@ def add(a: int, b: int) -> int:
     return a + b
 ```
 
-### 5. 权限控制
+### 5. アクセス制御
 
 ```python
 from functools import wraps
@@ -204,9 +204,9 @@ def require_auth(role="user"):
         @wraps(func)
         def wrapper(request, *args, **kwargs):
             if not getattr(request, 'user', None):
-                raise PermissionError("未登录")
+                raise PermissionError("未認証です")
             if request.user.role != role:
-                raise PermissionError(f"需要 {role} 权限")
+                raise PermissionError(f"{role} 権限が必要です")
             return func(request, *args, **kwargs)
         return wrapper
     return decorator
@@ -216,7 +216,7 @@ def delete_user(request, user_id):
     ...
 ```
 
-### 6. 日志记录
+### 6. ログ記録
 
 ```python
 import logging
@@ -227,15 +227,15 @@ def log_calls(logger=None):
         _logger = logger or logging.getLogger(func.__module__)
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
-            _logger.info(f"调用 {func.__name__}({args}, {kwargs})")
+            _logger.info(f"{func.__name__}({args}, {kwargs}) を呼び出し")
             result = func(*args, **kwargs)
-            _logger.info(f"{func.__name__} 返回 {result}")
+            _logger.info(f"{func.__name__} の戻り値: {result}")
             return result
         return wrapper
     return decorator
 ```
 
-### 7. 单例模式
+### 7. シングルトンパターン
 
 ```python
 def singleton(cls):
@@ -255,9 +255,9 @@ class Config:
 
 ---
 
-## 类装饰器
+## クラスデコレータ
 
-用类实现装饰器，适合需要保存状态的场景：
+状態を保持する必要がある場合、クラスでデコレータを実装します：
 
 ```python
 import functools
@@ -270,51 +270,51 @@ class Counter:
 
     def __call__(self, *args, **kwargs):
         self.count += 1
-        print(f"调用次数：{self.count}")
+        print(f"呼び出し回数：{self.count}")
         return self.func(*args, **kwargs)
 
 @Counter
 def say_hello():
     print("Hello!")
 
-say_hello()  # 调用次数：1
-say_hello()  # 调用次数：2
+say_hello()  # 呼び出し回数：1
+say_hello()  # 呼び出し回数：2
 print(say_hello.count)  # 2
 ```
 
 ---
 
-## 装饰器叠加顺序
+## デコレータの適用順序
 
-多个装饰器叠加时，**从下往上执行**：
+複数のデコレータを重ねた場合、**下から上の順**で実行されます：
 
 ```python
-@decorator_A   # 最后执行（最外层）
-@decorator_B   # 先执行（最内层）
+@decorator_A   # 最後に実行（最外層）
+@decorator_B   # 最初に実行（最内層）
 def func():
     pass
 
-# 等价于：
+# これと同等：
 func = decorator_A(decorator_B(func))
 ```
 
 ---
 
-## 知识卡片 📌
+## チートシート 📌
 
 ```
-装饰器三件套：
-  1. *args, **kwargs — 透明传参
-  2. @functools.wraps — 保留函数元信息
-  3. return result — 别忘了返回值
+デコレータ三種の神器：
+  1. *args, **kwargs — 透過的な引数パッシング
+  2. @functools.wraps — 関数メタ情報の保持
+  3. return result — 戻り値を忘れずに
 
-带参数装饰器 = 3层嵌套函数
-  参数层 → 装饰器层 → wrapper 层
+引数付きデコレータ = 3層のネスト関数
+  引数層 → デコレータ層 → wrapper 層
 
-常用内置装饰器：
-  @property      — 属性访问
-  @staticmethod  — 静态方法
-  @classmethod   — 类方法
-  @functools.lru_cache — 缓存
-  @dataclasses.dataclass — 数据类
+よく使う組み込みデコレータ：
+  @property      — プロパティアクセス
+  @staticmethod  — 静的メソッド
+  @classmethod   — クラスメソッド
+  @functools.lru_cache — キャッシュ
+  @dataclasses.dataclass — データクラス
 ```

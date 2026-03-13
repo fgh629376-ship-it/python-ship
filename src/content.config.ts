@@ -15,6 +15,7 @@ const blog = defineCollection({
 			updatedDate: z.coerce.date().optional(),
 			heroImage: z.optional(image()),
 			category: z.enum(['python', 'solar']).default('python'),
+			lang: z.enum(['zh', 'en', 'ja']).default('zh'),
 			tags: z.array(z.string()).optional(),
 		}),
 });
