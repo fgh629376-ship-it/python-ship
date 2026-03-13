@@ -2,21 +2,21 @@
 ---
 <div class="lang-switcher" id="langSwitcher">
   <button class="lang-btn" id="langBtn" aria-haspopup="true" aria-expanded="false">
-    <span id="currentFlag">🇨🇳</span>
+    <img id="currentFlag" class="flag-icon" src="https://flagcdn.com/w40/cn.png" alt="CN" width="20" height="15" />
     <span id="currentLang">简体中文</span>
     <svg class="chevron" width="12" height="12" viewBox="0 0 12 12" fill="none">
       <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
   </button>
   <ul class="lang-menu" id="langMenu" role="menu">
-    <li role="menuitem" data-lang="en" data-flag="🇺🇸" data-label="English">
-      🇺🇸 English
+    <li role="menuitem" data-lang="en" data-flag="https://flagcdn.com/w40/us.png" data-label="English">
+      <img class="flag-icon" src="https://flagcdn.com/w40/us.png" alt="US" width="20" height="15" /> English
     </li>
-    <li role="menuitem" data-lang="zh" data-flag="🇨🇳" data-label="简体中文" class="active">
-      🇨🇳 简体中文
+    <li role="menuitem" data-lang="zh" data-flag="https://flagcdn.com/w40/cn.png" data-label="简体中文" class="active">
+      <img class="flag-icon" src="https://flagcdn.com/w40/cn.png" alt="CN" width="20" height="15" /> 简体中文
     </li>
-    <li role="menuitem" data-lang="ja" data-flag="🇯🇵" data-label="日本語">
-      🇯🇵 日本語
+    <li role="menuitem" data-lang="ja" data-flag="https://flagcdn.com/w40/jp.png" data-label="日本語">
+      <img class="flag-icon" src="https://flagcdn.com/w40/jp.png" alt="JP" width="20" height="15" /> 日本語
     </li>
   </ul>
 </div>
@@ -44,6 +44,13 @@
 .lang-btn:hover {
   border-color: var(--accent);
   background: var(--tag-bg);
+}
+
+.flag-icon {
+  display: inline-block;
+  vertical-align: middle;
+  border-radius: 2px;
+  object-fit: cover;
 }
 
 .chevron {
@@ -315,7 +322,7 @@ function initSwitcher() {
   try { savedLang = localStorage.getItem('preferred-lang') || 'zh'; } catch(e) {}
   const savedItem = menu.querySelector(`[data-lang="${savedLang}"]`) as HTMLElement;
   if (savedItem && currentFlag && currentLang) {
-    currentFlag.textContent = savedItem.dataset.flag || '🇨🇳';
+    (currentFlag as HTMLImageElement).src = savedItem.dataset.flag || 'https://flagcdn.com/w40/cn.png';
     currentLang.textContent = savedItem.dataset.label || '简体中文';
     menu.querySelectorAll('li').forEach(li => li.classList.remove('active'));
     savedItem.classList.add('active');
@@ -333,7 +340,7 @@ function initSwitcher() {
       const lang = (item as HTMLElement).dataset.lang!;
       const flag = (item as HTMLElement).dataset.flag!;
       const label = (item as HTMLElement).dataset.label!;
-      if (currentFlag) currentFlag.textContent = flag;
+      if (currentFlag) (currentFlag as HTMLImageElement).src = flag;
       if (currentLang) currentLang.textContent = label;
       menu.querySelectorAll('li').forEach(li => li.classList.remove('active'));
       item.classList.add('active');
