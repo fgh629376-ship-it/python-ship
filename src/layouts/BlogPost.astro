@@ -81,9 +81,9 @@ const { title, description, pubDate, updatedDate, tags } = Astro.props;
 			// 文章页语言切换：跳转到对应语言版本
 			window.addEventListener('langchange', (e: any) => {
 				const lang = e.detail?.lang || 'zh';
-				const path = window.location.pathname.replace(/\/$/, ''); // /blog/xxx or /blog/xxx.en
-				// 解析当前 slug 和语言
-				const match = path.match(/^\/blog\/(.+?)(?:\.(en|ja))?$/);
+				const path = window.location.pathname.replace(/\/$/, ''); // /blog/xxx or /blog/xxx-en
+				// 解析当前 slug：去掉末尾的 -en 或 -ja 得到 base slug
+				const match = path.match(/^\/blog\/(.+?)(?:-(en|ja))?$/);
 				if (!match) return;
 				const baseSlug = match[1];
 				// 构建目标路径
@@ -91,7 +91,7 @@ const { title, description, pubDate, updatedDate, tags } = Astro.props;
 				if (lang === 'zh') {
 					target = `/blog/${baseSlug}/`;
 				} else {
-					target = `/blog/${baseSlug}.${lang}/`;
+					target = `/blog/${baseSlug}-${lang}/`;
 				}
 				if (path + '/' !== target && path !== target.replace(/\/$/, '')) {
 					window.location.href = target;
