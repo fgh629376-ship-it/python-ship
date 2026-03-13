@@ -16,6 +16,14 @@ const CATEGORIES = [
 	{ id: 'solar',     label: '光伏能源',     emoji: '☀️', i18n: 'catTabSolar' },
 	{ id: 'algorithm', label: '跨行业算法',   emoji: '🔬', i18n: 'catTabAlgo' },
 ];
+
+const SERIES = [
+	{ id: 'all',            label: '全部系列',     emoji: '📚', i18n: 'seriesAll' },
+	{ id: 'pvlib',          label: 'pvlib 库教程', emoji: '🔧', i18n: 'seriesPvlib' },
+	{ id: 'solar-book',     label: '教材学习笔记', emoji: '📖', i18n: 'seriesBook' },
+	{ id: 'cross-industry', label: '跨行业算法',   emoji: '🔬', i18n: 'seriesCross' },
+	{ id: 'python-basics',  label: 'Python 基础',  emoji: '🐍', i18n: 'seriesPython' },
+];
 ---
 
 <!doctype html>
@@ -80,6 +88,83 @@ const CATEGORIES = [
 				background: rgba(168, 85, 247, 0.12);
 				color: #a855f7;
 				border: 1px solid rgba(168, 85, 247, 0.3);
+			}
+
+			/* Series tabs */
+			.series-tabs {
+				display: flex;
+				gap: 0.4rem;
+				margin-bottom: 2rem;
+				flex-wrap: wrap;
+				align-items: center;
+			}
+			.series-label {
+				color: var(--text-muted);
+				font-size: 0.82rem;
+				margin-right: 0.3rem;
+			}
+			.series-tab {
+				display: inline-flex;
+				align-items: center;
+				gap: 0.25rem;
+				padding: 0.3rem 0.8rem;
+				border-radius: 99px;
+				border: 1px solid var(--border);
+				background: transparent;
+				color: var(--text-muted);
+				font-size: 0.78rem;
+				cursor: pointer;
+				transition: all 0.18s;
+				font-family: inherit;
+			}
+			.series-tab:hover {
+				border-color: var(--accent);
+				color: var(--accent);
+			}
+			.series-tab.active {
+				background: rgba(61, 214, 140, 0.15);
+				border-color: var(--accent);
+				color: var(--accent);
+				font-weight: 600;
+			}
+
+			/* Badge row */
+			.badge-row {
+				display: flex;
+				gap: 0.4rem;
+				margin-bottom: 0.5rem;
+				align-items: center;
+			}
+
+			/* Series badge on card */
+			.series-badge {
+				display: inline-flex;
+				align-items: center;
+				gap: 0.2rem;
+				padding: 0.1rem 0.5rem;
+				border-radius: 4px;
+				font-size: 0.7rem;
+				font-weight: 600;
+			}
+			.series-badge.pvlib {
+				background: rgba(56, 189, 248, 0.12);
+				color: #38bdf8;
+				border: 1px solid rgba(56, 189, 248, 0.3);
+			}
+			.series-badge.solar-book {
+				background: rgba(251, 146, 60, 0.12);
+				color: #fb923c;
+				border: 1px solid rgba(251, 146, 60, 0.3);
+			}
+			.series-badge.cross-industry {
+				background: rgba(168, 85, 247, 0.12);
+				color: #a855f7;
+				border: 1px solid rgba(168, 85, 247, 0.3);
+			}
+			.series-badge.python-basics {
+				background: rgba(61, 214, 140, 0.12);
+				color: var(--accent);
+				border: 1px solid rgba(61, 214, 140, 0.3);
 			}
 
 			/* Post list */
@@ -162,14 +247,34 @@ const CATEGORIES = [
 				))}
 			</div>
 
+			<!-- Series tabs -->
+			<div class="series-tabs" id="seriesTabs">
+				<span class="series-label" data-i18n="seriesLabel">系列：</span>
+				{SERIES.map((s) => (
+					<button
+						class={`series-tab${s.id === 'all' ? ' active' : ''}`}
+						data-series={s.id}
+					>
+						<span>{s.emoji}</span><span data-i18n={s.i18n}>{s.label}</span>
+					</button>
+				))}
+			</div>
+
 			<!-- Post list -->
 			<ul class="post-list" id="postList">
 				{posts.map((post) => (
-					<li data-category={post.data.category} data-lang={post.data.lang || 'zh'}>
+					<li data-category={post.data.category} data-series={post.data.series || ''} data-lang={post.data.lang || 'zh'}>
 						<a class="post-card" href={`/blog/${post.id}/`}>
-							<span class={`cat-badge ${post.data.category}`} data-i18n={post.data.category === 'python' ? 'catPython' : post.data.category === 'solar' ? 'catSolar' : 'catAlgo'}>
-								{post.data.category === 'python' ? '🐍 Python' : post.data.category === 'solar' ? '☀️ 光伏' : '🔬 算法'}
-							</span>
+							<div class="badge-row">
+								<span class={`cat-badge ${post.data.category}`} data-i18n={post.data.category === 'python' ? 'catPython' : post.data.category === 'solar' ? 'catSolar' : 'catAlgo'}>
+									{post.data.category === 'python' ? '🐍 Python' : post.data.category === 'solar' ? '☀️ 光伏' : '🔬 算法'}
+								</span>
+								{post.data.series && (
+									<span class={`series-badge ${post.data.series}`}>
+										{post.data.series === 'pvlib' ? '🔧 pvlib' : post.data.series === 'solar-book' ? '📖 教材' : post.data.series === 'cross-industry' ? '🔬 跨行业' : '🐍 基础'}
+									</span>
+								)}
+							</div>
 							<h2>{post.data.title}</h2>
 							<p class="meta">
 								<FormattedDate date={post.data.pubDate} />
@@ -185,7 +290,8 @@ const CATEGORIES = [
 		<Footer />
 
 		<script>
-			const tabs = document.querySelectorAll<HTMLButtonElement>('.cat-tab');
+			const catTabs = document.querySelectorAll<HTMLButtonElement>('.cat-tab');
+			const seriesTabs = document.querySelectorAll<HTMLButtonElement>('.series-tab');
 			const items = document.querySelectorAll<HTMLLIElement>('#postList li');
 			const noPostsEl = document.getElementById('noPosts')!;
 
@@ -193,45 +299,55 @@ const CATEGORIES = [
 				try { return localStorage.getItem('preferred-lang') || 'zh'; } catch(e) { return 'zh'; }
 			}
 
-			function filter(cat: string) {
+			let currentCat = 'all';
+			let currentSeries = 'all';
+
+			function filter() {
 				const lang = getCurrentLang();
 				let visible = 0;
 				items.forEach((li) => {
-					const catMatch = cat === 'all' || li.dataset.category === cat;
+					const catMatch = currentCat === 'all' || li.dataset.category === currentCat;
+					const seriesMatch = currentSeries === 'all' || li.dataset.series === currentSeries;
 					const langMatch = li.dataset.lang === lang;
-					const show = catMatch && langMatch;
+					const show = catMatch && seriesMatch && langMatch;
 					li.hidden = !show;
 					if (show) visible++;
 				});
 				noPostsEl.classList.toggle('visible', visible === 0);
 			}
 
-			let currentCat = 'all';
-
-			function activateTab(cat: string) {
-				currentCat = cat;
-				tabs.forEach((b) => {
-					b.classList.toggle('active', b.dataset.cat === cat);
-				});
-				filter(cat);
-			}
-
-			tabs.forEach((btn) => {
+			catTabs.forEach((btn) => {
 				btn.addEventListener('click', () => {
-					activateTab(btn.dataset.cat!);
+					currentCat = btn.dataset.cat!;
+					catTabs.forEach((b) => b.classList.toggle('active', b.dataset.cat === currentCat));
+					filter();
 				});
 			});
 
-			// 读取 URL 参数自动筛选
-			const urlCat = new URLSearchParams(window.location.search).get('cat');
-			if (urlCat && ['python', 'solar', 'algorithm'].includes(urlCat)) {
-				activateTab(urlCat);
-			} else {
-				filter('all');
-			}
+			seriesTabs.forEach((btn) => {
+				btn.addEventListener('click', () => {
+					currentSeries = btn.dataset.series!;
+					seriesTabs.forEach((b) => b.classList.toggle('active', b.dataset.series === currentSeries));
+					filter();
+				});
+			});
 
-			// 监听语言切换事件，重新筛选
-			window.addEventListener('langchange', () => filter(currentCat));
+			// 读取 URL 参数
+			const params = new URLSearchParams(window.location.search);
+			const urlCat = params.get('cat');
+			const urlSeries = params.get('series');
+			if (urlCat && ['python', 'solar', 'algorithm'].includes(urlCat)) {
+				currentCat = urlCat;
+				catTabs.forEach((b) => b.classList.toggle('active', b.dataset.cat === currentCat));
+			}
+			if (urlSeries && ['pvlib', 'solar-book', 'cross-industry', 'python-basics'].includes(urlSeries)) {
+				currentSeries = urlSeries;
+				seriesTabs.forEach((b) => b.classList.toggle('active', b.dataset.series === currentSeries));
+			}
+			filter();
+
+			// 监听语言切换
+			window.addEventListener('langchange', () => filter());
 		</script>
 	</body>
 </html>

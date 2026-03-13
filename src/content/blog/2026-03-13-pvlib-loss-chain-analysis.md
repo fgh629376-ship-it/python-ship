@@ -3,6 +3,7 @@ title: 'pvlib 系统损耗链完全解析：从天上的阳光到电网的每一
 description: '逐步拆解光伏系统从辐照度到并网功率的 10 个损耗环节，每一步都有 pvlib 代码和实测数据对比'
 pubDate: '2026-03-13'
 category: solar
+series: pvlib
 lang: zh
 tags: ["pvlib", "损耗链", "PR", "系统效率", "光伏设计"]
 ---

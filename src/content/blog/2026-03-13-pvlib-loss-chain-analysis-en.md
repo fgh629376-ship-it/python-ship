@@ -3,6 +3,7 @@ title: 'pvlib Loss Chain Deep Dive: Every Step from Sunlight to Grid Power'
 description: 'A step-by-step breakdown of the 10 loss stages in a PV system from irradiance to grid-connected power, with pvlib code and measured data at every step'
 pubDate: '2026-03-13'
 category: solar
+series: pvlib
 lang: en
 tags: ["pvlib", "损耗链", "PR", "系统效率", "光伏设计"]
 ---

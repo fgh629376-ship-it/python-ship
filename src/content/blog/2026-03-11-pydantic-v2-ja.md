@@ -3,6 +3,7 @@ title: 'Pydantic v2：Python データバリデーションの最強ツール'
 description: 'Pydantic v2 コア機能の詳解 — v1 比 5〜50倍の高速化、型バリデーション・シリアライズ・カスタムバリデータを完全網羅'
 pubDate: '2026-03-11'
 category: python
+series: python-basics
 lang: ja
 tags: ['Pydantic', 'Python', '技术干货']
 ---

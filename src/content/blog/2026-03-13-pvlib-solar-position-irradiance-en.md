@@ -2,6 +2,7 @@
 title: 'pvlib Solar Position and Irradiance Decomposition — The Physical Foundation of PV Forecasting'
 description: 'Deep dive into pvlib solar position calculation (SPA) and irradiance decomposition (GHI→DNI/DHI→POA), with complete code demonstrations'
 category: solar
+series: pvlib
 pubDate: '2026-03-13'
 lang: en
 tags: ["pvlib", "光伏", "辐照度", "技术干货"]

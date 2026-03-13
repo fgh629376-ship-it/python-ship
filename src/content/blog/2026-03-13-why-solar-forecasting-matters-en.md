@@ -3,6 +3,7 @@ title: 'Why Do We Need Photovoltaic Power Forecasting? — Reflections After an 
 description: 'From grid balancing to the duck curve, from deterministic to probabilistic forecasting — a deep dive into the fundamental reasons solar forecasting exists and its five technical pillars'
 pubDate: '2026-03-13'
 category: solar
+series: solar-book
 lang: en
 tags: ["光伏预测", "电网集成", "预测科学", "Solar Forecasting"]
 ---

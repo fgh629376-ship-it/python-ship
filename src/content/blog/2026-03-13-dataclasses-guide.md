@@ -2,6 +2,7 @@
 title: 'Python dataclass：告别样板代码'
 description: '用 @dataclass 替代手写 __init__/__repr__/__eq__ — 字段默认值、frozen、slots、继承、与 Pydantic 对比'
 category: python
+series: python-basics
 lang: zh
 pubDate: '2026-03-13'
 tags: ['dataclass', 'Python进阶', '知识卡片']

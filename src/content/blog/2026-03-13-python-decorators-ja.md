@@ -2,6 +2,7 @@
 title: 'Python デコレータ：シンタックスシュガーから実務レベルの活用まで'
 description: 'Python decorator を完全理解 — 原理、関数デコレータ、クラスデコレータ、引数付きデコレータ、@functools.wraps、実践10パターン'
 category: python
+series: python-basics
 lang: ja
 pubDate: '2026-03-13'
 tags: ['装饰器', 'Python进阶', '技术干货']

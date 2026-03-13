@@ -3,6 +3,7 @@ title: 'pvlib 完全学习笔记：24 个核心模块逐一吃透'
 description: '从零到精通 pvlib 光伏仿真库的完整学习记录 — 覆盖太阳位置、辐照度、温度、DC/AC 模型、ModelChain、跟踪器、双面板等全部核心模块，附实测数据和踩坑记录'
 pubDate: '2026-03-13'
 category: solar
+series: pvlib
 lang: zh
 tags: ["pvlib", "光伏仿真", "学习笔记", "ModelChain", "系统设计"]
 ---

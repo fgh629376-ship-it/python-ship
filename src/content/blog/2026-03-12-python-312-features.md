@@ -2,6 +2,7 @@
 title: 'Python 3.12 新特性：你必须知道的6个改进'
 description: 'Python 3.12 最重要的新特性详解 — f-string 升级、type 语句、性能提升、更清晰的错误信息'
 category: python
+series: python-basics
 lang: zh
 pubDate: '2026-03-12'
 tags: ['Python3.12', '技术干货', '知识卡片']

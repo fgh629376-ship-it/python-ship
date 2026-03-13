@@ -2,6 +2,7 @@
 title: 'pvlib ModelChain 源码精读：10步损耗链与自定义扩展实战'
 description: '深入 pvlib ModelChain 的调用链原理，拆解 9 个可替换模型节点，实战自定义 losses_model 施加污渍/失配/线路损耗，揭示逆变器欠配截幅陷阱。'
 category: solar
+series: pvlib
 lang: zh
 pubDate: '2026-03-13'
 tags: ["pvlib", "光伏", "ModelChain", "仿真", "技术干货"]

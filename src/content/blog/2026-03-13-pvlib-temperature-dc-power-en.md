@@ -2,6 +2,7 @@
 title: 'pvlib Temperature Models and DC Power Calculation — From Irradiance to Watts'
 description: 'Deep dive into pvlib cell temperature models (SAPM/PVsyst/Faiman) and DC power models (SAPM/CEC/PVWatts), with complete code comparisons'
 category: solar
+series: pvlib
 pubDate: '2026-03-13'
 lang: en
 tags: ["pvlib", "光伏", "温度模型", "DC功率", "技术干货"]

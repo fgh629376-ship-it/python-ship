@@ -2,6 +2,7 @@
 title: 'pvlib 単軸トラッカー モデリング実践：年間15%増益の物理的根拠'
 description: 'pvlib.tracking.singleaxis を使って固定架台と単軸トラッカーを比較し、上海地区での年間+15.3%増益の原因と、冬季にトラッカーがかえって損をする本当の理由を解明します。バックトラッキングと GCR パラメータの詳細解説付き。'
 category: solar
+series: pvlib
 pubDate: '2026-03-13'
 lang: ja
 tags: ["pvlib", "光伏", "单轴跟踪器", "跟踪增益", "技術干货"]

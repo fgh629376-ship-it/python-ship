@@ -3,6 +3,7 @@ title: 'pvlib Annual Energy Yield Assessment and PR Calculation — From Formula
 description: 'Full 8760-hour simulation of a 5kWp system in Shanghai using pvlib. A systematic guide to calculating PR, specific yield, and capacity factor — and why PR is actually lowest in summer'
 pubDate: '2026-03-13'
 category: solar
+series: pvlib
 lang: en
 tags: ["pvlib", "光伏", "PR计算", "发电量评估", "技术干货"]
 ---

@@ -2,6 +2,7 @@
 title: 'pvlib ModelChain 徹底解説：10ステップ損失チェーンとカスタム拡張の実践'
 description: 'pvlib ModelChain の内部呼び出しチェーンを深く理解し、9つの置き換え可能なモデルノードを分解。カスタム losses_model による汚損/ミスマッチ/配線損失の適用実践と、インバーター容量不足によるクリッピングの落とし穴を解説します。'
 category: solar
+series: pvlib
 pubDate: '2026-03-13'
 lang: ja
 tags: ["pvlib", "光伏", "ModelChain", "仿真", "技術干货"]

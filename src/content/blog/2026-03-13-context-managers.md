@@ -2,6 +2,7 @@
 title: 'Python 上下文管理器：with 语句的真正力量'
 description: '彻底搞懂 with 语句 — __enter__/__exit__、contextlib、实战场景：文件、数据库、锁、临时修改'
 category: python
+series: python-basics
 lang: zh
 pubDate: '2026-03-13'
 tags: ['上下文管理器', 'Python进阶', '技术干货']

@@ -3,6 +3,7 @@ title: 'The Complete Guide to Solar Power Forecasting with pvlib-python'
 description: 'PV power forecasting with Python — pvlib from basics to production, covering the physics modeling chain, ModelChain, weather data integration, and hybrid ML approaches'
 pubDate: '2026-03-12'
 category: solar
+series: pvlib
 lang: en
 tags: ['pvlib', '光伏', '能源', '技术干货']
 ---

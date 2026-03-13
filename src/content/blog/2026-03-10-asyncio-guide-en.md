@@ -3,6 +3,7 @@ title: 'The Complete Guide to Python asyncio: From Basics to Real-World Use'
 description: 'Master Python async programming — event loop, coroutines, Tasks, gather, and more, with real-world examples'
 pubDate: '2026-03-10'
 category: python
+series: python-basics
 lang: en
 tags: ['asyncio', 'Python', '教程型']
 ---

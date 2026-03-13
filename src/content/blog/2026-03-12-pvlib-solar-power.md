@@ -2,6 +2,7 @@
 title: 'pvlib-python 光伏功率预测完全指南'
 description: '用 Python 做光伏发电量预测 — pvlib 库从入门到实战，涵盖物理建模链路、ModelChain、气象数据接入、ML混合方案'
 category: solar
+series: pvlib
 lang: zh
 pubDate: '2026-03-12'
 tags: ['pvlib', '光伏', '能源', '技术干货']

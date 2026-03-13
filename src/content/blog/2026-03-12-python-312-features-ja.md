@@ -3,6 +3,7 @@ title: 'Python 3.12 新機能：必ず知っておくべき6つの改善点'
 description: 'Python 3.12 の重要な新機能を詳しく解説 — f-string の強化・type 文・パフォーマンス向上・より明確なエラーメッセージ'
 pubDate: '2026-03-12'
 category: python
+series: python-basics
 lang: ja
 tags: ['Python3.12', '技术干货', '知识卡片']
 ---

@@ -2,6 +2,7 @@
 title: 'Python Decorators: From Syntactic Sugar to Industrial-Grade Patterns'
 description: 'Master Python decorators — principles, function decorators, class decorators, parameterized decorators, @functools.wraps, and 10 real-world use cases'
 category: python
+series: python-basics
 lang: en
 pubDate: '2026-03-13'
 tags: ['装饰器', 'Python进阶', '技术干货']

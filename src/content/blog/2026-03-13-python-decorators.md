@@ -2,6 +2,7 @@
 title: 'Python 装饰器：从语法糖到工业级用法'
 description: '彻底搞懂 Python decorator — 原理、函数装饰器、类装饰器、带参数装饰器、@functools.wraps、实战10个常用场景'
 category: python
+series: python-basics
 lang: zh
 pubDate: '2026-03-13'
 tags: ['装饰器', 'Python进阶', '技术干货']

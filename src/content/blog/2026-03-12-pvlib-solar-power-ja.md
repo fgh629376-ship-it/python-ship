@@ -3,6 +3,7 @@ title: 'pvlib-python 太陽光発電量予測完全ガイド'
 description: 'Python で太陽光発電量を予測する — pvlib ライブラリの入門から実践まで、物理モデリングチェーン・ModelChain・気象データ連携・ML ハイブリッド手法を網羅'
 pubDate: '2026-03-12'
 category: solar
+series: pvlib
 lang: ja
 tags: ['pvlib', '光伏', '能源', '技术干货']
 ---

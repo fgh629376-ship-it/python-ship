@@ -3,6 +3,7 @@ title: 'Python Context Managers: The Real Power of the with Statement'
 description: 'Master the with statement — __enter__/__exit__, contextlib, and real-world use cases: files, databases, locks, and temporary state changes'
 pubDate: '2026-03-13'
 category: python
+series: python-basics
 lang: en
 tags: ['上下文管理器', 'Python进阶', '技术干货']
 ---

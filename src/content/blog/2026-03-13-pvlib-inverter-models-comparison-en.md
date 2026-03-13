@@ -3,6 +3,7 @@ title: 'Deep Comparison of pvlib Inverter Models: Sandia vs ADR vs PVWatts'
 description: 'A comprehensive comparison of three major inverter models — parameter systems, efficiency curves, and voltage sensitivity — with real database code samples to help you choose the right model for PV simulation'
 pubDate: '2026-03-13'
 category: solar
+series: pvlib
 lang: en
 tags: ["pvlib", "光伏", "逆变器", "技术干货", "仿真"]
 ---

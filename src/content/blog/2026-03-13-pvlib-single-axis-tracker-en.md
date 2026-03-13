@@ -2,6 +2,7 @@
 title: 'pvlib Single-Axis Tracker Modeling: The Physics Behind a 15% Annual Gain'
 description: 'Use pvlib.tracking.singleaxis to compare fixed-tilt and single-axis tracker systems, revealing the source of the +15.3% annual gain in Shanghai and the real reason why trackers can lose out in winter. Includes detailed explanation of backtracking and GCR parameters.'
 category: solar
+series: pvlib
 pubDate: '2026-03-13'
 lang: en
 tags: ["pvlib", "光伏", "单轴跟踪器", "跟踪增益", "技术干货"]

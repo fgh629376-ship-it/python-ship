@@ -3,6 +3,7 @@ title: 'Mamba 状态空间模型：从 NLP 到光伏功率预测的跨界之旅'
 description: '深度解析 Mamba (S6) 选择性状态空间模型的核心原理，以及如何将其迁移到光伏功率预测场景，附完整 PyTorch 实现代码'
 pubDate: '2026-03-13'
 category: algorithm
+series: cross-industry
 lang: zh
 tags: ["Mamba", "SSM", "时序预测", "光伏功率预测", "跨行业算法"]
 ---

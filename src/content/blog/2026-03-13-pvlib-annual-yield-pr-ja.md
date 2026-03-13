@@ -3,6 +3,7 @@ title: 'pvlib 年間発電量評価と PR 計算 — 公式から全年シミュ
 description: 'pvlib を使って上海の 5kWp システムで 8760 時間シミュレーションを実施。PR・比発電量・設備利用率の計算方法と、なぜ夏の PR が最も低くなるのかを体系的に解説'
 pubDate: '2026-03-13'
 category: solar
+series: pvlib
 lang: ja
 tags: ["pvlib", "光伏", "PR计算", "发电量评估", "技术干货"]
 ---

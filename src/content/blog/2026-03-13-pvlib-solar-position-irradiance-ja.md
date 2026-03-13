@@ -2,6 +2,7 @@
 title: 'pvlib 太陽位置と日射量分解 — 太陽光発電予測の物理的基盤'
 description: 'pvlib の太陽位置計算（SPA）と日射量分解（GHI→DNI/DHI→POA）を深く理解する。完全なコードデモ付き。'
 category: solar
+series: pvlib
 pubDate: '2026-03-13'
 lang: ja
 tags: ["pvlib", "光伏", "辐照度", "技術干货"]

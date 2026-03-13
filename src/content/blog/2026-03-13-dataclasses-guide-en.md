@@ -3,6 +3,7 @@ title: 'Python dataclass: Say Goodbye to Boilerplate Code'
 description: 'Replace hand-written __init__/__repr__/__eq__ with @dataclass — field defaults, frozen, slots, inheritance, and comparison with Pydantic'
 pubDate: '2026-03-13'
 category: python
+series: python-basics
 lang: en
 tags: ['dataclass', 'Python进阶', '知识卡片']
 ---

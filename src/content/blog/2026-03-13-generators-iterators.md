@@ -2,6 +2,7 @@
 title: 'Python 生成器与迭代器：懒加载的艺术'
 description: '深入理解 yield、生成器表达式、迭代器协议 — 处理大数据不爆内存的核心技巧'
 category: python
+series: python-basics
 lang: zh
 pubDate: '2026-03-13'
 tags: ['生成器', '迭代器', 'Python进阶', '技术干货']

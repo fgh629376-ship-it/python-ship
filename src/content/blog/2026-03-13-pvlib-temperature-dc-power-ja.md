@@ -2,6 +2,7 @@
 title: 'pvlib 温度モデルと DC 電力計算 — 日射量からワットへ'
 description: 'pvlib のセル温度モデル（SAPM/PVsyst/Faiman）と DC 電力モデル（SAPM/CEC/PVWatts）を深く理解する。完全なコード比較付き。'
 category: solar
+series: pvlib
 pubDate: '2026-03-13'
 lang: ja
 tags: ["pvlib", "光伏", "温度模型", "DC功率", "技術干货"]

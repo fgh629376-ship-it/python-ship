@@ -3,6 +3,7 @@ title: 'pvlib Complete Study Notes: Mastering All 24 Core Modules'
 description: 'A complete learning record from zero to proficiency with the pvlib photovoltaic simulation library — covering solar position, irradiance, temperature, DC/AC models, ModelChain, trackers, bifacial panels, and all core modules, with real test data and pitfall notes'
 pubDate: '2026-03-13'
 category: solar
+series: pvlib
 lang: en
 tags: ["pvlib", "光伏仿真", "学习笔记", "ModelChain", "系统设计"]
 ---

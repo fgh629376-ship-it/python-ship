@@ -3,6 +3,7 @@ title: 'Python asyncio 完全ガイド：基礎から実践まで'
 description: 'Python 非同期プログラミングを完全理解 — イベントループ・コルーチン・Task・gather を網羅、実用サンプル付き'
 pubDate: '2026-03-10'
 category: python
+series: python-basics
 lang: ja
 tags: ['asyncio', 'Python', '教程型']
 ---

@@ -3,6 +3,7 @@ title: 'Python 3.12: 6 Improvements You Need to Know'
 description: 'A deep dive into the most important Python 3.12 features — upgraded f-strings, the type statement, performance gains, and clearer error messages'
 pubDate: '2026-03-12'
 category: python
+series: python-basics
 lang: en
 tags: ['Python3.12', '技术干货', '知识卡片']
 ---

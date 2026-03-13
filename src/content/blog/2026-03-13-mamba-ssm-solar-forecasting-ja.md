@@ -3,6 +3,7 @@ title: 'Mamba 状態空間モデル：NLPから太陽光発電予測への越境
 description: 'Mamba (S6) 選択的状態空間モデルのコア原理を深く解説し、それを太陽光発電予測シナリオへ適用する方法を紹介します。完全な PyTorch 実装コードも含みます'
 pubDate: '2026-03-13'
 category: algorithm
+series: cross-industry
 lang: ja
 tags: ["Mamba", "SSM", "時序予測", "光伏功率預測", "跨行業算法"]
 ---

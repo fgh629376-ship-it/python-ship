@@ -3,6 +3,7 @@ title: 'Python コンテキストマネージャ：with 文の真の力'
 description: 'with 文を完全理解 — __enter__/__exit__・contextlib・実践シナリオ：ファイル・データベース・ロック・一時的な状態変更'
 pubDate: '2026-03-13'
 category: python
+series: python-basics
 lang: ja
 tags: ['上下文管理器', 'Python进阶', '技术干货']
 ---

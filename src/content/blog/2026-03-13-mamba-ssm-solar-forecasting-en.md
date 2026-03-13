@@ -3,6 +3,7 @@ title: 'Mamba State Space Models: A Cross-Domain Journey from NLP to Solar Power
 description: 'A deep dive into the core principles of Mamba (S6) selective state space models, and how to adapt them for solar power forecasting — with a complete PyTorch implementation'
 pubDate: '2026-03-13'
 category: algorithm
+series: cross-industry
 lang: en
 tags: ["Mamba", "SSM", "时序预测", "光伏功率预测", "跨行业算法"]
 ---

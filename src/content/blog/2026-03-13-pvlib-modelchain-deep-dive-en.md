@@ -2,6 +2,7 @@
 title: 'pvlib ModelChain Deep Dive: The 10-Step Loss Chain and Custom Extensions'
 description: 'Explore the internal call chain of pvlib ModelChain, break down 9 replaceable model nodes, implement a custom losses_model for soiling/mismatch/wiring losses, and uncover the inverter undersizing clipping trap.'
 category: solar
+series: pvlib
 pubDate: '2026-03-13'
 lang: en
 tags: ["pvlib", "光伏", "ModelChain", "仿真", "技术干货"]

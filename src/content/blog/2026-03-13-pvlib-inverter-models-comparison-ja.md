@@ -3,6 +3,7 @@ title: 'pvlib パワーコンディショナーモデル徹底比較：Sandia vs
 description: '3大パワーコンディショナーモデルのパラメータ体系・効率曲線・電圧感度を全面比較。実際のデータベース呼び出しコードも含め、太陽光シミュレーションで適切なモデルを選ぶ方法を解説'
 pubDate: '2026-03-13'
 category: solar
+series: pvlib
 lang: ja
 tags: ["pvlib", "光伏", "逆变器", "技术干货", "仿真"]
 ---

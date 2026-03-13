@@ -3,6 +3,7 @@ title: 'Pydantic v2: The Ultimate Weapon for Python Data Validation'
 description: 'Deep dive into Pydantic v2 — 5–50x faster than v1, covering type validation, serialization, and custom validators'
 pubDate: '2026-03-11'
 category: python
+series: python-basics
 lang: en
 tags: ['Pydantic', 'Python', '技术干货']
 ---

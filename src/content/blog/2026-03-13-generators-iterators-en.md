@@ -3,6 +3,7 @@ title: 'Python Generators and Iterators: The Art of Lazy Loading'
 description: 'Deep dive into yield, generator expressions, and the iterator protocol — the core technique for processing large data without blowing up memory'
 pubDate: '2026-03-13'
 category: python
+series: python-basics
 lang: en
 tags: ['生成器', '迭代器', 'Python进阶', '技术干货']
 ---

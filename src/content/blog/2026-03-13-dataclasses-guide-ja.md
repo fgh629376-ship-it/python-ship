@@ -3,6 +3,7 @@ title: 'Python dataclass：ボイラープレートコードとおさらば'
 description: '@dataclass で手書きの __init__/__repr__/__eq__ を置き換える — フィールドのデフォルト値、frozen、slots、継承、Pydantic との比較'
 pubDate: '2026-03-13'
 category: python
+series: python-basics
 lang: ja
 tags: ['dataclass', 'Python進化', '知識カード']
 ---
