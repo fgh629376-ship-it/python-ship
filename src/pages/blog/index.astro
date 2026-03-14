@@ -361,6 +361,11 @@ const SERIES = [
 
 			seriesTabs.forEach((btn) => {
 				btn.addEventListener('click', () => {
+					// "教材学习笔记" 跳转到专门的教材笔记页面
+					if (btn.dataset.series === 'solar-book') {
+						window.location.href = '/textbook/';
+						return;
+					}
 					currentSeries = btn.dataset.series!;
 					seriesTabs.forEach((b) => b.classList.toggle('active', b.dataset.series === currentSeries));
 					filter();
