@@ -59,7 +59,7 @@ for i, m in enumerate(benchmark_results['最佳模型Top5'], 1):
 
 ## 2. κ vs kt：数学上为什么 κ 更好
 
-Lauret et al. (2022) 和 Yang (2020) 从数学上证明了为什么清空指数 κ 比混浊指数 kt 更适合预测：
+Lauret et al. (2022) 和 Yang (2020) 从数学上证明了为什么晴空指数 κ 比混浊指数 kt 更适合预测：
 
 ```python
 import numpy as np
@@ -111,9 +111,9 @@ demonstrate_kappa_vs_kt()
 
 **核心**：κ 的标准差比 kt 小一个量级——说明 κ 把天文周期去除得更干净，剩下的波动才是模型需要学的**天气信号**。
 
-## 3. 清空模型的选择影响比你想象的大
+## 3. 晴空模型的选择影响比你想象的大
 
-Yang (2020, 135 citations) 研究了不同清空模型对预测的影响：
+Yang (2020, 135 citations) 研究了不同晴空模型对预测的影响：
 
 ```python
 CLEAR_SKY_MODELS = {
@@ -147,7 +147,7 @@ CLEAR_SKY_MODELS = {
     },
 }
 
-print("清空模型选择指南 (Yang, 2020)：\n")
+print("晴空模型选择指南 (Yang, 2020)：\n")
 for name, info in CLEAR_SKY_MODELS.items():
     print(f"📌 {name}")
     print(f"   精度: {info['精度']}")
@@ -158,7 +158,7 @@ for name, info in CLEAR_SKY_MODELS.items():
     print()
 
 print("Yang 的结论：")
-print("  → 清空模型的选择对 Forecast Skill 影响可达 5-10%")
+print("  → 晴空模型的选择对 Forecast Skill 影响可达 5-10%")
 print("  → REST2/McClear 最准，但 Ineichen-Perez 是最佳性价比")
 print("  → Haurwitz 只能用于快速原型，不能用于生产")
 ```
@@ -327,7 +327,7 @@ METRIC_TRAPS = {
     "R² 在时序预测中不可靠": {
         "现象": "R² = 0.95 看起来很好",
         "原因": "光伏出力本身有强日周期，哪怕用 GHI_clear 做预测 R² 也能 0.90+",
-        "解法": "在清空指数 κ 空间评估 R²，而非原始功率空间",
+        "解法": "在晴空指数 κ 空间评估 R²，而非原始功率空间",
     },
 }
 
@@ -381,13 +381,13 @@ for name, info in DEPLOYMENT_ISSUES.items():
 | 来源论文 | 期刊 | 核心启示 |
 |---------|------|---------|
 | Markovics & Mayer (2022) | R&SE Reviews (1区Top) | XGBoost 是日前预测最优解，深度学习无显著优势 |
-| Yang (2020) | JRSE (2区) | 清空模型选择影响 Skill 5-10%，Ineichen-Perez 最佳性价比 |
+| Yang (2020) | JRSE (2区) | 晴空模型选择影响 Skill 5-10%，Ineichen-Perez 最佳性价比 |
 | Lauret et al. (2022) | Solar (2区) | κ 比 kt 标准差小一个量级，去天文信号更干净 |
 | Yang et al. (2021) | Solar Energy (2区) | 运营化预测要考虑数据延迟、备用方案、滚动更新 |
 | Prema & Bhaskar (2021) | IEEE Access (2区) | 概率预测不是可选项，电网调度必须要 |
 
 > **核心原则**：
 > 1. 先跑 XGBoost，90% 情况下够用
-> 2. κ 归一化 + Ineichen-Perez 清空模型 = 最佳性价比
+> 2. κ 归一化 + Ineichen-Perez 晴空模型 = 最佳性价比
 > 3. 概率预测是电网的真正需求
 > 4. 部署 ≠ 训练，要考虑漂移/延迟/异常/回退

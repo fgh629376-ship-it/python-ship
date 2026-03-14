@@ -66,7 +66,7 @@ print("结论：用 GHI 直接预测功率 = 引入系统性偏差")
 ```python
 def clear_sky_index(ghi: np.ndarray, ghi_clear: np.ndarray) -> np.ndarray:
     """
-    清空指数 κ = GHI / GHI_clear
+    晴空指数 κ = GHI / GHI_clear
     
     κ ≈ 1.0 → 晴天
     κ < 0.5 → 多云/阴天
@@ -190,7 +190,7 @@ def gap_fill_irradiance(
     """
     辐照度缺失值填充策略。
     
-    短缺失（≤3h）：用清空指数插值
+    短缺失（≤3h）：用晴空指数插值
     长缺失（>3h）：标记为不可用，不填充
     
     ⚠️ 绝对不能用 0 填充白天缺失值——会引入虚假的"阴天"信号
@@ -198,7 +198,7 @@ def gap_fill_irradiance(
     filled = series.copy()
     is_filled = np.zeros(len(series), dtype=bool)
     
-    # 计算清空指数
+    # 计算晴空指数
     kappa = np.where(clear_sky > 10, series / clear_sky, np.nan)
     
     # 找缺失段
@@ -211,7 +211,7 @@ def gap_fill_irradiance(
         elif not is_nan[i] and gap_start is not None:
             gap_len = i - gap_start
             if gap_len <= max_gap_hours:
-                # 短缺失：插值 κ 再乘回清空值
+                # 短缺失：插值 κ 再乘回晴空值
                 k_start = kappa[gap_start - 1] if gap_start > 0 else 1.0
                 k_end = kappa[i] if not np.isnan(kappa[i]) else k_start
                 for j in range(gap_start, i):
@@ -224,7 +224,7 @@ def gap_fill_irradiance(
     return filled, is_filled
 
 print("缺失值处理规则：")
-print("  ✅ 短缺失（≤3h）：清空指数线性插值")
+print("  ✅ 短缺失（≤3h）：晴空指数线性插值")
 print("  ❌ 长缺失（>3h）：不填充，标记不可用")
 print("  🚫 绝对禁止：用 0 填充白天数据")
 print("  🚫 绝对禁止：用均值填充（破坏时序结构）")
@@ -289,7 +289,7 @@ def engineer_solar_features(
     """
     features = {}
     
-    # 核心特征：清空指数（消除天文周期）
+    # 核心特征：晴空指数（消除天文周期）
     valid = ghi_clear > 10
     kappa = np.where(valid, ghi / ghi_clear, 0)
     features["kappa"] = kappa
@@ -317,7 +317,7 @@ def engineer_solar_features(
     return features
 
 print("特征工程规则：")
-print("  1. 清空指数 κ 是最核心特征")
+print("  1. 晴空指数 κ 是最核心特征")
 print("  2. 滞后项 κ(t-1), κ(t-24) 提供自回归信息")
 print("  3. 时间特征用 sin/cos 编码，不用 raw hour")
 print("  4. 每个气象变量要说清物理因果链")
@@ -334,7 +334,7 @@ def persistence_forecast(
     """
     持续性模型：最简单的 baseline。
     
-    κ̂(t+h) = κ(t)（清空指数不变）
+    κ̂(t+h) = κ(t)（晴空指数不变）
     
     实际功率 = κ̂ × P_clear(t+h)
     
@@ -442,10 +442,10 @@ COMMON_MISTAKES = {
         "原因": "不同 horizon 的可预测性完全不同",
         "解决": "分 horizon 建模：0-6h / 6-24h / 24-72h",
     },
-    "忽略清空归一化": {
+    "忽略晴空归一化": {
         "症状": "模型在夏季好，冬季差（或反之）",
         "原因": "模型在学季节变化而非天气变化",
-        "解决": "使用清空指数 κ 作为输入/输出变量",
+        "解决": "使用晴空指数 κ 作为输入/输出变量",
     },
 }
 
@@ -475,7 +475,7 @@ def solar_forecast_pipeline(
     1. 数据加载
     2. QC（质量控制）
     3. 缺失值处理
-    4. 清空指数归一化
+    4. 晴空指数归一化
     5. 特征工程
     6. 时序划分（train/val/test）
     7. Baseline（持续性模型）
