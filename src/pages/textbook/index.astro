@@ -4,110 +4,111 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import { SITE_TITLE } from '../../consts';
 
+// ── Chapter data (notes embedded) ───────────────────────────
 const chapters = [
   {
-    id: 'ch1', num: 1, status: '✅',
+    id: 'ch1', num: 1, status: 'done',
     title: 'Why We Do Solar Forecasting',
     titleZh: '为什么做光伏预测',
     pages: 'p1-25',
     sections: [
       { id: '1.1', title: '光伏预测的五个方面', subsections: [
-        { id: '1.1.1', title: '基础方法 (Base Methods)', note: '五大基础方法按预测范围排列：①天空相机(ASI)：地面鱼眼镜头拍摄云图，光流法追踪云运动，有效范围~30分钟，优点是空间分辨率高，缺点是视野有限且假设云场"冻结"。②卫星(Satellite)：气象卫星红外/可见光通道，云运动矢量(CMV)平流预测，有效范围~4小时，覆盖范围大但时空分辨率受限。③NWP(数值天气预报)：求解大气运动的7个原始方程（3动量+热力学+水汽+质量+状态方程），有效范围1-15天，是日前预测的唯一可靠来源，但计算昂贵且依赖初始条件质量。④统计方法：ARIMA、ETS、VAR等时序模型，灵活且计算快，但无法捕获云的空间动态。⑤机器学习：从数据中学习非线性映射，可融合多源数据，但需要大量训练数据且缺乏物理可解释性。关键认识：不同方法适用于不同预测范围，不存在"一个方法通吃"的情况。' },
-        { id: '1.1.2', title: '后处理 (Post-processing)', note: '后处理是连接基础预测和最终产品的桥梁，教材定义了10类技术，按输入/输出的确定性(D)和概率性(P)分为四象限：【D2D】确定性→确定性：回归(线性/非线性修正NWP偏差)、滤波(卡尔曼滤波等自适应校正)、降尺度(从粗网格到细网格)。【D2P】确定性→概率性：模拟集成(analog ensemble,从历史中找相似情况)、分布穿衣(dressing,给确定性预测加不确定性包络)、概率回归(分位数回归/NGBoost)。【P2D】概率性→确定性：汇总分布(取均值/中位数)、组合确定性预测(多模型加权平均)。【P2P】概率性→概率性：校准集成(BMA/EMOS修正集成预测偏差)、组合概率预测(多个概率预测的最优融合)。共10类，覆盖了从原始预测到最终产品的所有可能转换路径。后处理是提升预测质量最直接有效的手段。' },
-        { id: '1.1.3', title: '验证 (Verification)', note: 'Murphy (1993) 提出预测质量三维度框架，至今仍是预测验证的理论基石：①一致性(Consistency)：预测者是否相信自己的预测？即发布的预测是否反映了预测者的真实最佳判断。如果预测者知道明天大概率下雨但报了晴天，就违反了一致性。②质量(Quality)：预测与观测的统计对应关系有多好？包括准确度(RMSE/MAE)、可靠度(校准)、分辨度(区分不同情况的能力)。③价值(Value)：预测对用户决策的经济或社会帮助有多大？关键洞察：三者可以冲突——高质量的概率预测如果用户不会解读，就没有价值；一致但质量差的预测至少是诚实的。预测精度每提升1%，大电网可节省数百万美元——这就是价值维度的具体体现。' },
-        { id: '1.1.4', title: '辐照度→功率转换', note: '从辐照度预测到功率预测不是简单的"辐照度×效率"。需要完整的Model Chain（物理模型链），每一步都有专门的物理模型：①太阳位置算法(SPA)：计算天顶角Z、方位角，精度±0.0003°。②分离模型：从GHI分离出直射BNI和散射DHI，常用Erbs/BRL模型，输入是混浊指数kt=GHI/E₀。③转置模型：将水平面辐照度转为面板平面辐照度(POA/GTI)，GTI=Bn·cos(θ)+Rd·Dh+ρg·Rr·Gh，Perez模型最准。④温度模型：T_cell=T_amb+(NOCT-20)/800×GTI，电池温度直接影响效率。⑤PV电气模型：P=P_dc_ref×(GTI/1000)×[1+γ(T_cell-25)]，γ是温度系数(典型-0.4%/°C)。还有反射损失、污垢损失、线缆损失、逆变器效率等。关键：最佳个体模型的组合不一定是最佳Model Chain，因为误差会在各步之间传播和累积。' },
-        { id: '1.1.5', title: '电网集成 (Grid Integration)', note: '预测最终服务于电网运营，不同运营场景对预测的要求截然不同：①日前市场(DAM, Day-Ahead Market)：需要>36小时预测，电力交易的主要市场，前一天上午提交次日24小时的功率预测和竞价。②实时市场(RTM, Real-Time Market)：需要>4小时预测，用于日内调度和偏差平衡，每15分钟或每小时更新。③频率调节(Frequency Regulation)：需要分钟级甚至秒级预测，维持电网50/60Hz频率稳定，对响应速度要求极高。④备用容量调度(Reserve Scheduling)：基于概率预测评估需要多少备用发电机组，概率预测在此场景价值最大。⑤长期规划：年度级别，用于输电线路建设、电厂规划等。光伏预测精度直接影响：电力交易收益（预测偏差=罚款）、备用容量成本（过度保守=浪费）、电网稳定性（预测失败=可能停电）。这就是为什么预测研究必须紧密对接电网运营标准。' },
+        { id: '1.1.1', title: '基础方法 (Base Methods)', note: '五大基础方法按预测范围排列：\n\n①天空相机(ASI)：地面鱼眼镜头拍摄云图，光流法追踪云运动，有效范围约30分钟，优点是空间分辨率高，缺点是视野有限且假设云场"冻结"。\n\n②卫星(Satellite)：气象卫星红外/可见光通道，云运动矢量(CMV)平流预测，有效范围约4小时，覆盖范围大但时空分辨率受限。\n\n③NWP(数值天气预报)：求解大气运动的7个原始方程（3动量+热力学+水汽+质量+状态方程），有效范围1-15天，是日前预测的唯一可靠来源，但计算昂贵且依赖初始条件质量。\n\n④统计方法：ARIMA、ETS、VAR等时序模型，灵活且计算快，但无法捕获云的空间动态。\n\n⑤机器学习：从数据中学习非线性映射，可融合多源数据，但需要大量训练数据且缺乏物理可解释性。\n\n关键认识：不同方法适用于不同预测范围，不存在"一个方法通吃"的情况。' },
+        { id: '1.1.2', title: '后处理 (Post-processing)', note: '后处理是连接基础预测和最终产品的桥梁，教材定义了10类技术，按输入/输出的确定性(D)和概率性(P)分为四象限：\n\n【D2D】确定性→确定性：回归(线性/非线性修正NWP偏差)、滤波(卡尔曼滤波等自适应校正)、降尺度(从粗网格到细网格)。\n\n【D2P】确定性→概率性：模拟集成(analog ensemble,从历史中找相似情况)、分布穿衣(dressing,给确定性预测加不确定性包络)、概率回归(分位数回归/NGBoost)。\n\n【P2D】概率性→确定性：汇总分布(取均值/中位数)、组合确定性预测(多模型加权平均)。\n\n【P2P】概率性→概率性：校准集成(BMA/EMOS修正集成预测偏差)、组合概率预测(多个概率预测的最优融合)。\n\n共10类，覆盖了从原始预测到最终产品的所有可能转换路径。后处理是提升预测质量最直接有效的手段。' },
+        { id: '1.1.3', title: '验证 (Verification)', note: 'Murphy (1993) 提出预测质量三维度框架，至今仍是预测验证的理论基石：\n\n①一致性(Consistency)：预测者是否相信自己的预测？即发布的预测是否反映了预测者的真实最佳判断。如果预测者知道明天大概率下雨但报了晴天，就违反了一致性。\n\n②质量(Quality)：预测与观测的统计对应关系有多好？包括准确度(RMSE/MAE)、可靠度(校准)、分辨度(区分不同情况的能力)。\n\n③价值(Value)：预测对用户决策的经济或社会帮助有多大？\n\n关键洞察：三者可以冲突——高质量的概率预测如果用户不会解读，就没有价值；一致但质量差的预测至少是诚实的。预测精度每提升1%，大电网可节省数百万美元——这就是价值维度的具体体现。' },
+        { id: '1.1.4', title: '辐照度→功率转换', note: '从辐照度预测到功率预测不是简单的"辐照度×效率"。需要完整的Model Chain（物理模型链），每一步都有专门的物理模型：\n\n①太阳位置算法(SPA)：计算天顶角Z、方位角，精度±0.0003°。\n\n②分离模型：从GHI分离出直射BNI和散射DHI，常用Erbs/BRL模型，输入是混浊指数kt=GHI/E₀。\n\n③转置模型：将水平面辐照度转为面板平面辐照度(POA/GTI)，GTI=Bn·cos(θ)+Rd·Dh+ρg·Rr·Gh，Perez模型最准。\n\n④温度模型：T_cell=T_amb+(NOCT-20)/800×GTI，电池温度直接影响效率。\n\n⑤PV电气模型：P=P_dc_ref×(GTI/1000)×[1+γ(T_cell-25)]，γ是温度系数(典型-0.4%/°C)。还有反射损失、污垢损失、线缆损失、逆变器效率等。\n\n关键：最佳个体模型的组合不一定是最佳Model Chain，因为误差会在各步之间传播和累积。' },
+        { id: '1.1.5', title: '电网集成 (Grid Integration)', note: '预测最终服务于电网运营，不同运营场景对预测的要求截然不同：\n\n①日前市场(DAM)：需要>36小时预测，电力交易的主要市场，前一天上午提交次日24小时的功率预测和竞价。\n\n②实时市场(RTM)：需要>4小时预测，用于日内调度和偏差平衡，每15分钟或每小时更新。\n\n③频率调节：需要分钟级甚至秒级预测，维持电网50/60Hz频率稳定。\n\n④备用容量调度：基于概率预测评估需要多少备用发电机组，概率预测在此场景价值最大。\n\n⑤长期规划：年度级别，用于输电线路建设、电厂规划等。\n\n光伏预测精度直接影响：电力交易收益（预测偏差=罚款）、备用容量成本（过度保守=浪费）、电网稳定性（预测失败=可能停电）。' },
       ]},
       { id: '1.2', title: '本书大纲', subsections: [
-        { id: '1.2.1', title: '理解先于行动', note: '教材的核心哲学：不要一上来就跑模型。正确的学习路径是：先理解预测的物理基础（大气辐射传输、云动力学）→ 掌握统计理论（概率分布、集成方法、验证框架）→ 熟悉实践标准（电网运营要求、数据质量控制）→ 然后才动手建模。教材前四章(Ch1-4)专注于"理解"：为什么预测(Ch1)、如何批判性思考(Ch2)、确定性vs概率性(Ch3)、光伏vs其他能源预测(Ch4)。这种"理论先行"的安排在光伏预测领域是罕见的——大多数教程直接跳到代码和模型，导致很多从业者知道"怎么做"但不知道"为什么"。' },
-        { id: '1.2.2', title: '电网集成与可调度太阳能', note: '教材的终极目标不只是提高预测精度，而是实现可调度太阳能(Dispatchable Solar Power)。传统电厂（火电/核电）可以按需调度——电网需要多少电就发多少电。光伏天然不可调度（取决于天气），但通过三要素组合可以接近可调度：①高质量预测（告诉电网未来会发多少电）②储能系统（在光照充足时储存，不足时释放）③智能调度算法（基于预测和储能状态优化出力曲线）。这三者的协同就是"稳固功率交付(Firm Power Delivery)"的概念，详见教材Ch12。这个目标解释了为什么教材同时覆盖预测方法和电网运营——它们不是两个独立话题，而是一个完整系统的两面。' },
+        { id: '1.2.1', title: '理解先于行动', note: '教材的核心哲学：不要一上来就跑模型。正确的学习路径是：\n\n先理解预测的物理基础（大气辐射传输、云动力学）→ 掌握统计理论（概率分布、集成方法、验证框架）→ 熟悉实践标准（电网运营要求、数据质量控制）→ 然后才动手建模。\n\n教材前四章(Ch1-4)专注于"理解"：为什么预测(Ch1)、如何批判性思考(Ch2)、确定性vs概率性(Ch3)、光伏vs其他能源预测(Ch4)。\n\n这种"理论先行"的安排在光伏预测领域是罕见的——大多数教程直接跳到代码和模型，导致很多从业者知道"怎么做"但不知道"为什么"。' },
+        { id: '1.2.2', title: '电网集成与可调度太阳能', note: '教材的终极目标不只是提高预测精度，而是实现可调度太阳能(Dispatchable Solar Power)。\n\n传统电厂可以按需调度——电网需要多少电就发多少电。光伏天然不可调度（取决于天气），但通过三要素组合可以接近可调度：\n\n①高质量预测（告诉电网未来会发多少电）\n②储能系统（在光照充足时储存，不足时释放）\n③智能调度算法（基于预测和储能状态优化出力曲线）\n\n这三者的协同就是"稳固功率交付(Firm Power Delivery)"的概念，详见教材Ch12。这个目标解释了为什么教材同时覆盖预测方法和电网运营——它们是一个完整系统的两面。' },
       ]},
     ],
   },
   {
-    id: 'ch2', num: 2, status: '✅',
+    id: 'ch2', num: 2, status: 'done',
     title: 'Philosophical Thinking Tools',
     titleZh: '哲学思维工具',
     pages: 'p26-49',
     sections: [
-      { id: '2.1', title: '与匿名者争论', note: '学术审稿是双盲匿名的——你看不到审稿人是谁，审稿人也不知道你是谁（理论上）。这创造了一个独特的争论环境：你无法利用权威、关系或情感来说服对方，只能依靠逻辑和证据。教材强调：回复审稿意见时，每一条反驳都必须有数据支撑或逻辑推导，模糊的"我们认为"式回应会被直接忽略。反过来，作为审稿人，也应该基于科学标准而非个人偏好来评判。这个规则同样适用于日常的技术讨论——用数据说话，不用立场说话。' },
-      { id: '2.2', title: '拉波波特规则 (Rapoport\'s Rule)', note: '批评他人工作前的四步规则（来自博弈论学家Anatol Rapoport）：①先重述对方的观点，重述到对方会说"是的，这正是我的意思"的程度。②列出你同意对方的部分（通常比你以为的多）。③明确说明你从对方那里学到了什么。④然后才开始你的批评。核心思想：大多数学术争论的根源不是观点分歧，而是双方根本没有理解对方在说什么。先理解再批评，不仅是礼貌，更是避免无效争论的最有效手段。在光伏预测领域，很多"方法A比方法B好"的争论，其实是因为双方使用了不同的数据集、不同的评估指标、或不同的预测范围——如果先确认这些前提，争论往往不攻自破。' },
-      { id: '2.3', title: '还原论：什么是"好"', note: 'Murphy (1993) 将预测的"好"还原为三个独立维度，这是预测验证的理论基石：①一致性(Consistency)：预测者是否真诚地发布了自己的最佳判断？如果预测模型输出概率为70%会下雨，但预测者因为害怕惩罚改成50%发布，就违反了一致性。②质量(Quality)：预测与实际观测的统计对应关系。包括准确度(bias有多大)、可靠度(说70%的事件是否真的70%发生)、分辨度(能否区分不同情况)。③价值(Value)：预测对用户决策带来的经济或社会收益。关键洞察：三者可以独立变化！一个高质量的概率预测，如果调度人员不懂概率、只看点预测，那它的价值就和普通点预测一样。一个完全诚实但技术差的预测，一致性高但质量低。理解这三个维度的独立性，是避免"我的RMSE最低所以我最好"这种简单化思维的关键。' },
-      { id: '2.4', title: '"我掌控未来"', note: '预测科学的三大哲学基础（受Karl Popper影响）：①可预测性(Predictability)：不是一切都能预测。天气的可预测性取决于空间尺度（局部vs区域）、时间范围（小时vs天）、天气状况（晴天几乎完美可预测，阴晴交替最难）。认识到可预测性的极限，就不会盲目追求更复杂的模型——有些误差是不可约的。②好的预测(Good Forecasts)：Murphy三维度（见2.3），好的预测不等于完美预测，而是在可预测性极限内做到最好。③可证伪性(Falsifiability)：Popper的核心主张——不能被推翻的结论不是科学。如果一个预测方法不能被复现和验证，它就不具备科学性。这也是为什么教材反复强调可重现性——不提供代码和数据的论文，本质上是不可证伪的。' },
-      { id: '2.5', title: '奥卡姆剃刀 (Occam\'s Razor)', note: '"如无必要，勿增实体"——14世纪方济各会修士William of Ockham的原则。在光伏预测中的具体应用：如果线性回归能达到RMSE=50W/m²，而20层深度网络达到49W/m²，那1W/m²的提升是否值得10倍的模型复杂度和训练时间？通常不值得。Markovics & Mayer (2022) 在68个ML模型的大比较中证实：XGBoost/LightGBM（相对简单的集成树模型）在日前预测中整体最优，深度学习并未显著优于传统ML。教材引申：模型复杂度的增加必须用统计显著的精度提升来证明（Diebold-Mariano检验）。简单模型还有可解释性优势——你能说清楚XGBoost每个特征的贡献，但很难解释LSTM的隐层在学什么。' },
-      { id: '2.6', title: '奥卡姆扫帚 (Occam\'s Broom)', note: '比剃刀更隐蔽也更危险的问题：把不利的事实"扫到地毯下面"，假装它们不存在。在光伏预测论文中的常见表现：①只报告对自己有利的误差指标（比如只报R²不报RMSE，因为光伏出力有强日周期导致R²天然很高）。②选择性展示"好的"时间段（只展示晴天结果，避开多云天气的惨淡表现）。③不报告与持续性模型(persistence)的对比——如果你的"先进"模型打不过最简单的持续性，说明有根本问题。④隐藏模型在特定天气条件下的灾难性失败（如突变天气下误差暴增10倍）。⑤不报告负面实验（尝试了但失败的方法）。教材忠告：诚实报告所有结果，包括不好看的。负面结果对科学的价值可能比正面结果更大——它告诉后人哪条路走不通。' },
-      { id: '2.7', title: '"新颖"算子 (The "Novel" Operator)', note: '学术论文中最被滥用的词就是"novel"（新颖）。教材批判的典型模式："We propose a novel hybrid CNN-LSTM-Attention-Transformer model for solar forecasting"——实际上只是把现有的深度学习模块像积木一样拼在一起，每个模块都不是新的，拼接方式也谈不上创新。教材认为真正的新颖有三个层次：①新问题（发现了一个前人没注意的预测场景或需求）②新理解（对已知现象提出了新的物理或统计解释）③新发现（用实验证据推翻了领域内的普遍信念）。仅仅是"新排列组合"不构成真正的新颖。对我们的启示：做光伏预测不要追求模型的花哨，而是追求对问题本身的深入理解。理解清楚了，用最简单的方法也能做出好预测。' },
-      { id: '2.8', title: '烟雾弹 (The Smoke Grenade)', note: '用复杂的数学公式和冗长的流程图来掩盖内容的空洞——教材称之为"烟雾弹"。典型特征：①用三页推导一个标准线性回归的公式，让它看起来像是全新的数学贡献。②画极其复杂的流程图（20+个方框和箭头），但核心步骤其实只有三步。③大量使用自造缩写和术语（如"MSCNN-BiLSTM-SA-DWT"），让读者无法快速理解在做什么。④公式中使用了大量符号但不给直觉解释，纯粹靠数学形式吓唬人。教材的判断标准：如果一个方法不能用简单的话向一个聪明的外行解释清楚，要么这个方法确实非常复杂（如辐射传输理论），要么作者自己也没真正搞懂。爱因斯坦说"Everything should be made as simple as possible, but not simpler"——这也是Ch5的开篇引言。' },
-      { id: '2.9', title: '用外行作诱饵', note: '这是教材提出的反制烟雾弹的策略。核心思想：写论文时假设读者是一个聪明但不是本领域的外行（比如一个电力系统工程师来读你的气象预测论文）。如果这个外行能理解你方法的核心思想和逻辑，说明你写得够清楚。如果他一头雾水，说明你要么写得太晦涩，要么方法本身没有清晰的逻辑。可重现性(reproducibility)是最好的去烟雾弹手段——当你提供了完整的代码和数据，任何人都可以验证你的方法是否真如你所说的那么好，再多的烟雾弹也会被真实数据戳穿。教材作者建议：提供代码（ostensive reproducibility，展示性可重现）远优于只提供文字描述（verbal reproducibility，口头可重现）。' },
-      { id: '2.10', title: '砖块与阶梯', note: '科学进步的两种方式：①砖块(Bricks)：一块一块往上垒，每块砖都在前人的基础上增加一点点新东西。大多数论文都是砖块——用新数据验证已有方法、用已有方法解决新场景、对已有方法做小改进。这没有任何问题，科学大厦就是砖块垒起来的。②阶梯(Ladders)：直接跳到更高的层次，范式转换。在光伏预测中，晴空模型的引入就是一个阶梯——它从根本上改变了"如何去除太阳辐照度中的季节性"这个问题的解法。Gneiting (2007)的校准+锐度范式也是一个阶梯——它重新定义了什么是"好的概率预测"。教材的告诫：大多数研究者一生都在搬砖，这完全正常也很有价值。但要有意识地辨别砖块和阶梯，不要把搬砖误认为爬梯（即不要把增量改进包装成革命性创新），也不要因为在搬砖就看不到阶梯的存在。' },
+      { id: '2.1', title: '与匿名者争论', note: '学术审稿是双盲匿名的——你看不到审稿人是谁，审稿人也不知道你是谁。\n\n这创造了一个独特的争论环境：你无法利用权威、关系或情感来说服对方，只能依靠逻辑和证据。\n\n教材强调：回复审稿意见时，每一条反驳都必须有数据支撑或逻辑推导，模糊的"我们认为"式回应会被直接忽略。反过来，作为审稿人，也应该基于科学标准而非个人偏好来评判。\n\n这个规则同样适用于日常的技术讨论——用数据说话，不用立场说话。' },
+      { id: '2.2', title: '拉波波特规则', note: '批评他人工作前的四步规则（来自博弈论学家Anatol Rapoport）：\n\n①先重述对方的观点，重述到对方会说"是的，这正是我的意思"的程度\n②列出你同意对方的部分（通常比你以为的多）\n③明确说明你从对方那里学到了什么\n④然后才开始你的批评\n\n核心思想：大多数学术争论的根源不是观点分歧，而是双方根本没有理解对方在说什么。先理解再批评，不仅是礼貌，更是避免无效争论的最有效手段。\n\n在光伏预测领域，很多"方法A比方法B好"的争论，其实是因为双方使用了不同的数据集、不同的评估指标、或不同的预测范围——如果先确认这些前提，争论往往不攻自破。' },
+      { id: '2.3', title: '还原论：什么是"好"', note: 'Murphy (1993) 将预测的"好"还原为三个独立维度，这是预测验证的理论基石：\n\n①一致性(Consistency)：预测者是否真诚地发布了自己的最佳判断？如果模型输出概率为70%会下雨，但预测者改成50%发布，就违反了一致性。\n\n②质量(Quality)：预测与实际观测的统计对应关系。包括准确度(bias有多大)、可靠度(说70%是否真的70%发生)、分辨度(能否区分不同情况)。\n\n③价值(Value)：预测对用户决策带来的经济或社会收益。\n\n关键洞察：三者可以独立变化！一个高质量的概率预测，如果调度人员不懂概率、只看点预测，那它的价值就和普通点预测一样。理解三个维度的独立性，是避免"我的RMSE最低所以我最好"这种简单化思维的关键。' },
+      { id: '2.4', title: '"我掌控未来"', note: '预测科学的三大哲学基础（受Karl Popper影响）：\n\n①可预测性(Predictability)：不是一切都能预测。天气的可预测性取决于空间尺度（局部vs区域）、时间范围（小时vs天）、天气状况（晴天几乎完美可预测，阴晴交替最难）。认识到可预测性的极限，就不会盲目追求更复杂的模型——有些误差是不可约的。\n\n②好的预测(Good Forecasts)：Murphy三维度（见2.3），好的预测不等于完美预测，而是在可预测性极限内做到最好。\n\n③可证伪性(Falsifiability)：Popper的核心主张——不能被推翻的结论不是科学。如果一个预测方法不能被复现和验证，它就不具备科学性。不提供代码和数据的论文，本质上是不可证伪的。' },
+      { id: '2.5', title: '奥卡姆剃刀', note: '"如无必要，勿增实体"——14世纪方济各会修士William of Ockham的原则。\n\n在光伏预测中的具体应用：如果线性回归能达到RMSE=50W/m²，而20层深度网络达到49W/m²，那1W/m²的提升是否值得10倍的复杂度和训练时间？通常不值得。\n\nMarkovics & Mayer (2022) 在68个ML模型的大比较中证实：XGBoost/LightGBM（相对简单的集成树模型）在日前预测中整体最优，深度学习并未显著优于传统ML。\n\n教材引申：模型复杂度的增加必须用统计显著的精度提升来证明（Diebold-Mariano检验）。简单模型还有可解释性优势——你能说清楚XGBoost每个特征的贡献，但很难解释LSTM的隐层在学什么。' },
+      { id: '2.6', title: '奥卡姆扫帚', note: '比剃刀更隐蔽也更危险：把不利的事实"扫到地毯下面"，假装它们不存在。\n\n在光伏预测论文中的常见表现：\n①只报告对自己有利的误差指标（只报R²不报RMSE，因为光伏出力有强日周期导致R²天然很高）\n②选择性展示"好的"时间段（只展示晴天，避开多云天气的惨淡表现）\n③不报告与持续性模型(persistence)的对比——"先进"模型打不过最简单的持续性说明有根本问题\n④隐藏模型在特定天气条件下的灾难性失败（突变天气下误差暴增10倍）\n⑤不报告负面实验（尝试了但失败的方法）\n\n教材忠告：诚实报告所有结果。负面结果对科学的价值可能比正面结果更大——它告诉后人哪条路走不通。' },
+      { id: '2.7', title: '"新颖"算子', note: '学术论文中最被滥用的词就是"novel"。\n\n教材批判的典型模式："We propose a novel hybrid CNN-LSTM-Attention-Transformer model for solar forecasting"——实际上只是把现有深度学习模块像积木一样拼在一起，每个模块都不是新的，拼接方式也谈不上创新。\n\n教材认为真正的新颖有三个层次：\n①新问题（发现前人没注意的预测场景或需求）\n②新理解（对已知现象提出新的物理或统计解释）\n③新发现（用实验证据推翻领域内的普遍信念）\n\n仅仅是"新排列组合"不构成真正的新颖。对我们的启示：做光伏预测不要追求模型的花哨，而是追求对问题本身的深入理解。' },
+      { id: '2.8', title: '烟雾弹', note: '用复杂的数学公式和冗长的流程图来掩盖内容的空洞。\n\n典型特征：\n①用三页推导一个标准线性回归的公式，让它看起来像全新的数学贡献\n②画极其复杂的流程图（20+方框和箭头），核心步骤其实只有三步\n③大量使用自造缩写和术语（如"MSCNN-BiLSTM-SA-DWT"），读者无法快速理解\n④公式中大量符号但不给直觉解释，纯靠数学形式吓唬人\n\n教材的判断标准：如果一个方法不能用简单的话向一个聪明的外行解释清楚，要么这个方法确实非常复杂（如辐射传输理论），要么作者自己也没真正搞懂。\n\n爱因斯坦说"Everything should be made as simple as possible, but not simpler"——这也是Ch5的开篇引言。' },
+      { id: '2.9', title: '用外行作诱饵', note: '这是教材提出的反制烟雾弹的策略。\n\n核心思想：写论文时假设读者是一个聪明但不是本领域的外行（比如电力系统工程师来读气象预测论文）。如果这个外行能理解你方法的核心思想和逻辑，说明你写得够清楚。如果他一头雾水，说明要么写得太晦涩，要么方法本身没有清晰的逻辑。\n\n可重现性(reproducibility)是最好的去烟雾弹手段——当你提供了完整的代码和数据，任何人都可以验证你的方法是否真如所说的那么好。\n\n教材作者建议：提供代码（ostensive reproducibility，展示性可重现）远优于只提供文字描述（verbal reproducibility，口头可重现）。' },
+      { id: '2.10', title: '砖块与阶梯', note: '科学进步的两种方式：\n\n①砖块(Bricks)：一块一块往上垒，每块砖都在前人基础上增加一点点新东西。大多数论文都是砖块——用新数据验证已有方法、用已有方法解决新场景、对已有方法做小改进。这没问题，科学大厦就是砖块垒起来的。\n\n②阶梯(Ladders)：直接跳到更高的层次，范式转换。在光伏预测中，晴空模型的引入就是一个阶梯——它从根本上改变了"如何去除太阳辐照度中的季节性"这个问题的解法。Gneiting (2007)的校准+锐度范式也是一个阶梯——它重新定义了什么是"好的概率预测"。\n\n教材的告诫：大多数研究者一生都在搬砖，完全正常也很有价值。但要有意识地辨别砖块和阶梯，不要把搬砖误认为爬梯（不要把增量改进包装成革命性创新）。' },
     ],
   },
   {
-    id: 'ch3', num: 3, status: '✅',
+    id: 'ch3', num: 3, status: 'done',
     title: 'Deterministic and Probabilistic Forecasts',
     titleZh: '确定性与概率性预测',
     pages: 'p50-82',
     sections: [
-      { id: '3.1', title: '物理世界的确定性本质', note: '核心推理链：所有混沌系统都是确定性的→天气是混沌系统→天气是确定性的。拉普拉斯妖思想实验。但确定性≠可预测——初始条件不完美+物理定律不完美导致误差指数增长。' },
+      { id: '3.1', title: '物理世界的确定性本质', note: '核心推理链：所有混沌系统都是确定性的（前提一）→ 天气是混沌系统（前提二）→ 因此天气是确定性的（结论）。\n\n这就是拉普拉斯妖(Laplace\'s Demon)的思想实验——如果知道系统的精确初始状态和所有物理定律，未来就完全确定。\n\n但确定性 ≠ 可预测。混沌系统对初始条件极度敏感，微小的测量误差会指数增长。这就是天气预测的理论极限来源。\n\n预测误差的两个来源：\n①初始条件不完美（观测永远有误差，传感器精度、空间覆盖、时间分辨率都有限）\n②动力学定律不完美（NWP中的参数化方案是对真实物理过程的近似，尤其是云微物理和辐射传输）\n\n这两个来源解释了为什么我们需要概率预测——确定性预测永远不够。' },
       { id: '3.2', title: '不确定性与分布预测', subsections: [
-        { id: '3.2.1', title: '概率分布基础', note: 'CDF: F(x)=P(X≤x)，值域[0,1]。PDF: f(x)=F\'(x)，值可>1（常见误解）。辐照度有物理上下界，Gaussian分布(±∞)不适合。' },
-        { id: '3.2.2', title: '预测分布', note: 'Nature选真实分布Gᵢ，预测者发布Fᵢ。分位数：τ分位数=F⁻¹(τ)。⚠️当X范围也是[0,1]时（如κ），极易混淆τ和分位数值。' },
-        { id: '3.2.3', title: '理想预测分布 (Gneiting 2007)', note: '概率预测验证基石。核心范式：在校准(calibration)约束下最大化锐度(sharpness)。校准=说80%就真80%。锐度=区间越窄越好。两者有张力。' },
-        { id: '3.2.4', title: '预测分布类型', note: '四种：参数型(高斯,需截断) / 半参数型(混合高斯,捕获双峰) / 非参数型(KDE) / 经验型(ECDF)。辐照度天然双峰，混合高斯最适合。' },
-        { id: '3.2.5', title: '分布预测的其他表示', note: '分位数预测(报告q₀.₁,q₀.₅,q₀.₉) / 区间预测([α/2,1-α/2]分位数) / 集成预测(多个确定性预测的集合)。' },
+        { id: '3.2.1', title: '概率分布基础', note: 'CDF（累积分布函数）：F_X(x) = P(X ≤ x)，值域 [0,1]，单调不减。\n\nPDF（概率密度函数）：f_X(x) = F\'_X(x)，注意 PDF 的值可以大于 1！这是常见误解——PDF 不是概率，而是概率密度，只有积分后才是概率。\n\n辐照度的特殊性：有物理上下界（0 到约 1.5 × 晴空值），因此 Gaussian 分布（延伸到 ±∞）从物理上就不适合描述辐照度。\n\n需要截断分布或物理约束分布（如 Beta 分布、截断正态分布、或混合分布）。' },
+        { id: '3.2.2', title: '预测分布', note: '概率预测的核心形式。Nature 选择真实分布 Gᵢ，预测者发布预测分布 Fᵢ。预测验证的本质就是比较 Fᵢ 和 Gᵢ。\n\n分位数定义：τ 分位数 = F⁻¹(τ) = inf{x : F(x) > τ}\n- τ 是概率水平（0到1）\n- 分位数值是具体的辐照度/功率值\n\n⚠️ 重要陷阱：当 X 的范围也是 [0,1] 时（如晴空指数 κ），极易混淆 τ（概率水平）和分位数值（κ 值）。例如 0.9 分位数的值可能是 0.95——两个都是 0.X 的数，必须仔细区分。' },
+        { id: '3.2.3', title: '理想预测分布', note: 'Gneiting et al. (2007) 提出概率预测验证的基石论文。核心范式：\n\n在校准(calibration)约束下，最大化锐度(sharpness)\n\n校准：预测分布与观测的统计一致性。如果你说 80% 预测区间，观测真的有 80% 的时间落在区间内。\n\n锐度：预测分布的集中程度。区间越窄越好——说明你的预测越精确。\n\n但两者存在张力：\n- 只追求锐度 → 区间太窄，实际覆盖率远低于标称（过度自信）\n- 只追求校准 → 气候学预测也能校准，但没有任何技巧（大得没用的区间）\n\nGneiting 范式的精髓：先保证校准（诚实），再在此约束下追求锐度（精确）。' },
+        { id: '3.2.4', title: '预测分布类型', note: '四种类型各有适用场景：\n\n①参数型（如高斯 N(μ,σ)）：用固定数量的参数完全描述分布。简单高效，但需要截断以满足辐照度的物理约束。\n\n②半参数型（如混合高斯 2-3个组件）：能捕获多峰分布。辐照度天然双峰（晴天峰 ≈ κ=1.0 + 阴天峰 ≈ κ=0.3-0.5），混合高斯非常适合。\n\n③非参数型（KDE 核密度估计）：不假设分布形状，用核函数从数据中直接估计。灵活但需要选择带宽，计算量较大。\n\n④经验型（ECDF 经验累积分布）：完全无参数，直接用观测频率作为概率。最简单，但需要大量样本才稳健。' },
+        { id: '3.2.5', title: '分布预测的其他表示', note: '完整的分布预测可以用多种等价方式表示：\n\n①分位数预测：报告特定 τ 值对应的分位数。例如 q₀.₁=100, q₀.₅=350, q₀.₉=600 表示"90%的情况下辐照度在100-600 W/m²之间，中位数350"。\n\n②区间预测：(1-α)×100% 中央预测区间 = [q_{α/2}, q_{1-α/2}]。例如 80% 区间 = [q₀.₁, q₀.₉]。\n\n③集成预测：多个确定性预测的集合，每个成员代表一种可能的未来。ECMWF EPS 有 50+1 个成员。集成的分散程度反映不确定性大小。\n\n这三种表示本质相同，只是展示角度不同。选择哪种取决于用户需求。' },
       ]},
       { id: '3.3', title: '集成预测', subsections: [
-        { id: '3.3.1', title: '气象集成类型', note: '三种：动力集成(扰动初始条件,ECMWF EPS 50+1成员)→数据不确定性 / 穷人集成(不同模型)→过程不确定性 / 随机参数化(不同物理方案)→参数不确定性。' },
-        { id: '3.3.2', title: '统计集成预测', note: '数据集成(不同历史长度/Bootstrap/多数据源) / 过程集成(ARIMA族/ETS族/STL/X11/傅里叶/小波分解) / 参数集成(调整ARIMA的p,d,q)。TBATS=三角+Box-Cox+ARMA+趋势+季节。' },
-        { id: '3.3.3', title: '集成学习', note: 'Bagging：Bootstrap+平均，降方差，可并行，保证MSE≤平均但不保证≤最好。Boosting：顺序构建，聚焦错误样本(权重×exp(α))，降偏差，AdaBoost→XGBoost。Stacking：基学习器+超级学习器(通过CV训练)，常用正则化回归。' },
+        { id: '3.3.1', title: '气象集成类型', note: '按不确定性来源分三种：\n\n①动力集成（扰动初始条件）：同一个模型，不同的初始状态。ECMWF EPS 有 50+1 个成员，每个成员从略微不同的初始条件出发。对应数据不确定性。\n\n②穷人集成（不同模型）：ECMWF + GFS + NAM + ... 不同机构的不同模型。对应过程不确定性（不同的物理参数化方案）。\n\n③随机参数化（不同物理方案）：同一个模型框架，但每次运行随机选择不同的云微物理、辐射传输等参数化方案。对应参数不确定性。\n\n三种集成量化了不同来源的不确定性，理想情况下应该组合使用。' },
+        { id: '3.3.2', title: '统计集成预测', note: '三种生成集成的统计策略：\n\n【数据集成】\n- 时序长度扰动（用不同历史长度训练：1年/2年/5年...）\n- Bootstrap 聚合（bagging 的统计基础）\n- 多数据源（地面+卫星+再分析的同一变量不同版本）\n- 空间集成（邻近站点的预测加入集成）\n\n【过程集成】\n- 大量时序模型可选：ARIMA族、ETS族\n- 各种分解方法：STL / X11 / SEATS / 傅里叶 / 小波\n- 分解→预测→重构是经典工作流\n- TBATS = 三角(Fourier) + Box-Cox + ARMA误差 + 趋势 + 季节\n\n【参数集成】\n- 调整 ARIMA 的 (p,d,q) 或 ETS 的状态\n- 与最优参数化相矛盾？但非最优参数化对不确定性量化有价值' },
+        { id: '3.3.3', title: '集成学习', note: '三种核心策略：\n\n【Bagging（Bootstrap Aggregating）】\n创建多个bootstrap样本 → 各自训练基学习器 → 平均预测。降低方差（适合高方差模型如决策树）。基学习器可并行训练。保证集成MSE ≤ 平均基学习器MSE，但不保证 ≤ 最好的。多样性是关键。Out-of-bag样本可用于内部评估。代表：Random Forest。\n\n【Boosting】\n顺序构建，每次聚焦上一轮的错误样本。AdaBoost核心：初始化等权重 → 训练弱分类器 → 计算误差率η → 计算α=log[(1-η)/η] → 错误样本权重×exp(α)。降低偏差（适合高偏差模型如浅树）。代表：XGBoost、LightGBM。\n\n【Stacking】\n两层结构：基学习器(Level 0) + 超级学习器(Level 1)。超级学习器通过交叉验证训练（不需额外hold-out）。常用正则化回归作为超级学习器。' },
       ]},
-      { id: '3.4', title: '深思', note: '本节提出两个深层问题：①统计集成vs集成学习的核心区别是什么？答：是否能访问组件预测。统计集成（穷人集成）可以看到每个组件模型的输出，因此可以做加权组合、校准等精细操作。集成学习工具箱（如sklearn的RandomForest）通常只输出最终组合结果，内部树的预测对用户不可见。②概率预测→确定性预测的转换看似简单，实则暗藏陷阱。如果你用预测分布的均值作为点预测，那评估时应该用MSE（因为MSE在均值处最小化）。如果用中位数作为点预测，应该用MAE（MAE在中位数处最小化）。如果用众数，应该用0-1损失。大多数太阳预测论文从来没问过"我用的点预测是均值还是中位数"——他们只是用sklearn.predict()然后报告RMSE，完全没意识到这个选择会影响评估结果。这个问题看似学术，实际上在偏态分布（如辐照度）下差异显著。' },
+      { id: '3.4', title: '深思', note: '本节提出两个深层问题：\n\n①统计集成 vs 集成学习的核心区别是什么？\n答：是否能访问组件预测。统计集成（穷人集成）可以看到每个组件模型的输出，可以做加权组合、校准等精细操作。集成学习工具箱（如sklearn的RandomForest）通常只输出最终组合结果，内部树的预测对用户不可见。\n\n②概率预测→确定性预测的转换看似简单，实则暗藏陷阱。\n- 用预测分布的均值作为点预测 → 应该用MSE评估（MSE在均值处最小化）\n- 用中位数作为点预测 → 应该用MAE评估（MAE在中位数处最小化）\n- 用众数 → 应该用0-1损失\n\n大多数太阳预测论文从来没问过"我用的点预测是均值还是中位数"——他们只是用sklearn.predict()然后报告RMSE，完全没意识到这个选择会影响评估结果。在偏态分布（如辐照度）下差异显著。' },
     ],
   },
   {
-    id: 'ch4', num: 4, status: '✅',
+    id: 'ch4', num: 4, status: 'done',
     title: 'Solar Forecasting: The New Member of the Band',
     titleZh: '光伏预测：乐队新成员',
     pages: 'p83-128',
     sections: [
-      { id: '4.1', title: '能源预测各领域成熟度', note: 'GEFCom2014首次大规模跨域对比(581人,61国)。成熟度四象限：STLF最成熟/风力概率性最成熟/电价确定性较成熟/光伏两方面都最不成熟(2010s才起步，社区闭塞"living in a bubble")。' },
+      { id: '4.1', title: '能源预测各领域成熟度', note: 'GEFCom2014（全球能源预测竞赛）首次大规模跨域对比——581名参赛者，61个国家，四个赛道：负荷/风力/电价/光伏。\n\nHong et al. (2016) 提出的成熟度四象限（确定性×概率性）：\n- 短期负荷(STLF)：确定性最成熟，概率性较成熟（1980s开始）\n- 风力：概率性最成熟（天气预报传统深厚），确定性较成熟\n- 电价：确定性较成熟（经济学家主导），概率性不成熟\n- 光伏：两方面都最不成熟（2010s才起步）\n\n原因：文献量少 + 社区闭塞（Yang 2019a: "living in a bubble"）。光伏预测社区大量重复发明已有概念，缺乏与其他能源预测领域的交流。' },
       { id: '4.2', title: '负荷预测：微小差异很重要', subsections: [
-        { id: '4.2.1', title: '鸟瞰负荷预测', note: '本质是回归问题。最佳技巧(Hong&Fan 2016)：两阶段法——非黑盒多变量捕主特征+黑盒单变量处理残差。主要特征：星期几/日历/温度(最重要)/层次结构。' },
-        { id: '4.2.2', title: '评估负荷预测质量', note: 'MAPE最常用，典型误差仅3%。1%MAPE≈几十万美元/GW peak。采样不确定性：模型差异可能只有0.002%，需Diebold-Mariano检验。' },
-        { id: '4.2.3', title: '近期创新', note: '纯应用新ML已不够新颖——必须回答why and how。大数据/IoT细粒度监测。峰值负荷预测。网络安全攻击下的鲁棒预测。' },
+        { id: '4.2.1', title: '鸟瞰负荷预测', note: '负荷预测的本质是回归问题，无论用什么模型。\n\n最佳技巧(Hong & Fan 2016)——两阶段法：\n第一阶段：非黑盒多变量模型 → 捕获显著特征（日历效应/温度/负荷模式）\n第二阶段：黑盒单变量模型 → 解释残差的小尺度变化\n组合 > 单阶段\n\n主要特征：星期几（周末vs工作日差异巨大）、日历事件（节假日/特殊事件）、天气状况（温度最重要，因为空调负荷）、层次结构（个体→区域→全网）。\n\n对光伏预测的启示：两阶段法 = 晴空模型（捕获主特征）+ ML（处理κ的残差波动）。' },
+        { id: '4.2.2', title: '评估负荷预测质量', note: 'MAPE是负荷预测最常用指标，典型误差仅3%（中型美国电力公司，日前）。\n\n1% MAPE ≈ 几十万美元/GW peak——微小的精度差异意味着巨大的经济价值。\n\n⚠️ 采样不确定性问题：模型差异可能只有0.002%，远小于采样噪声。仅凭一个测试集上的RMSE差异不能断言模型优劣。\n\n必须使用Diebold-Mariano检验：H₀: 两组预测的损失差异期望为零。只有p-value足够小，才能说"模型A显著优于模型B"。光伏预测论文极少做这个检验。' },
+        { id: '4.2.3', title: '近期创新', note: '纯应用新ML方法已不够新颖——必须回答"why and how"（为什么这个方法在这个场景有效，以及机制是什么）。\n\n新方向：\n- 大数据/IoT带来更细粒度的负荷监测（智能电表秒级数据）\n- 峰值负荷预测（Amara-Ouali et al., 2023）——比平均负荷更重要\n- 网络安全攻击下的鲁棒预测（数据被篡改时如何保持准确性）\n- 分布式能源下的净负荷预测（负荷 - 屋顶光伏 = 净负荷）' },
       ]},
       { id: '4.3', title: '风力预测：一切关于天气', subsections: [
-        { id: '4.3.1', title: 'NWP与风速预测', note: '<3h统计/ML够用，>3h必须NWP。风速是预报变量(动量方程)。验证注意：局部暴露/尺度不匹配/山地困难——全部适用于光伏！' },
-        { id: '4.3.2', title: '风功率曲线建模', note: '非单射映射(同一风速多个功率)。P=½CₚρπR²W³。四区域：启动前/立方增长/额定/停机。S型曲线拟合or回归。' },
-        { id: '4.3.3', title: '统计与机器学习', note: '三用途：NWP后处理/功率曲线建模/直接生成预测。Pinson四大挑战：信息利用/运营整合/大维度验证/质量-价值对应。' },
+        { id: '4.3.1', title: 'NWP与风速预测', note: '<3h：统计/ML方法够用（时序自相关仍然有效）\n>3h：必须依赖NWP（无法从历史数据中预测未来的天气系统移动）\n\n风速是NWP的预报变量（通过动量方程求解），10m风速需通过边界层参数化诊断得到。\n\nNWP验证注意事项：\n- 局部暴露(measurement site surroundings)：站点周围地形和建筑影响观测\n- 尺度不匹配：NWP网格平均 vs 局部点观测，两者物理含义不同\n- 山地区域天然困难：NWP对复杂地形的描述粗糙\n\n⚠️ 以上全部适用于光伏预测！GHI观测同样受局部遮挡、传感器暴露、NWP空间分辨率等影响。' },
+        { id: '4.3.2', title: '风功率曲线建模', note: '风速→风功率是非单射映射（同一风速可能对应多个功率值），因为功率还受空气密度、风向、湍流强度等影响。\n\n理论功率公式：P = ½CₚρπR²W³\nCₚ=功率系数(理论最大0.593,即Betz极限)，ρ=空气密度，R=叶片半径，W=风速\n\n四个运行区域：\n①启动前(cut-in以下)：功率=0\n②立方增长区：P∝W³\n③额定功率区：变桨控制维持额定\n④停机区(cut-out以上)：安全停机，功率=0\n\n建模方法：S型曲线拟合(logistics/Gompertz)或数据驱动回归(ANN/随机森林)。' },
+        { id: '4.3.3', title: '统计与机器学习', note: 'ML在风力预测中的三个用途：\n①NWP后处理（修正系统偏差，如MOS）\n②风功率曲线建模（替代参数化拟合）\n③直接生成预测（纯数据驱动，仅限短期）\n\nPinson (2013) 提出四大挑战：\n①信息利用与提取：如何从高维时空数据中提取有用信号→深度学习/CNN\n②运营整合：预测要能与现有决策系统对接\n③大维度下的概率预测验证：多站点/多时步联合分布如何验证\n④预测质量与价值的对应关系：质量提升是否真的转化为经济价值' },
       ]},
       { id: '4.4', title: '电价预测：因果关系', subsections: [
-        { id: '4.4.1', title: '市场与预测范围', note: '术语差异：欧洲spot=日前价格，澳洲/北美spot=实时价格。时间线：年合同→季月周→日前拍卖→日内/实时→平衡市场。>90%论文聚焦日前。' },
-        { id: '4.4.2', title: '短期价格预测模型', note: '本质是回归Y=x\'β+ε。Lasso/Elastic Net自动变量选择(L1惩罚缩到零)。可扩展到分位数回归(pinball loss)。ANN/LSTM建模非线性和时序动态。VAR同时估计24小时。' },
-        { id: '4.4.3', title: '建模技巧', note: '三大技巧：①方差稳定化VST(电价可为负→用asinh) ②季节分解(趋势+随机分别建模再组合) ③校准窗口平均(多窗口组合>单一最优窗口)。全部可迁移到光伏。' },
+        { id: '4.4.1', title: '市场与预测范围', note: '术语差异（容易混淆）：\n- 欧洲"spot" = 日前价格(day-ahead)\n- 澳洲/北美"spot" = 实时价格(real-time)\n\n电力交易时间线：年合同 → 季/月/周合同 → 日前拍卖 → 日内/实时 → 平衡市场\n\n日前价格最重要（>90%论文聚焦于此），因为日前市场交易量最大。\n\n平衡市场特点：极端波动性（价格可以从50到5000再到-100）+ 结算价格延迟发布（事后才知道真实价格）。' },
+        { id: '4.4.2', title: '短期价格预测模型', note: '本质是回归：Y_{d,h} = x^T_{d,h} β_h + ε_{d,h}\n\n正则化回归（Lasso/Elastic Net）自动变量选择：\n- Lasso: λΣ|β| → L1惩罚将无关变量系数缩到零\n- Elastic Net: λ₁Σ|β| + λ₂Σβ² → 兼顾特征选择和系数稳定性\n- 可扩展到分位数回归（用pinball loss替代MSE loss）\n\nANN/LSTM/GRU：建模非线性关系和时序动态，但可解释性差。\n\nVAR模型：同时估计24个小时的价格向量，捕获小时间的交叉相关性（如h=13的价格受h=12影响）。' },
+        { id: '4.4.3', title: '建模技巧', note: '三大技巧，全部可迁移到光伏预测：\n\n①方差稳定化(VST)：电价有尖峰且可能为负 → 对数变换不可用。解决方案：asinh变换或概率积分变换(PIT)。先标准化（减中位数，除中位数绝对偏差MAD），再做VST。\n\n②季节分解：分解为长期趋势 + 随机成分，独立建模再组合。分解后建模 > 直接对原始价格建模。对ANN和概率预测同样有效。光伏版本 = 晴空分解(κ)。\n\n③校准窗口平均(Calibration Window Averaging)：Hubicka et al. (2019)发现，多窗口预测组合 > 单一"最优"窗口。用56天/84天/112天/...多个训练窗口各跑一遍，然后加权平均。本质是数据集成（Section 3.3.2.1）。' },
       ]},
       { id: '4.5', title: '太阳辐照度的突出特征', subsections: [
-        { id: '4.5.1', title: '晴空期望', note: '光伏预测最大武器！REST2模型：Bnc=E₀ₙ×T_R×T_g×T_o×T_n×T_w×T_a（六种大气衰减相乘）。GEFCom2014唯一用晴空模型的团队=冠军。75+个GHI模型，REST2v9.1质量最高。' },
-        { id: '4.5.2', title: '晴空指数分布', note: '乘法分解(κ)>加法分解(κ\')。κ分布通常双峰(晴天≈1.0+阴天≈0.3-0.5)。⚠️常见错误：假设GHI服从Beta分布(GHI可超晴空值)/直接对GHI算相关性(夸大季节虚假相关)。' },
-        { id: '4.5.3', title: '物理极限', note: '下界≈0。上界≈1.5×晴空值(云增强+反照率增强)。1秒~1900W/m²，1分钟~1600W/m²，>5分钟趋平均。Gaussian不适合辐照度(有物理界)。' },
-        { id: '4.5.4', title: '时空依赖', note: '去季节后相关性完全来自移动云。相机<30min/卫星<4h/NWP>4h。电网需>4h(RTM)+>36h(DAM)→NWP是唯一可靠来源。传感器网络>数公里后衰减，不可扩展。' },
-        { id: '4.5.5', title: '光伏功率曲线 (Model Chain)', note: '四步：分离(kt→Bn,Dh)→转置(GTI)→温度(T_cell)→功率(P)。⚠️最优个体模型组合≠最优Model Chain，误差传播机制复杂，必须整体优化。' },
+        { id: '4.5.1', title: '晴空期望', note: '这是光伏预测与其他一切预测最根本的区别！\n\nREST2晴空模型的核心方程：\nB_{nc} = E₀ₙ × T_R × T_g × T_o × T_n × T_w × T_a\n六种大气衰减过程的透射率相乘：\n- T_R: Rayleigh散射（空气分子）\n- T_g: 混合气体吸收（CO₂等）\n- T_o: 臭氧吸收\n- T_n: NO₂吸收\n- T_w: 水汽吸收\n- T_a: 气溶胶衰减\n\nGHI_clear = BNI_clear × cos(Z) + DHI_clear\n\nSun et al. (2021a, 2019) 完成了最全面的比较：75个GHI模型，95个BNI/DHI模型。REST2v9.1质量最高。\n\n⚡ GEFCom2014关键事实：唯一使用晴空模型的团队 = 冠军。所有其他团队的预测"黯然失色"。' },
+        { id: '4.5.2', title: '晴空指数分布', note: '乘法分解 κ = GHI / GHI_clear 优于加法分解 κ\' = GHI - GHI_clear\n\n原因：加法分解后振幅仍随时间变化（中午的偏差比早晨大得多），没有真正去除季节性。乘法分解将GHI归一化到[0, ~1.5]范围，季节性被晴空模型完全吸收。\n\nκ分布通常双峰：\n- 晴天峰 ≈ 1.0（云很少，辐照度接近晴空值）\n- 阴天峰 ≈ 0.3-0.5（厚云遮挡）\n- 干旱地区（如Desert Rock）可能只有晴天单峰\n\n⚠️ 常见错误：\n①假设GHI服从Beta分布——物理上不合理（GHI可超过晴空值，即κ>1）\n②直接对GHI计算相关性——夸大季节性虚假相关（上海和洛杉矶的GHI相关性高，但无因果关系，只是都在北半球有相同的季节模式）' },
+        { id: '4.5.3', title: '物理极限', note: '下界：理论上0（热电偶偏移可能出现小负值，实践中忽略）\n\n上界（云增强效应）：约1.5 × 晴空值\n- 1秒分辨率：最高约1900 W/m²\n- 1分钟分辨率：最高约1600 W/m²\n- >5分钟：云增强趋于平均化\n- 100kW光伏电站：峰值可达约1400 W/m²（约1.5×晴空值）\n\n云增强的物理机制：太阳周围的云边缘将额外的散射辐射聚焦到地面，加上地面反照率反射，可以使瞬时GHI显著超过晴空值。\n\nAC功率上限：逆变器额定功率（过配电站DC:AC>2时产生削减效应clipping）。\n\nGaussian分布不适合辐照度：有物理上下界，高斯延伸到±∞。' },
+        { id: '4.5.4', title: '时空依赖', note: '去季节后（即κ的时空相关性），相关性完全来自移动云。\n\n各预测方法的有效范围：\n- 天空相机：<30分钟（假设"冻结"云场，几分钟内有效）\n- 卫星：<4小时（CMV平流假设，数小时内有效）\n- NWP：4h → 15天（唯一能求解云动力学的方法）\n- 传感器网络：<数公里有效，不可扩展到电网尺度\n\n教材推导的核心结论：\n前提1：电网需要 >4h (RTM) 和 >36h (DAM) 的预测\n前提2：相机/卫星/传感器网络都达不到这个范围\n结论：NWP是日前/日内电网调度的唯一可靠来源\n\n这个结论直接否定了"纯数据驱动方法可以替代NWP"的幻想——至少在日前预测范围内不行。' },
+        { id: '4.5.5', title: '光伏功率曲线 (Model Chain)', note: '最简Model Chain四步公式：\n\n①分离模型：kt = Gh/E₀ → 用经验关系估计Bn（直射）和Dh（散射）\n②转置方程：Gc = Bn·cos(θ) + Rd·Dh + ρg·Rr·Gh\n  - Bn·cos(θ)：直射在面板法线方向的投影\n  - Rd·Dh：天空散射辐照度\n  - ρg·Rr·Gh：地面反射辐照度\n③温度模型：T_cell = T_amb + (NOCT-20)/800 × Gc\n  - NOCT=标准工作温度(约45°C)\n④功率方程：P = P_dc_ref × (Gc/1000) × [1 + γ(T_cell - 25)]\n  - γ=温度系数(典型-0.004/°C)\n\n⚠️ 最佳个体模型组合 ≠ 最佳Model Chain\n误差传播机制复杂——分离模型的偏差可能被转置模型放大或抵消。必须对整个链进行端到端优化。' },
       ]},
       { id: '4.6', title: '共享研究前沿', subsections: [
-        { id: '4.6.1', title: '先进物理预测', note: '能源预测者≠天气预测者，知识不匹配。大多数只用NWP现成产品。机会：用全球NWP作边界条件运行区域高分辨率(WRF-Solar)。' },
-        { id: '4.6.2', title: '机器学习', note: 'ML在能源预测已30+年。深度学习需大量数据(几年单站不够)。当前文献重形式轻本质。物理特征必须融入ML。"没有决定性证据结束DL辩论"。' },
-        { id: '4.6.3', title: '集成与概率预测', note: '概率预测是最重要的思维转变。能源预测者是天气预测用户，主要工作是后处理。工业界接受度低——保守运营，与运营脱节的研究没有内在价值。' },
-        { id: '4.6.4', title: '层次预测', note: '个体→区域→全网必须聚合一致。最优调和(Hyndman 2011)利用所有层级信息。电网法规要求系统所有者提交预测(合规+减罚款)。可统一负荷+风力+光伏为净负荷预测。' },
+        { id: '4.6.1', title: '先进物理预测', note: '能源预测者 ≠ 天气预测者，知识背景不匹配。\n\n大多数光伏预测论文只用NWP的现成产品（如GFS/ECMWF的GHI输出），不深入理解NWP的物理过程。\n\n机会：用全球NWP作为边界条件，运行区域高分辨率模型（如WRF-Solar），分辨率可达1-3km。\n\nWRF-Solar的特殊性：专门针对太阳辐照度优化了云微物理和辐射传输参数化，比通用NWP的GHI预测更准确。\n\n但需要气象学背景知识来配置和运行区域模型——这是大多数光伏预测从业者的知识盲区。' },
+        { id: '4.6.2', title: '机器学习', note: 'ML在能源预测中已有30+年历史，不是新概念。\n\n深度学习需要大量训练数据支撑——几年单站小时数据（~26,000个数据点）通常不够深度学习发挥优势。Markovics & Mayer的68模型比较证实了这一点。\n\n当前文献重形式轻本质——大量页面讨论网络结构（层数/节点数/激活函数），很少关注输入特征的物理含义和应用适配。\n\n物理特征必须融入ML，不能指望算法自动发现。例如：不给晴空指数κ，让LSTM自己学习"太阳会升起"，是巨大的资源浪费。\n\n教材直言："信仰深度学习的人会反对这些观点，但目前没有决定性证据结束这场辩论。"' },
+        { id: '4.6.3', title: '集成与概率预测', note: '概率预测是最重要的思维转变——从"明天发多少电"到"明天发电量的不确定性有多大"。\n\n能源预测者是天气预测的用户，不是生产者。主要工作是后处理（把NWP的原始输出转化为更好的预测产品），而不是从头开始做天气预报。\n\n工业界接受度仍低——电力系统运营极其保守，调度员习惯了确定性数字（"明天中午发500kW"），不习惯概率区间（"80%概率在400-600kW之间"）。\n\nYang et al. (2021a) 的尖锐观点：与运营标准脱节的预测研究没有内在价值。如果你的概率预测不能被电网调度系统使用，那它的价值为零。' },
+        { id: '4.6.4', title: '层次预测', note: '电网中的光伏发电有天然的层次结构：个体电站 → 区域汇总 → 全网汇总。\n\n各层级的预测必须满足聚合一致性：所有个体电站的预测之和 = 区域预测。但独立做出的预测通常不一致。\n\n传统方法（top-down / bottom-up / middle-out）只利用单层信息。\n\n现代方法——最优调和(Hyndman et al., 2011)：先独立预测所有层级，再用最小方差调和矩阵将它们调和为一致的预测。利用了所有层级的信息，证明优于任何单层方法。\n\n电网法规要求系统所有者提交功率预测（合规+减少不平衡罚款）。层次预测还可以将负荷+风力+光伏统一为净负荷预测。' },
       ]},
       { id: '4.7', title: '常见问题与建议', subsections: [
-        { id: '4.7.1', title: '常见问题', note: '①数据集有限(专有/上下文特定→不可泛化) ②验证不足(错误指标如对零值用MAPE/弱基准/验证集太小，至少需一年小时级) ③术语不一致(reinvent jargon)。' },
-        { id: '4.7.2', title: '建议', note: '①文献综述注重逻辑流 ②术语精确(不说短期,说horizon=24h) ③提供代码+数据(ostensive>verbal) ④选有专家的期刊 ⑤坚持不懈——理解∝时间。' },
+        { id: '4.7.1', title: '常见问题', note: '光伏预测文献中的三大问题：\n\n①数据集有限：专有/上下文特定的数据集 → 结论不可泛化。一个在Arizona有效的模型在上海可能完全失效，因为气候类型完全不同。\n\n②验证不足：\n- 错误指标（对接近零的值用MAPE → 除以零附近的小数 → MAPE爆炸到数百%）\n- 弱基准（只和自家弱版本比，不和领域标准基准比）\n- 验证集太小（Rob Hyndman: "That is just silly"）\n- 至少需要一整年小时级数据才能覆盖所有季节和天气类型\n\n③术语不一致：不同论文对同一概念使用不同名称(reinvent jargon)，造成文献膨胀和理解困难。' },
+        { id: '4.7.2', title: '建议', note: '教材给出的五条实践建议：\n\n①文献综述注重逻辑流(narrative flow)——不是"who did what"的流水账名册，而是"为什么A方法不够→B方法解决了什么→但B方法又有什么局限→所以我们需要C"。\n\n②术语精确：不说"短期预测"（每个人的"短期"定义不同），说"horizon=24h, resolution=1h, update=6h"。\n\n③提供代码+数据增强可重现性：ostensive > verbal reproducibility（展示性可重现 > 口头可重现）。\n\n④选有领域专家的期刊，不是只看影响因子。Applied Energy有光伏专家审稿，MDPI的某些期刊可能没有。\n\n⑤坚持不懈——理解与时间成正比，没有捷径。' },
       ]},
-      { id: '4.8', title: '章节总结', note: '终极结论：晴空模型是最重要的考虑/纯数据驱动单站方法seriously handicapped/最佳路径=辐照度→后处理→Model Chain→功率/需要特殊数据的方法不值得推广。' },
+      { id: '4.8', title: '章节总结', note: '教材的终极结论（Ch4核心take-away）：\n\n①晴空模型是光伏预测最重要的考虑——没有之一。GEFCom2014已经证明了这一点。\n\n②纯数据驱动的单站方法 seriously handicapped——无论模型多复杂，如果不使用物理知识（晴空模型、NWP），在日前预测中就不可能有竞争力。\n\n③最佳预测路径：NWP辐照度预测 → 晴空归一化 → ML后处理 → 还原辐照度 → Model Chain → 功率 → 概率化\n\n④需要很特殊数据的方法不值得推广——如果一个方法只在你有卫星图像+天空相机+50个邻近站点数据时才有效，那它对大多数实际应用场景没有价值。' },
     ],
   },
   {
-    id: 'ch5', num: 5, status: '🔜',
+    id: 'ch5', num: 5, status: 'wip',
     title: 'A Guide to Good Housekeeping',
     titleZh: '良好工作习惯指南',
     pages: 'p129-168',
@@ -126,7 +127,7 @@ const chapters = [
         { id: '5.3.3', title: '缺失值填充' },
       ]},
       { id: '5.4', title: '晴空模型的选择', subsections: [
-        { id: '5.4.1', title: 'REST2, McClear, Ineichen–Perez' },
+        { id: '5.4.1', title: 'REST2, McClear, Ineichen-Perez' },
         { id: '5.4.2', title: '获取与计算' },
         { id: '5.4.3', title: 'MSE 缩放' },
         { id: '5.4.4', title: '平稳性检验' },
@@ -144,336 +145,345 @@ const chapters = [
       ]},
     ],
   },
-  { id: 'ch6', num: 6, status: '🔒', title: 'Data for Solar Forecasting', titleZh: '光伏预测数据', pages: 'p169-220', sections: [] },
-  { id: 'ch7', num: 7, status: '🔒', title: 'Base Methods for Solar Forecast Generation', titleZh: '基础预测方法', pages: 'p221-293', sections: [] },
-  { id: 'ch8', num: 8, status: '🔒', title: 'Post-processing Solar Forecasts', titleZh: '后处理技术', pages: 'p294-362', sections: [] },
-  { id: 'ch9', num: 9, status: '🔒', title: 'Deterministic Forecast Verification', titleZh: '确定性预测验证', pages: 'p363-398', sections: [] },
-  { id: 'ch10', num: 10, status: '🔒', title: 'Probabilistic Forecast Verification', titleZh: '概率预测验证', pages: 'p399-438', sections: [] },
-  { id: 'ch11', num: 11, status: '🔒', title: 'Irradiance-to-Power Conversion', titleZh: '辐照度→功率转换', pages: 'p439-515', sections: [] },
-  { id: 'ch12', num: 12, status: '🔒', title: 'Hierarchical Forecasting and Firm Power Delivery', titleZh: '层次预测与稳固功率交付', pages: 'p516-560', sections: [] },
+  { id: 'ch6', num: 6, status: 'locked', title: 'Data for Solar Forecasting', titleZh: '光伏预测数据', pages: 'p169-220', sections: [] },
+  { id: 'ch7', num: 7, status: 'locked', title: 'Base Methods for Solar Forecast Generation', titleZh: '基础预测方法', pages: 'p221-293', sections: [] },
+  { id: 'ch8', num: 8, status: 'locked', title: 'Post-processing Solar Forecasts', titleZh: '后处理技术', pages: 'p294-362', sections: [] },
+  { id: 'ch9', num: 9, status: 'locked', title: 'Deterministic Forecast Verification', titleZh: '确定性预测验证', pages: 'p363-398', sections: [] },
+  { id: 'ch10', num: 10, status: 'locked', title: 'Probabilistic Forecast Verification', titleZh: '概率预测验证', pages: 'p399-438', sections: [] },
+  { id: 'ch11', num: 11, status: 'locked', title: 'Irradiance-to-Power Conversion', titleZh: '辐照度→功率转换', pages: 'p439-515', sections: [] },
+  { id: 'ch12', num: 12, status: 'locked', title: 'Hierarchical Forecasting and Firm Power Delivery', titleZh: '层次预测与稳固功率交付', pages: 'p516-560', sections: [] },
 ];
+
+// Helper: flatten all notes for content panel
+function getAllNotes(chapters: any[]) {
+  const notes: any[] = [];
+  for (const ch of chapters) {
+    for (const sec of ch.sections) {
+      if (sec.note) notes.push({ id: `${ch.id}-${sec.id}`, chNum: ch.num, secId: sec.id, title: sec.title, note: sec.note });
+      if (sec.subsections) {
+        for (const sub of sec.subsections) {
+          if (sub.note) notes.push({ id: `${ch.id}-${sub.id}`, chNum: ch.num, secId: sub.id, title: sub.title, note: sub.note });
+        }
+      }
+    }
+  }
+  return notes;
+}
+const allNotes = getAllNotes(chapters);
 ---
 
 <!doctype html>
 <html lang="zh">
 <head>
   <BaseHead title={`📖 教材笔记 — ${SITE_TITLE}`} description="Yang & Kleissl (2024) 教材逐章逐节精读笔记" />
-  <meta name="color-scheme" content="dark" />
   <style>
-    .textbook-header {
-      text-align: center;
-      padding: 2rem 0 1rem;
-    }
-    .textbook-header h1 {
-      font-size: 1.6rem;
-      color: var(--accent);
-      margin-bottom: 0.5rem;
-    }
-    .textbook-header .meta {
-      color: var(--text-muted);
-      font-size: 0.85rem;
-      line-height: 1.6;
-    }
-    .nav-links {
+    /* ── Layout: sidebar + content ── */
+    .tb-wrap {
       display: flex;
-      gap: 1rem;
-      justify-content: center;
-      margin: 1.5rem 0;
-    }
-    .nav-links a {
-      padding: 0.4rem 1rem;
-      border-radius: 99px;
-      border: 1px solid var(--border);
-      background: var(--bg-card);
-      color: var(--text-muted);
-      font-size: 0.85rem;
-      text-decoration: none;
-      transition: all 0.2s;
-    }
-    .nav-links a:hover, .nav-links a.active {
-      border-color: var(--accent);
-      color: var(--accent);
-      background: rgba(245, 158, 11, 0.1);
-    }
-    .chapter-list {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 0 1rem 3rem;
-    }
-    .chapter {
-      margin-bottom: 0.5rem;
-      border: 1px solid var(--border);
-      border-radius: 12px;
+      height: calc(100vh - 64px);
       overflow: hidden;
+    }
+
+    /* ── Sidebar (left outline) ── */
+    .tb-sidebar {
+      width: 280px;
+      min-width: 280px;
+      border-right: 1px solid var(--border);
       background: var(--bg-card);
-    }
-    .chapter-head {
       display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      padding: 0.9rem 1.2rem;
-      cursor: pointer;
-      user-select: none;
-      transition: background 0.2s;
+      flex-direction: column;
+      overflow: hidden;
     }
-    .chapter-head:hover {
-      background: rgba(245, 158, 11, 0.05);
-    }
-    .chapter-head .arrow {
-      font-size: 0.7rem;
+    .tb-sidebar-header {
+      padding: 1rem;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.8rem;
       color: var(--text-muted);
-      transition: transform 0.25s;
-      flex-shrink: 0;
     }
-    .chapter.open > .chapter-head .arrow {
-      transform: rotate(90deg);
-    }
-    .chapter-head .status {
-      flex-shrink: 0;
+    .tb-sidebar-header h2 {
       font-size: 0.9rem;
-    }
-    .chapter-head .num {
       color: var(--accent);
-      font-weight: 700;
-      font-size: 0.85rem;
-      flex-shrink: 0;
-      min-width: 2.5rem;
+      margin: 0 0 0.3rem;
     }
-    .chapter-head .info {
-      flex: 1;
-      min-width: 0;
-    }
-    .chapter-head .en-title {
-      font-size: 0.82rem;
-      color: var(--text);
-      font-weight: 600;
-    }
-    .chapter-head .zh-title {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-    }
-    .chapter-head .pages {
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      flex-shrink: 0;
-    }
-    .chapter-body {
-      display: none;
-      border-top: 1px solid var(--border);
-      padding: 0.5rem 0;
-    }
-    .chapter.open > .chapter-body {
-      display: block;
-    }
-    /* Sections */
-    .section {
-      margin: 0.2rem 0.8rem;
-      border-radius: 8px;
-      overflow: hidden;
-    }
-    .section-head {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      padding: 0.55rem 0.8rem;
-      cursor: pointer;
-      border-radius: 8px;
-      transition: background 0.2s;
-    }
-    .section-head:hover {
-      background: rgba(245, 158, 11, 0.08);
-    }
-    .section-head .arrow {
-      font-size: 0.6rem;
-      color: var(--text-muted);
-      transition: transform 0.25s;
-      flex-shrink: 0;
-    }
-    .section.open > .section-head .arrow {
-      transform: rotate(90deg);
-    }
-    .section-head .sid {
-      color: var(--accent-green);
-      font-weight: 600;
-      font-size: 0.8rem;
-      min-width: 2rem;
-    }
-    .section-head .stitle {
-      font-size: 0.82rem;
-      color: var(--text);
-    }
-    .section-body {
-      display: none;
-      padding: 0 0.8rem 0.5rem 2.8rem;
-    }
-    .section.open > .section-body {
-      display: block;
-    }
-    .section-note {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      line-height: 1.7;
-      padding: 0.5rem 0.8rem;
-      background: rgba(0,0,0,0.15);
-      border-radius: 8px;
-      border-left: 3px solid var(--accent);
-      margin-bottom: 0.4rem;
-    }
-    /* Subsections */
-    .subsection {
-      margin: 0.15rem 0;
-      border-radius: 6px;
-    }
-    .subsection-head {
+    .tb-sidebar-header .progress {
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      padding: 0.4rem 0.6rem;
-      cursor: pointer;
-      border-radius: 6px;
-      transition: background 0.2s;
+      margin-top: 0.5rem;
     }
-    .subsection-head:hover {
-      background: rgba(61, 214, 140, 0.08);
-    }
-    .subsection-head .arrow {
-      font-size: 0.55rem;
-      color: var(--text-muted);
-      transition: transform 0.25s;
-    }
-    .subsection.open > .subsection-head .arrow {
-      transform: rotate(90deg);
-    }
-    .subsection-head .ssid {
-      color: var(--accent-blue, #38bdf8);
-      font-size: 0.78rem;
-      font-weight: 600;
-      min-width: 2.5rem;
-    }
-    .subsection-head .sstitle {
-      font-size: 0.78rem;
-      color: var(--text);
-    }
-    .subsection-body {
-      display: none;
-      padding: 0.2rem 0 0.3rem 2.5rem;
-    }
-    .subsection.open > .subsection-body {
-      display: block;
-    }
-    .sub-note {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      line-height: 1.65;
-      padding: 0.4rem 0.7rem;
-      background: rgba(0,0,0,0.1);
-      border-radius: 6px;
-      border-left: 2px solid var(--accent-green);
-    }
-    .empty-note {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      opacity: 0.5;
-      padding: 0.3rem 0.7rem;
-      font-style: italic;
-    }
-    .progress-bar {
-      max-width: 800px;
-      margin: 0 auto 1.5rem;
-      padding: 0 1rem;
-    }
-    .progress-track {
-      height: 6px;
-      background: var(--border);
-      border-radius: 3px;
+    .tb-sidebar-header .progress-track {
+      flex: 1; height: 4px;
+      background: var(--border); border-radius: 2px;
       overflow: hidden;
     }
-    .progress-fill {
+    .tb-sidebar-header .progress-fill {
       height: 100%;
-      background: linear-gradient(90deg, var(--accent), var(--accent-green));
-      border-radius: 3px;
-      transition: width 0.5s;
+      background: linear-gradient(90deg, var(--accent), #3dd68c);
+      border-radius: 2px;
     }
-    .progress-label {
+    .tb-sidebar-header .progress-text {
+      font-size: 0.7rem; white-space: nowrap;
+    }
+    .tb-tree {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0.5rem 0;
+    }
+
+    /* Tree items */
+    .tree-ch {
+      user-select: none;
+    }
+    .tree-ch-head {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.6rem 0.35rem 0.5rem;
+      cursor: pointer;
+      font-size: 0.82rem;
+      color: var(--text);
+      transition: background 0.15s;
+    }
+    .tree-ch-head:hover { background: rgba(245,158,11,0.08); }
+    .tree-ch-head .arrow {
+      font-size: 0.55rem;
+      color: var(--text-muted);
+      transition: transform 0.2s;
+      width: 0.8rem;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .tree-ch.open > .tree-ch-head .arrow { transform: rotate(90deg); }
+    .tree-ch-head .status-dot {
+      width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+    }
+    .status-done { background: #3dd68c; }
+    .status-wip { background: var(--accent); }
+    .status-locked { background: var(--text-muted); opacity: 0.4; }
+    .tree-ch-head .ch-label { font-weight: 600; color: var(--accent); margin-right: 0.3rem; flex-shrink: 0; }
+    .tree-ch-head .ch-title { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+    .tree-ch-body { display: none; }
+    .tree-ch.open > .tree-ch-body { display: block; }
+
+    .tree-sec {
+      user-select: none;
+    }
+    .tree-sec-head {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.25rem 0.6rem 0.25rem 1.6rem;
+      cursor: pointer;
+      font-size: 0.78rem;
+      color: var(--text);
+      transition: background 0.15s;
+    }
+    .tree-sec-head:hover { background: rgba(245,158,11,0.06); }
+    .tree-sec-head .arrow {
+      font-size: 0.5rem; color: var(--text-muted);
+      transition: transform 0.2s; width: 0.7rem; text-align: center; flex-shrink: 0;
+    }
+    .tree-sec.open > .tree-sec-head .arrow { transform: rotate(90deg); }
+    .tree-sec-head .sec-id { color: #3dd68c; font-weight: 600; min-width: 1.8rem; flex-shrink: 0; }
+    .tree-sec-head .sec-title { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+    .tree-sec-body { display: none; }
+    .tree-sec.open > .tree-sec-body { display: block; }
+
+    .tree-sub {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.2rem 0.6rem 0.2rem 2.8rem;
+      cursor: pointer;
       font-size: 0.75rem;
       color: var(--text-muted);
-      text-align: right;
-      margin-top: 0.3rem;
+      transition: background 0.15s;
+    }
+    .tree-sub:hover { background: rgba(61,214,140,0.06); }
+    .tree-sub.active { background: rgba(245,158,11,0.12); color: var(--accent); }
+    .tree-sub .sub-id { color: #38bdf8; font-weight: 600; min-width: 2.2rem; flex-shrink: 0; }
+    .tree-sub .sub-title { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .tree-sub .no-note { opacity: 0.4; font-style: italic; }
+
+    /* Section-level clickable (no subsections) */
+    .tree-sec-head.clickable.active { background: rgba(245,158,11,0.12); }
+    .tree-sec-head.clickable.active .sec-title { color: var(--accent); }
+
+    /* ── Content panel (right) ── */
+    .tb-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 2rem 3rem;
+    }
+    .tb-content .welcome {
+      text-align: center;
+      color: var(--text-muted);
+      padding-top: 15vh;
+    }
+    .tb-content .welcome h2 { color: var(--accent); font-size: 1.4rem; margin-bottom: 0.5rem; }
+    .tb-content .welcome p { font-size: 0.9rem; line-height: 1.7; }
+    .tb-content .welcome .links { margin-top: 1.5rem; display: flex; gap: 1rem; justify-content: center; }
+    .tb-content .welcome .links a {
+      padding: 0.4rem 1rem; border-radius: 99px; border: 1px solid var(--border);
+      background: var(--bg-card); color: var(--text-muted); text-decoration: none; font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+    .tb-content .welcome .links a:hover { border-color: var(--accent); color: var(--accent); }
+
+    .note-panel { display: none; }
+    .note-panel.active { display: block; }
+    .note-panel .note-breadcrumb {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+    .note-panel h2 {
+      font-size: 1.3rem;
+      color: var(--accent);
+      margin: 0 0 1rem;
+      padding-bottom: 0.8rem;
+      border-bottom: 2px solid var(--accent);
+    }
+    .note-panel .note-body {
+      font-size: 0.92rem;
+      line-height: 1.9;
+      color: var(--text);
+      white-space: pre-wrap;
+      max-width: 700px;
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .tb-sidebar { width: 240px; min-width: 240px; }
+      .tb-content { padding: 1.5rem 1rem; }
+    }
+    @media (max-width: 600px) {
+      .tb-wrap { flex-direction: column; height: auto; }
+      .tb-sidebar {
+        width: 100%; min-width: 100%;
+        max-height: 50vh;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+      .tb-content { min-height: 50vh; }
     }
   </style>
 </head>
 <body>
   <Header />
-  <main>
-    <div class="textbook-header">
-      <h1>📖 Solar Irradiance and PV Power Forecasting</h1>
-      <div class="meta">
-        Dazhi Yang & Jan Kleissl · CRC Press, 2024 · 682页 · 12章<br/>
-        逐章逐节精读笔记 · 点击章节展开详细内容
+  <div class="tb-wrap">
+    <!-- ── Sidebar outline ── -->
+    <aside class="tb-sidebar">
+      <div class="tb-sidebar-header">
+        <h2>📖 目录</h2>
+        <div style="font-size:0.72rem; line-height:1.4;">
+          Solar Irradiance and PV Power Forecasting<br/>
+          Yang & Kleissl · CRC Press, 2024
+        </div>
+        <div class="progress">
+          <div class="progress-track"><div class="progress-fill" style="width:33.3%"></div></div>
+          <span class="progress-text">4/12</span>
+        </div>
       </div>
-    </div>
-
-    <div class="nav-links">
-      <a href="/blog/?series=solar-book">← 返回博客</a>
-      <a href="/blog/textbook-thinking/" class="active">🧠 思维训练</a>
-    </div>
-
-    <div class="progress-bar">
-      <div class="progress-track">
-        <div class="progress-fill" style="width: 33.3%"></div>
-      </div>
-      <div class="progress-label">学习进度：4 / 12 章 (33%)</div>
-    </div>
-
-    <div class="chapter-list">
-      {chapters.map(ch => (
-        <div class="chapter" data-ch={ch.id}>
-          <div class="chapter-head" onclick={`this.parentElement.classList.toggle('open')`}>
-            <span class="arrow">▶</span>
-            <span class="status">{ch.status}</span>
-            <span class="num">Ch{ch.num}</span>
-            <span class="info">
-              <div class="en-title">{ch.title}</div>
-              <div class="zh-title">{ch.titleZh}</div>
-            </span>
-            <span class="pages">{ch.pages}</span>
-          </div>
-          <div class="chapter-body">
-            {ch.sections.length === 0 ? (
-              <div class="empty-note">📝 尚未学习，敬请期待</div>
-            ) : ch.sections.map(sec => (
-              <div class="section">
-                <div class="section-head" onclick={`this.parentElement.classList.toggle('open')`}>
-                  <span class="arrow">▶</span>
-                  <span class="sid">{sec.id}</span>
-                  <span class="stitle">{sec.title}</span>
-                </div>
-                <div class="section-body">
-                  {sec.note && <div class="section-note">{sec.note}</div>}
-                  {sec.subsections && sec.subsections.map(sub => (
-                    <div class="subsection">
-                      <div class="subsection-head" onclick={`this.parentElement.classList.toggle('open')`}>
-                        <span class="arrow">▶</span>
-                        <span class="ssid">{sub.id}</span>
-                        <span class="sstitle">{sub.title}</span>
-                      </div>
-                      <div class="subsection-body">
-                        {sub.note ? (
-                          <div class="sub-note">{sub.note}</div>
-                        ) : (
-                          <div class="empty-note">📝 待学习</div>
-                        )}
-                      </div>
+      <nav class="tb-tree" id="tree">
+        {chapters.map(ch => (
+          <div class="tree-ch" data-ch={ch.id}>
+            <div class="tree-ch-head">
+              <span class="arrow">▶</span>
+              <span class={`status-dot status-${ch.status}`}></span>
+              <span class="ch-label">Ch{ch.num}</span>
+              <span class="ch-title">{ch.title}</span>
+            </div>
+            <div class="tree-ch-body">
+              {ch.sections.length === 0 ? (
+                <div class="tree-sub"><span class="no-note">尚未学习</span></div>
+              ) : ch.sections.map(sec => (
+                sec.subsections ? (
+                  <div class="tree-sec">
+                    <div class={`tree-sec-head${sec.note ? ' clickable' : ''}`} data-note-id={sec.note ? `${ch.id}-${sec.id}` : undefined}>
+                      <span class="arrow">▶</span>
+                      <span class="sec-id">{sec.id}</span>
+                      <span class="sec-title">{sec.title}</span>
                     </div>
-                  ))}
-                </div>
-              </div>
-            ))}
+                    <div class="tree-sec-body">
+                      {sec.subsections.map((sub: any) => (
+                        <div class={`tree-sub${sub.note ? '' : ' no-note-item'}`} data-note-id={sub.note ? `${ch.id}-${sub.id}` : undefined}>
+                          <span class="sub-id">{sub.id}</span>
+                          <span class={`sub-title${sub.note ? '' : ' no-note'}`}>{sub.title}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ) : (
+                  <div class={`tree-sub${sec.note ? '' : ' no-note-item'}`} data-note-id={sec.note ? `${ch.id}-${sec.id}` : undefined} style="padding-left:1.6rem;">
+                    <span class="sub-id">{sec.id}</span>
+                    <span class={`sub-title${sec.note ? '' : ' no-note'}`}>{sec.title}</span>
+                  </div>
+                )
+              ))}
+            </div>
           </div>
+        ))}
+      </nav>
+    </aside>
+
+    <!-- ── Content panel ── -->
+    <main class="tb-content" id="content">
+      <div class="welcome" id="welcomePanel">
+        <h2>📖 教材精读笔记</h2>
+        <p>
+          点击左侧目录展开章节<br/>
+          选择小节查看详细笔记
+        </p>
+        <div class="links">
+          <a href="/blog/">← 返回博客</a>
+          <a href="/blog/textbook-thinking/">🧠 思维训练</a>
+        </div>
+      </div>
+      {allNotes.map(n => (
+        <div class="note-panel" id={`note-${n.id}`}>
+          <div class="note-breadcrumb">Ch{n.chNum} › {n.secId}</div>
+          <h2>{n.secId} {n.title}</h2>
+          <div class="note-body">{n.note}</div>
         </div>
       ))}
-    </div>
-  </main>
-  <Footer />
+    </main>
+  </div>
+
+  <script is:inline>
+    // Toggle chapter
+    document.querySelectorAll('.tree-ch-head').forEach(el => {
+      el.addEventListener('click', () => el.parentElement.classList.toggle('open'));
+    });
+    // Toggle section
+    document.querySelectorAll('.tree-sec-head').forEach(el => {
+      el.addEventListener('click', (e) => {
+        const sec = el.parentElement;
+        // If has note and is clickable, show note; otherwise just toggle
+        if (el.dataset.noteId) {
+          showNote(el.dataset.noteId, el);
+        }
+        sec.classList.toggle('open');
+      });
+    });
+    // Click subsection → show note
+    document.querySelectorAll('.tree-sub[data-note-id]').forEach(el => {
+      el.addEventListener('click', () => showNote(el.dataset.noteId, el));
+    });
+
+    function showNote(noteId, clickedEl) {
+      // Hide all notes
+      document.querySelectorAll('.note-panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('welcomePanel').style.display = 'none';
+      // Show target
+      const target = document.getElementById('note-' + noteId);
+      if (target) target.classList.add('active');
+      // Update active state
+      document.querySelectorAll('.tree-sub.active, .tree-sec-head.active').forEach(el => el.classList.remove('active'));
+      clickedEl.classList.add('active');
+    }
+  </script>
 </body>
 </html>
