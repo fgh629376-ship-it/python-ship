@@ -52,3 +52,32 @@ GHI can reach ~1.5× clear-sky value due to cloud enhancement. At 1-second resol
 ---
 
 > **Core principle**: Solar forecasting's unique advantage is leverageable physics (clear-sky model + Model Chain). Abandoning physics for pure data-driven methods is a massive waste.
+
+---
+
+## Appendix: Ch4 Full Supplement
+
+### Price Forecasting Tricks (Transferable to Solar)
+
+1. **Variance Stabilizing Transform (VST)**: Use `np.arcsinh()` instead of `np.log()` (handles negative values). Solar: useful for cloud-enhancement outliers.
+2. **Seasonal decomposition**: Decompose into trend + stochastic, model separately, combine. Solar: residuals after clear-sky removal can be further decomposed.
+3. **Calibration window averaging**: Combine predictions from multiple training window lengths instead of picking one "optimal" length. Works for solar too.
+
+### Hierarchical Forecasting
+
+Individual → regional → grid-level forecasts must be **aggregation consistent**. Modern approach: Optimal Reconciliation (Hyndman et al., 2011) uses all hierarchy levels simultaneously, improving both consistency and accuracy.
+
+### Industry Reality
+
+- Probabilistic forecast adoption remains low — grid operators prefer worst-case planning
+- **Textbook verdict**: "Purely data-driven single-location methods are seriously handicapped, regardless of complexity"
+- **Best path**: Forecast irradiance → post-process → Model Chain → PV power
+- Minimum verification: one full calendar year of hourly data, Diebold-Mariano test for significance
+
+### Five Publication Recommendations
+
+1. Literature review: focus on logical flow, not "who did what"
+2. Precise terminology: not "short-term" — specify "horizon=24h, resolution=1h"
+3. Provide code + data (ostensive > verbal reproducibility)
+4. Choose journals with domain expertise, not just impact factor
+5. Be persistent — understanding is proportional to time spent

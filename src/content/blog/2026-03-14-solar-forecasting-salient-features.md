@@ -300,3 +300,137 @@ for domain, info in LESSONS_FROM_OTHER_DOMAINS.items():
 | Model Chain | 5 步物理链 | 整体优化，不是拼接最优个体模型 |
 
 > **核心原则**：光伏预测的独特优势在于可利用物理知识（晴空模型+Model Chain），放弃这个优势而纯粹依赖数据驱动，是极大的浪费。
+
+---
+
+## 附录：教材 Ch4 完整补遗
+
+### 电价预测的三大建模技巧（光伏可借鉴）
+
+电价预测看似和光伏无关，但其中的建模技巧值得跨领域借鉴：
+
+```python
+PRICE_FORECASTING_TRICKS = {
+    "方差稳定化 (VST)": {
+        "问题": "电价有剧烈尖峰（含负电价），线性模型对异常值敏感",
+        "做法": "对数变换不可用（电价可为负）→ 用 asinh 或概率积分变换",
+        "光伏借鉴": "辐照度也有异常值（云增强），VST 可用于稳健建模",
+        "代码": "np.arcsinh(price)  # 代替 np.log(price)",
+    },
+    "季节分解": {
+        "问题": "电价有日/周/年三重季节性",
+        "做法": "分解为长期趋势+随机成分，分别建模再组合",
+        "光伏借鉴": "光伏的双季节性(日+年)用晴空模型处理，但残差可进一步分解",
+        "代码": "Hodrick-Prescott filter / wavelet decomposition",
+    },
+    "校准窗口平均": {
+        "问题": "训练窗口长度选多少？2周还是5年？",
+        "做法": "不选'最优'窗口，而是多窗口预测取平均",
+        "光伏借鉴": "光伏模型也面临同样问题，集成不同窗口 > 选单一窗口",
+        "代码": "forecast = mean([model.fit(window_n).predict() for n in windows])",
+    },
+}
+
+print("电价预测三大技巧 → 光伏借鉴：\n")
+for name, info in PRICE_FORECASTING_TRICKS.items():
+    print(f"🔧 {name}")
+    print(f"   问题: {info['问题']}")
+    print(f"   做法: {info['做法']}")
+    print(f"   光伏借鉴: {info['光伏借鉴']}")
+    print(f"   代码: {info['代码']}")
+    print()
+```
+
+### 层次预测：个体→区域→全网的一致性
+
+```python
+def hierarchical_forecasting_explained():
+    """
+    层次预测（Hierarchical Forecasting）：
+    光伏电站的预测必须满足聚合一致性。
+    
+    传统方法                 现代方法
+    ─────────              ─────────
+    自上而下 (top-down)     最优调和法 (Hyndman et al., 2011)
+    自下而上 (bottom-up)    → 利用所有层级信息
+    中间输出 (middle-out)   → 调和后精度通常更高
+    ↑ 只用单层信息          ↑ 用全部信息
+    """
+    hierarchy = {
+        "Level 3 全网": "区域A + 区域B + 区域C（净负荷）",
+        "Level 2 区域": "电站1 + 电站2 + ... + 电站N",
+        "Level 1 电站": "逆变器1 + 逆变器2 + ... + 逆变器M",
+        "Level 0 组串": "单个光伏组串的功率预测",
+    }
+    
+    print("光伏功率预测的层级结构：\n")
+    for level, desc in hierarchy.items():
+        print(f"  {level}: {desc}")
+    
+    print("\n问题: 各层级独立预测后，加总不一致")
+    print("  电站1预测 + 电站2预测 ≠ 区域预测")
+    print("\n解决: 最优调和法")
+    print("  1. 各层级独立预测（base forecasts）")
+    print("  2. 用 MinT/WLS 等方法调和所有层级")
+    print("  3. 调和后的预测既一致又更准确")
+    print("\n⚡ 电网法规要求: 系统所有者必须提交功率预测")
+    print("   动机: 合规 + 减少罚款")
+
+hierarchical_forecasting_explained()
+```
+
+### 工业界的残酷现实
+
+```python
+INDUSTRY_REALITY = {
+    "概率预测接受度低": {
+        "原因": "电力系统运营极其保守，流程已演化几十年",
+        "表现": "运营者宁可按最坏情况调度，也不完全信任概率模型",
+        "教材原话": "与运营标准脱节的预测研究没有内在价值",
+    },
+    "论文验证标准": {
+        "最低要求": "至少一整年小时级验证数据",
+        "禁止做法": [
+            "只和自家弱版本比（浅网络 vs 深网络）",
+            "对接近零的值用 MAPE",
+            "验证集只有几十个点",
+        ],
+        "统计检验": "Diebold-Mariano test 检验模型差异是否显著",
+    },
+    "教材终极结论": {
+        "原话": "纯数据驱动的单站方法 seriously handicapped，无论多复杂",
+        "最佳路径": "先预测辐照度 → 后处理 → Model Chain → 光伏功率",
+        "核心": "物理知识 + 数据驱动 = 唯一正确道路",
+    },
+}
+
+print("工业界现实 & 教材终极结论：\n")
+for topic, info in INDUSTRY_REALITY.items():
+    print(f"📌 {topic}")
+    if isinstance(info, dict):
+        for k, v in info.items():
+            if isinstance(v, list):
+                print(f"   {k}:")
+                for item in v:
+                    print(f"     ❌ {item}")
+            else:
+                print(f"   {k}: {v}")
+    print()
+```
+
+### 论文发表的五条黄金建议
+
+```python
+PUBLICATION_RECOMMENDATIONS = [
+    "1. 文献综述注重逻辑流，不是 roster-like 的 'who did what'",
+    "2. 术语精确：不说'短期'，说 'horizon = 24h, resolution = 1h'",
+    "3. 提供代码+数据（ostensive reproducibility > verbal）",
+    "4. 选有领域专家的期刊，不是只看影响因子",
+    "5. 坚持不懈——理解与时间成正比，没有捷径",
+]
+
+print("论文发表五条黄金建议（教材作者的编辑经验）：\n")
+for r in PUBLICATION_RECOMMENDATIONS:
+    print(f"  📝 {r}")
+print("\n教材作者背景：300+ 论文 / 数百篇审稿 / 数千篇编辑处理")
+```
