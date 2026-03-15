@@ -260,9 +260,9 @@ const allNotes = getAllNotes(chapters);
 <html lang="zh">
 <head>
   <BaseHead title={`📖 教材笔记 — ${SITE_TITLE}`} description="Yang & Kleissl (2024) 教材逐章逐节精读笔记" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.css" crossorigin="anonymous" />
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.11/contrib/auto-render.min.js" crossorigin="anonymous"></script>
   <style>
     /* ── Layout: sidebar + content ── */
     .tb-wrap {
@@ -571,15 +571,24 @@ const allNotes = getAllNotes(chapters);
       document.querySelectorAll('.tree-sub.active, .tree-sec-head.active').forEach(el => el.classList.remove('active'));
       clickedEl.classList.add('active');
       // Render math in the newly shown note
-      if (window.renderMathInElement && target && !target.dataset.mathRendered) {
-        renderMathInElement(target, {
+      tryRenderMath(target);
+    }
+
+    function tryRenderMath(el) {
+      if (!el) return;
+      if (el.dataset.mathRendered) return;
+      if (window.renderMathInElement) {
+        renderMathInElement(el, {
           delimiters: [
             {left: '$$', right: '$$', display: true},
             {left: '$', right: '$', display: false},
           ],
           throwOnError: false,
         });
-        target.dataset.mathRendered = '1';
+        el.dataset.mathRendered = '1';
+      } else {
+        // KaTeX not loaded yet, retry in 500ms
+        setTimeout(() => tryRenderMath(el), 500);
       }
     }
   </script>
