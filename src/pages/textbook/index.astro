@@ -213,15 +213,15 @@ const chapters = [
     ],
   },
   { id: 'ch9', num: 9, status: 'done', title: 'Deterministic Forecast Verification', titleZh: '确定性预测验证', pages: 'p363-398', sections: [
-    { id: '9.1', title: '参考预测与 Skill Score', note: 'Skill Score 公式：$S^* = 1 - S_{\\text{fcst}} / S_{\\text{ref}}$\\n$S^* > 0$ 预测优于参考，$S^* < 0$ 比参考还差。\\n\\n三种参考方法：\\n①Persistence（持续性）：用最新观测做预测，短时效优\\n②Climatology（气候态）：用长期均值做预测，长时效优\\n③CLIPER（最优凸组合）：$\\\\alpha_{\\text{optimal}} = \\\\gamma_h$（lag-h自相关系数）\\n  $\\\\text{MSE}_{\\text{CLIPER}} = (1 - \\\\gamma_h^2) \\\\cdot \\\\sigma_K^2$\\n  数学证明 CLIPER 严格优于或等于 persistence 和 climatology\\n  但太阳预测界直到 2019 年才引入（Yang 2019b,f）\\n\\n关键规则：\\n• 只用 RMSE 或 MAE 做 skill score，不用 MAPE（近零值时爆炸）\\n• 不用 MBE（正负误差相消，不反映精度）\\n• 必须在 clear-sky index ($\\\\kappa$) 上做，不在原始辐照度上做\\n• 中位数聚合不合适（忽略大误差，大误差对电网最有害）' },
+    { id: '9.1', title: '参考预测与 Skill Score', note: String.raw`Skill Score 公式：$S^* = 1 - S_{\text{fcst}} / S_{\text{ref}}$\n$S^* > 0$ 预测优于参考，$S^* < 0$ 比参考还差。\n\n三种参考方法：\n①Persistence（持续性）：用最新观测做预测，短时效优\n②Climatology（气候态）：用长期均值做预测，长时效优\n③CLIPER（最优凸组合）：$\alpha_{\text{optimal}} = \gamma_h$（lag-h自相关系数）\n  $\text{MSE}_{\text{CLIPER}} = (1 - \gamma_h^2) \cdot \sigma_K^2$\n  数学证明 CLIPER 严格优于或等于 persistence 和 climatology\n  但太阳预测界直到 2019 年才引入（Yang 2019b,f）\n\n关键规则：\n• 只用 RMSE 或 MAE 做 skill score，不用 MAPE（近零值时爆炸）\n• 不用 MBE（正负误差相消，不反映精度）\n• 必须在 clear-sky index ($\kappa$) 上做，不在原始辐照度上做\n• 中位数聚合不合适（忽略大误差，大误差对电网最有害）` },
     { id: '9.2', title: 'Measure-Oriented 验证的局限', note: '核心问题：不同指标给出矛盾结论。\\n\\n模拟实验（55小时数据，3个预测者）：\\n• Novice（持续性）：MBE 最小 → -2.85 W/m2\\n• Optimist（常数0.95）：MAE 最小 → 57.68 W/m2\\n• Statistician（条件均值）：RMSE 最小 → 111.77 W/m2\\n\\n每个预测者在某个指标上"最好" → 单一指标评优毫无意义！\\n\\n解决方案：报告预测-观测对（f-o pairs），不只报告指标。' },
     { id: '9.3', title: 'Murphy-Winkler 分布导向验证框架', note: '联合分布 f(x,y) 包含验证所需的全部信息（前提：不关心时序）。\\n\\n两种分解：\\n\\n①Calibration-Refinement 分解：f(x,y) = f(y|x) * f(x)\\n• f(y|x)：校准性 → E(Y|X=x) = x 为完美校准\\n• f(x)：精细度 → 预测值越多样越好\\n\\n②Likelihood-Base Rate 分解：f(x,y) = f(x|y) * f(y)\\n• f(x|y)：一致性/Type 2 条件偏差 → E(X|Y=y) = y 为完美\\n• f(y)：基准率\\n\\n四个关键统计量：\\n• Type 1 条件偏差 → 越小越好（校准好）\\n• 分辨率 → 越大越好（预测有信息量）\\n• Type 2 条件偏差 → 越小越好（判断无偏）\\n• 辨别力 → 越大越好（能区分不同天气）' },
-    { id: '9.4', title: 'MSE 三种分解', note: '①偏差-方差分解：\\n$$\\\\text{MSE} = V(X) + V(Y) - 2\\\\text{Cov}(X,Y) + [E(X)-E(Y)]^2$$\\n\\n②COF 分解（conditioning on forecast）：\\n$$\\\\text{MSE} = V(Y) + \\\\underbrace{E_X[X-E(Y|X)]^2}_{\\\\text{校准}} - \\\\underbrace{E_X[E(Y|X)-E(Y)]^2}_{\\\\text{分辨率}}$$\\n\\n③COX 分解（conditioning on observation）：\\n$$\\\\text{MSE} = V(X) + \\\\underbrace{E_Y[Y-E(X|Y)]^2}_{\\\\text{条件偏差}} - \\\\underbrace{E_Y[E(X|Y)-E(X)]^2}_{\\\\text{辨别力}}$$\\n\\n三种分解从不同角度揭示 MSE 的组成，Murphy-Winkler 框架的数学基础。' },
+    { id: '9.4', title: 'MSE 三种分解', note: String.raw`①偏差-方差分解：\n$$\text{MSE} = V(X) + V(Y) - 2\text{Cov}(X,Y) + [E(X)-E(Y)]^2$$\n\n②COF 分解（conditioning on forecast）：\n$$\text{MSE} = V(Y) + \underbrace{E_X[X-E(Y|X)]^2}_{\text{校准}} - \underbrace{E_X[E(Y|X)-E(Y)]^2}_{\text{分辨率}}$$\n\n③COX 分解（conditioning on observation）：\n$$\text{MSE} = V(X) + \underbrace{E_Y[Y-E(X|Y)]^2}_{\text{条件偏差}} - \underbrace{E_Y[E(X|Y)-E(X)]^2}_{\text{辨别力}}$$\n\n三种分解从不同角度揭示 MSE 的组成，Murphy-Winkler 框架的数学基础。` },
     { id: '9.5', title: '案例研究与一致性/价值', note: '案例：ECMWF HRES vs NCEP NAM，SURFRAD 三站（BON/DRA/PSU），2020年日前预测\\n\\n关键发现：\\n①HRES 精度更高但欠分散，NAM 边缘分布更接近观测\\n②没有一个模型在所有维度上占优\\n③一致性：MAE 最小化的预测在 MAE 上最好，MSE 最小化的在 RMSE 上最好 → 训练目标必须与评估指标一致\\n④价值：质量 9% 差异 → 惩罚 5 倍差异（非线性！）\\n⑤MAPE 最优的预测反而惩罚更高 → 质量好不等于价值高' },
   ]},
   { id: 'ch10', num: 10, status: 'done', title: 'Probabilistic Forecast Verification', titleZh: '概率预测验证', pages: 'p399-438', sections: [
     { id: '10.1', title: '校准与锐度范式', note: 'Gneiting (2007) 核心范式：最大化锐度，同时保持校准。\\n\\n校准（Calibration）：预测分布与观测之间的统计一致性。\\n完美校准 → PIT = F_t(y_t) ~ U(0,1)\\n三种形式：概率校准/超越校准/边缘校准\\n\\n锐度（Sharpness）：预测分布的集中程度（越窄越好）。\\n纯预测属性，不涉及观测。\\n\\n陷阱：\\n• 只要校准：发气候态分布 → 完美校准但零信息量\\n• 只要锐度：发极窄分布 → 可能完全偏离观测\\n→ 两者必须同时评估' },
-    { id: '10.2', title: '严格适当评分规则', note: '严格适当 = 预测者按真实信念出预测时得到最优期望分数 → 不鼓励作弊(hedging)\\n\\n四大评分规则：\\n\\n①Brier Score（二元事件）：$\\\\text{bs}(p,y) = (p-y)^2$\\n可分解为可靠性+分辨率+不确定性\\n\\n②CRPS（连续变量核心）：$$\\\\text{crps}(F,y) = \\\\int_{-\\\\infty}^{\\\\infty} [F(x) - \\\\mathbb{1}(x \\\\geq y)]^2 \\\\, dx$$\\n• 严格适当\\n• 退化为 MAE（点预测时）\\n• = Brier Score 对所有阈值的积分\\n• 可分解：可靠性 - 分辨率 + 不确定性\\n\\n③IGN（对数评分）：$\\\\text{ign}(f,y) = -\\\\log f(y)$\\n局部性质，只评估 PDF 在观测点的值\\n\\n④Quantile Score：$\\\\text{CRPS} = 2\\\\int_0^1 QS_\\\\tau \\\\, d\\\\tau$\\n\\n一致性原则：CRPS评估→CRPS训练；IGN评估→似然训练。混用导致次优！' },
+    { id: '10.2', title: '严格适当评分规则', note: String.raw`严格适当 = 预测者按真实信念出预测时得到最优期望分数 → 不鼓励作弊(hedging)\n\n四大评分规则：\n\n①Brier Score（二元事件）：$\text{bs}(p,y) = (p-y)^2$\n可分解为可靠性+分辨率+不确定性\n\n②CRPS（连续变量核心）：$$\text{crps}(F,y) = \int_{-\infty}^{\infty} [F(x) - \mathbb{1}(x \geq y)]^2 \, dx$$\n• 严格适当\n• 退化为 MAE（点预测时）\n• = Brier Score 对所有阈值的积分\n• 可分解：可靠性 - 分辨率 + 不确定性\n\n③IGN（对数评分）：$\text{ign}(f,y) = -\log f(y)$\n局部性质，只评估 PDF 在观测点的值\n\n④Quantile Score：$\text{CRPS} = 2\int_0^1 QS_\tau \, d\tau$\n\n一致性原则：CRPS评估→CRPS训练；IGN评估→似然训练。混用导致次优！` },
     { id: '10.3', title: '可视化评估工具', note: '①Rank 直方图（集合预测）：\\n把观测插入排序后的集合成员中统计排名\\n• 平坦 → 校准良好\\n• U形 → 欠分散（NWP最常见问题）\\n• 倒U形 → 过分散\\n• 偏斜 → 有偏差\\n\\n②PIT 直方图（分布预测）：\\nPIT = F_t(y_t)，完美校准时 ~ U(0,1)\\n连续版 Rank 直方图\\n\\n③Reliability Diagram（最推荐）：\\n横轴名义概率 vs 纵轴实际比例\\n完美校准 → 点在对角线上\\n必须加一致性带（consistency band）\\n\\n④Sharpness Diagram：\\n预测区间宽度箱线图，纯预测属性' },
     { id: '10.4', title: '案例：ECMWF 集合后处理', note: '数据：ECMWF EPS 50成员集合 GHI 预测，三个 SURFRAD 站点\\n\\n原始集合 → U形 Rank 直方图 → 欠分散 → 需要 P2P 后处理\\n\\n四种后处理方法对比：\\n• NGR1（EMOS，CRPS优化）→ CRPS 最优\\n• NGR2（EMOS，IGN优化）→ IGN 最优\\n• QR（分位数回归）→ PIT 最平坦（非参数校准优势）\\n• BMA（贝叶斯模型平均）→ 表现最差，锐度图缺乏变化\\n\\n关键发现：\\n①NGR1 在 CRPS 上最优，NGR2 在 IGN 上最优 → 适当性理论的经验验证\\n②没有一种方法在所有方面占优\\n③概率 Skill Score S* = 1 - S_fcst/S_ref 不适当（即使 S 适当），但 ECMWF 仍用' },
   ]},
@@ -571,7 +571,7 @@ const allNotes = getAllNotes(chapters);
       document.querySelectorAll('.tree-sub.active, .tree-sec-head.active').forEach(el => el.classList.remove('active'));
       clickedEl.classList.add('active');
       // Render math in the newly shown note
-      if (window.renderMathInElement && target) {
+      if (window.renderMathInElement && target && !target.dataset.mathRendered) {
         renderMathInElement(target, {
           delimiters: [
             {left: '$$', right: '$$', display: true},
@@ -579,6 +579,7 @@ const allNotes = getAllNotes(chapters);
           ],
           throwOnError: false,
         });
+        target.dataset.mathRendered = '1';
       }
     }
   </script>
