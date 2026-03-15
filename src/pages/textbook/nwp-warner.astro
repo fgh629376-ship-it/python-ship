@@ -84,9 +84,7 @@ const pct = Math.round(done / total * 100);
             <div class="ch-info">
               <div class="ch-title">
                 {ch.titleZh}
-                {ch.status === 'done' && ch.num <= 2 && (
-                  <a href="/blog/2026-03-15-nwp-warner-ch01-02/" class="blog-link">📝 笔记</a>
-                )}
+                {(ch.status === 'done' && ch.num < 3) && <a href="/blog/2026-03-15-nwp-warner-ch01-02/" class="blog-link">📝 笔记</a>}
               </div>
               <div class="ch-title-en">{ch.title}</div>
             </div>
