@@ -17,31 +17,31 @@ Knowing facts is not the same as being able to use them. This page contains **lo
 
 ---
 
-## I. Current Knowledge Map (Ch1-4)
+## I. Current Knowledge Map
 
 The 16 chapters of Warner can be grouped into **six major modules**:
 
 ```
-Module 1: Mathematical Foundations (Ch2-3)
-  Governing equations → Numerical methods
+Module 1: Mathematical Foundations (Ch2-3)     ✅ Completed
+  Ch2 Governing equations ✅ → Ch3 Numerical methods ✅
       ↓
-Module 2: Physical Representation (Ch4-5)
-  Parameterization schemes → Surface processes
+Module 2: Physical Representation (Ch4-5)      🔄 In progress
+  Ch4 Parameterization schemes ✅ → Ch5 Surface processes ⏳
       ↓
-Module 3: Initialization & Uncertainty (Ch6-8)
+Module 3: Initialization & Uncertainty (Ch6-8)  ⏳ Upcoming
   Data assimilation → Ensemble methods → Predictability
       ↓
-Module 4: Evaluation (Ch9-11)
+Module 4: Evaluation (Ch9-11)                   ⏳ Upcoming
   Verification methods → Experiment design → Output analysis
       ↓
-Module 5: Operations (Ch12-13)
+Module 5: Operations (Ch12-13)                  ⏳ Upcoming
   Operational NWP → Post-processing
       ↓
-Module 6: Extensions (Ch14-16)
+Module 6: Extensions (Ch14-16)                  ⏳ Upcoming
   Coupled applications → CFD → Climate modeling
 ```
 
-**Chapters 1–4 completed so far**: Module 1 (Mathematical Foundations) + Module 2 (Physical Representation) in progress.
+**Progress: Ch1 (Overview) + Ch2 (Governing Equations) + Ch3 (Numerical Methods) + Ch4 (Parameterization) completed — 4/16 chapters.** Next: Ch5 Surface Processes.
 
 ---
 
