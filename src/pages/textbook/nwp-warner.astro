@@ -119,6 +119,7 @@ const chapters = [
     title: 'Model Initialization',
     titleZh: '模型初始化',
     pages: 'p198-251',
+    blogUrl: '/blog/2026-03-16-nwp-warner-ch06/',
     sections: [
       { id: '6.1', title: '背景', note: '初始化 = 定义模型初始条件。两个要求：①忠实表示真实大气（锋面位置正确）②质量场和动量场动力学一致（近似地转/静力平衡）。不一致 → 初始化激波 → 惯性重力波 → 前12h不可用。' },
       { id: '6.2', title: '观测数据', note: '探空仪（12h一次，仍是三维结构主要来源）、地面站（5min-6h）、商业飞机（起降剖面+巡航高度）、多普勒雷达（反射率+径向风）、GPS掩星（温度/水汽）、卫星辐射计（MODIS/SEVIRI/SSM/I）。\n\n自适应观测：飓风预报中用伴随方法/ETKF确定最敏感区域，定向投放探空仪。' },
@@ -140,6 +141,7 @@ const chapters = [
     title: 'Ensemble Methods',
     titleZh: '集成方法',
     pages: 'p252-283',
+    blogUrl: '/blog/2026-03-16-nwp-warner-ch07-08/',
     sections: [
       { id: '7.1', title: '背景', note: '集成预报优于确定性预报：①集成平均更准确 ②离散度↔不确定性 ③PDF揭示极端事件概率 ④概率产品可用于决策支持。\n\n计算妥协：分辨率减半→速度×8→可跑8个成员。' },
       { id: '7.2', title: '集成平均与离散度', note: '集成平均：非线性滤波，不可预测部分相互抵消。注意：f(x̄) ≠ f̄(x)（非线性→从集成平均初始化的预报 ≠ 集成平均的预报）。\n\n离散度（spread）：成员间差异，反映预报不确定性。spread-skill关系需要校准。分岔时集成平均可能无意义。' },
@@ -156,6 +158,7 @@ const chapters = [
     title: 'Predictability',
     titleZh: '可预测性',
     pages: 'p284-293',
+    blogUrl: '/blog/2026-03-16-nwp-warner-ch07-08/',
     sections: [
       { id: '8.1-2', title: '背景与误差增长', note: 'Lorenz(1963)：微小初始差异→几周后两个解完全不相关。"蝴蝶效应"。误差增长三阶段：①诱导期(10-15天，缓慢) ②快速线性增长(~20天) ③饱和（两个解不相关）。\n\n初始条件误差 vs 模型误差难以分离——现代同化系统用模型产生背景场，模型误差会传染到初始条件。' },
       { id: '8.3', title: '地表强迫对可预测性的影响', note: '日变化/季节性太阳强迫产生可预测的现象（海陆风、山谷风、低空急流）。正确的LSM + 地形 → 即使初始条件不完美也能产生可预测的局地环流。\n\n对光伏：地表强迫驱动的可预测性是辐照度日内预测的基础。' },
@@ -167,6 +170,7 @@ const chapters = [
     title: 'Verification Methods',
     titleZh: '验证方法',
     pages: 'p294-320',
+    blogUrl: '/blog/2026-03-16-nwp-warner-ch09-11/',
     sections: [
       { id: '9.1-3', title: '基本概念与指标', note: '偏差(Bias)、MAE、RMSE、相关系数。技巧评分(Skill Score) = 1 - MSE/MSE_ref。参考预报：持续性、气候学。\n\n异常相关(AC)：500hPa高度场最常用，AC>0.6认为有用。全球模型的AC=0.6极限已从~5天延伸到~8天（40年进步）。' },
       { id: '9.4-6', title: '列联表与分类验证', note: 'POD(命中率)、FAR(虚警率)、CSI(临界成功指数)、HSS(Heidke技巧评分)、ETS(公平威胁评分)。\n\nROC曲线：POD vs POFD，曲线下面积(AUC)越大越好。\n\n对象验证(MODE/SAL)：不逐点比较，而是识别空间对象（降水区域）并比较位置、强度、形状。' },
@@ -178,6 +182,7 @@ const chapters = [
     title: 'Experimental Design in Model-Based Research',
     titleZh: '基于模型的研究实验设计',
     pages: 'p321-342',
+    blogUrl: '/blog/2026-03-16-nwp-warner-ch09-11/',
     sections: [
       { id: '10.1-2', title: '敏感性实验与OSSE', note: '敏感性实验：改变一个因素，保持其他不变。identical-twin实验：同一模型不同初始条件。OSSE（观测系统模拟实验）：评估新观测系统的潜在影响。\n\nOSE（观测系统实验）：移除某类观测，评估其贡献。' },
       { id: '10.3-5', title: '伴随敏感性 & 预报敏感性', note: '伴随方法：定义代价函数对初始条件/参数的梯度。用于定向观测、参数估计、最优实验设计。\n\n回顾预报(reforecasts)：用当前模型跑历史案例，获得大样本验证统计。' },
@@ -188,6 +193,7 @@ const chapters = [
     title: 'Techniques for Analyzing Model Output',
     titleZh: '模型输出分析技术',
     pages: 'p343-357',
+    blogUrl: '/blog/2026-03-16-nwp-warner-ch09-11/',
     sections: [
       { id: '11.1-2', title: '可视化与诊断', note: '后处理变量：涡度、散度、锋生函数、位涡。这些诊断量比原始场更能揭示物理过程。\n\nTaylor diagram、热力图(skew-T)、轨迹分析。' },
       { id: '11.3', title: '数学分析方法', note: 'SOM(自组织映射)：自动分类天气型。\nPCA/EOF(经验正交函数)：降维，提取主要变率模态。\nCCA(典型相关分析)和SVD：找耦合模态。\n\n对光伏：EOF可用于提取辐照度场的主要时空变率模态。' },
@@ -198,6 +204,7 @@ const chapters = [
     title: 'Operational Numerical Weather Prediction',
     titleZh: '业务数值天气预报',
     pages: 'p358-375',
+    blogUrl: '/blog/2026-03-16-nwp-warner-ch12-16/',
     sections: [
       { id: '12.1-2', title: '全球和区域业务系统', note: '主要中心：ECMWF(全球领先)、NCEP(GFS+NAM)、UKMO、DWD、JMA、CMA。\n\n全球模型：ECMWF IFS(~9km)、GFS(~13km)。区域模型：NAM(12km)、HRRR(3km，逐小时更新)、AROME(2.5km)。\n\n趋势：分辨率持续提高，同化频率加密（逐小时），集成成为标配。' },
       { id: '12.3', title: '后处理(MOS/PPM)', note: 'MOS(模型输出统计)：用历史预报-观测对建立回归方程，校正模型系统偏差。对光伏：MOS类方法可直接校正NWP辐照度预报。\n\nPPM(完美预报方法)：用分析场替代预报场建立回归，不依赖模型版本。' },
@@ -208,6 +215,7 @@ const chapters = [
     title: 'Post Processing of Model Output',
     titleZh: '模型输出后处理',
     pages: 'p376-389',
+    blogUrl: '/blog/2026-03-16-nwp-warner-ch12-16/',
     sections: [
       { id: '13.1', title: '统计后处理', note: '线性回归、分位数映射(quantile mapping)、模拟退火、神经网络。目的：消除系统偏差、提高局地技巧。\n\n对光伏：Yang教材Ch8的MOS/EMOS方法与Warner Ch13完全对应。' },
       { id: '13.2', title: '集成后处理', note: 'BMA(贝叶斯模型平均)、EMOS(集成MOS)、非齐次高斯回归。将集成输出转化为校准的概率密度函数。' },
@@ -218,6 +226,7 @@ const chapters = [
     title: 'Coupled Applications',
     titleZh: '耦合应用',
     pages: 'p390-415',
+    blogUrl: '/blog/2026-03-16-nwp-warner-ch12-16/',
     sections: [
       { id: '14.1-2', title: '空气质量与可再生能源', note: '大气模型耦合化学传输模型(CTM)预测空气质量。风能预测：NWP输出→风机功率曲线→功率预报。太阳能同理。\n\n对光伏：这正是 Yang 教材 Ch4.6 WRF-Solar 的应用背景——NWP 耦合辐射模型预测 GHI/DNI。' },
       { id: '14.3', title: '传染病与农业', note: '疟疾、登革热等与温湿度相关。NWP季节预报→疾病风险预警。沙尘预报→脑膜炎风险。农业：冻害、干旱、作物生长模型耦合。' },
@@ -228,6 +237,7 @@ const chapters = [
     title: 'Computational Fluid Dynamics Models',
     titleZh: 'CFD 模型',
     pages: 'p416-432',
+    blogUrl: '/blog/2026-03-16-nwp-warner-ch12-16/',
     sections: [
       { id: '15.1-2', title: 'DNS与LES', note: 'DNS(直接数值模拟)：解析所有湍流尺度，Re~O(10³)以下可行。计算量∝Re³。\nLES(大涡模拟)：显式解析大涡，参数化小涡（亚格子模型）。网格~O(10m)。\n\n"terra incognita"(Wyngaard 2004)：Δx=100m-1km，既不能LES也不能传统参数化——与Ch4的灰色地带问题类比。' },
     ],
@@ -237,6 +247,7 @@ const chapters = [
     title: 'Using Models for Climate Studies',
     titleZh: '气候研究中的模型应用',
     pages: 'p433-560',
+    blogUrl: '/blog/2026-03-16-nwp-warner-ch12-16/',
     sections: [
       { id: '16.1', title: '全球气候预测', note: 'AOGCM(大气-海洋耦合GCM)：需要海洋环流、海冰、碳循环、气溶胶化学等。IPCC情景驱动。气候模型误差可在长期积累成严重漂移（质量/能量不守恒）。\n\nCMIP(气候模型比较计划)：多模型集成是标准做法。' },
       { id: '16.2', title: '再分析', note: '用固定版本的同化系统处理历史观测→长期一致的网格化数据集。ERA-40/ERA5(ECMWF)、NNRP(NCEP-NCAR)。\n\n对光伏：ERA5是辐照度长期时序的重要数据源，Yang教材多次引用。' },
