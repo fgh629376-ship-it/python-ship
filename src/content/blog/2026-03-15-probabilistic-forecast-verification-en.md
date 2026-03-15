@@ -73,7 +73,7 @@ Local property: only evaluates the PDF at the observation point. Complements CRP
 
 ### 2.4 Quantile Score (Pinball Loss)
 
-Evaluates individual quantiles. CRPS = 2 × ∫ QS_τ dτ.
+Evaluates individual quantiles. $\text{CRPS} = 2 \int QS_\tau \, d\tau$.
 
 ### 2.5 Consistency Principle
 
@@ -102,7 +102,7 @@ $\text{PIT} = F_t(y_t)$. Should be $U(0,1)$ for calibrated forecasts. Continuous
 
 The "go-to" visual tool (Lauret et al., 2019):
 - x-axis: nominal probability τ
-- y-axis: observed proportion z̄_τ
+- y-axis: observed proportion $\bar{z}_\tau$
 - Perfect calibration → points on diagonal
 - Add **consistency bands** to quantify sampling uncertainty
 
