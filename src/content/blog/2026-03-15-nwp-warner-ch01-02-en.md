@@ -8,7 +8,7 @@ series: nwp-warner
 tags: ['Textbook Notes', 'NWP', 'Primitive Equations', 'Reynolds Averaging', 'Numerical Weather Prediction']
 ---
 
-> 📖 [Back to Textbook Index](/textbook/)
+> 📖 This is the reflection blog for [Warner NWP Textbook](/textbook/nwp-warner/) Ch1-2 | [Back to Textbook Index](/textbook/)
 
 ## Why Study This Book?
 

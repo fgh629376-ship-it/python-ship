@@ -3,23 +3,132 @@ import BaseHead from '../../components/BaseHead.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 
+// ── Chapter data (notes embedded) ───────────────────────────
 const chapters = [
-  { num: 1, title: 'Introduction', titleZh: '引言', pages: '1-5', status: 'done' },
-  { num: 2, title: 'The Governing Systems of Equations', titleZh: '控制方程', pages: '6-16', status: 'done' },
-  { num: 3, title: 'Numerical Solutions to the Equations', titleZh: '方程的数值解法', pages: '17-118', status: 'pending' },
-  { num: 4, title: 'Physical-Process Parameterizations', titleZh: '物理过程参数化', pages: '119-170', status: 'pending' },
-  { num: 5, title: 'Modeling Surface Processes', titleZh: '地表过程建模', pages: '171-197', status: 'pending' },
-  { num: 6, title: 'Model Initialization', titleZh: '模型初始化', pages: '198-251', status: 'pending' },
-  { num: 7, title: 'Ensemble Methods', titleZh: '集成方法', pages: '252-283', status: 'pending' },
-  { num: 8, title: 'Predictability', titleZh: '可预测性', pages: '284-293', status: 'pending' },
-  { num: 9, title: 'Verification Methods', titleZh: '验证方法', pages: '294-320', status: 'pending' },
-  { num: 10, title: 'Experimental Design', titleZh: '实验设计', pages: '321-342', status: 'pending' },
-  { num: 11, title: 'Analyzing Model Output', titleZh: '模型输出分析', pages: '343-357', status: 'pending' },
-  { num: 12, title: 'Operational NWP', titleZh: '业务数值预报', pages: '358-?', status: 'pending' },
-  { num: 13, title: 'Post Processing', titleZh: '后处理', pages: '?', status: 'pending' },
-  { num: 14, title: 'Coupled Applications', titleZh: '耦合应用', pages: '?', status: 'pending' },
-  { num: 15, title: 'CFD Models', titleZh: 'CFD 模型', pages: '?', status: 'pending' },
-  { num: 16, title: 'Climate Modeling', titleZh: '气候建模', pages: '?', status: 'pending' },
+  {
+    id: 'ch1', num: 1, status: 'done',
+    title: 'Introduction',
+    titleZh: '引言',
+    pages: 'p1-5',
+    blogUrl: '/blog/2026-03-15-nwp-warner-ch01-02/',
+    sections: [
+      { id: '1.0', title: 'NWP 的全局视角', note: String.raw`NWP 不是单一工具，而是覆盖从秒到世纪的完整预测体系。\n\n【时间尺度光谱】\n- 秒级 CFD → 逆变器级功率波动\n- 分钟级 Nowcast (1-2h) → 天空相机 + 超短期预测\n- 小时-天 确定性天气预报 → 日前市场 (DAM)、实时市场 (RTM)\n- 周 集成预报 → 周度调度计划\n- 季节 耦合海-气模型 → 年度发电量评估\n- 百年 气候模型 → 光伏电站长期规划\n\nWarner 的核心理念：先分析观测数据和理论，再跑模型。原话："使用模型过早只会延长完成研究项目所需的时间。"\n\n这和 Yang 教材 Ch2 的思想完全一致——不要一上来就跑 LSTM。\n\n【统一建模趋势】\n- 过去：中尺度模型和全球模型分开开发 → 现在：同一框架服务所有尺度（如 ECMWF IFS）\n- 过去：天气预报和气候模型分开 → 现在：统一模型（如 UKMO Unified Model）\n\n对光伏的启示：WRF-Solar 就是这个趋势的产物——在通用 NWP 框架上针对太阳辐照度优化物理方案。` },
+    ],
+  },
+  {
+    id: 'ch2', num: 2, status: 'done',
+    title: 'The Governing Systems of Equations',
+    titleZh: '控制方程',
+    pages: 'p6-16',
+    blogUrl: '/blog/2026-03-15-nwp-warner-ch01-02/',
+    sections: [
+      { id: '2.1', title: '基本方程', note: String.raw`NWP 的核心是求解大气运动的 7 个偏微分方程（原始方程 Primitive Equations）：\n\n①三个动量方程（预测风速 $u, v, w$）：\n- 气压梯度力：驱动风从高压到低压\n- 科里奥利力（$f = 2\Omega\sin\phi$）：地球自转使风偏转\n- 摩擦力（$Fr$）：地表阻力 + 湍流应力\n\n②热力学方程（预测温度 $T$）：加热率 $H$ 是辐射参数化方案计算的核心量。辐照度预测的误差很大程度上来自 $H$ 的计算精度。\n\n③质量连续方程（预测密度 $\rho$）\n\n④水汽方程（预测比湿 $q_v$）：$Q_v$ 是水汽源汇项（蒸发和凝结）。云的形成取决于这个方程，而云决定了地面辐照度。\n\n⑤状态方程 $p = \rho R T$（诊断方程，无时间导数）\n\n与 Yang 教材 Ch7.1.1 提到的"7个原始方程"完全对应——Warner 的贡献是把每个方程的物理含义、数学推导和近似假设都讲清楚了。` },
+      { id: '2.2', title: 'Reynolds 平均方程', note: String.raw`大气中的湍流尺度远小于 NWP 网格（10km 网格无法解析 10m 的湍涡）。\n\n解决方案——将每个变量分解为平均量 + 湍流扰动：\n$u = \bar{u} + u', \quad T = \bar{T} + T', \quad p = \bar{p} + p'$\n\n代入原始方程并取平均，得到 Reynolds 平均方程。关键结果是出现了 Reynolds 应力项：\n$\tau_{zx}^{turb} = -\rho \overline{u'w'}$\n\n这些项代表湍流对平均流的影响——必须通过参数化方案来表示，这就是 NWP 中"边界层参数化"的数学起源。\n\n湍流应力远大于分子粘性应力 → 分子粘性在 NWP 中可忽略。\n\n【与光伏预测的联系】\n- 边界层湍流影响地表感热/潜热通量 → 影响大气水汽含量 → 影响云的形成 → 影响辐照度\n- PBL（行星边界层）方案的选择是 WRF-Solar 中最敏感的设置之一（Yang Ch7.1.2 确认）` },
+      { id: '2.3', title: '方程的近似', subsections: [
+        { id: '2.3.1', title: '静力近似', note: String.raw`将完整的第三动量方程简化为 $\frac{\partial p}{\partial z} = -\rho g$，只保留重力和垂直气压梯度力平衡。\n\n物理意义：密度与垂直气压梯度绑定——声波无法传播（声波需要密度独立于压力变化）。\n\n过滤声波后，时间步长可大幅增加（声波速度 ~330 m/s vs 天气系统 ~30 m/s），计算量减少约一个数量级。\n\n但当 $\Delta x < 10$ km 时（高分辨率区域模型），静力近似不再成立——必须用完整的非静力方程。\n\n这就是为什么 HRRR（3km）用非静力方程，而 GFS（13km）可以用静力近似。对应 Yang Ch6.6 讨论的 GFS vs HRRR 模型差异。` },
+        { id: '2.3.2', title: 'Boussinesq 与非弹性近似', note: String.raw`与静力近似同属过滤声波的方法族，但不限于大尺度：\n\n【Boussinesq 近似】用体积守恒代替质量守恒：$\frac{\partial u}{\partial x} + \frac{\partial v}{\partial y} + \frac{\partial w}{\partial z} = 0$\n\n【非弹性近似 (Anelastic)】引入参考态密度 $\bar{\rho}(z)$：$\frac{\partial}{\partial x}(\bar{\rho}u) + \frac{\partial}{\partial y}(\bar{\rho}v) + \frac{\partial}{\partial z}(\bar{\rho}w) = 0$\n\n两者都过滤声波，但不限于 $\Delta x > 10$ km，适合中小尺度模型（如云尺度模拟）。\n\n还有 Durran (1989) 的伪不可压近似(pseudo-incompressible)。` },
+        { id: '2.3.3', title: '浅水方程', note: String.raw`浅水方程（Shallow-fluid equations）是 NWP 教学中的"玩具模型"：\n- 假设：均匀、不可压、静力、无粘\n- 保留：惯性重力波、平流、Rossby 波\n- 水平气压梯度力简化为流体深度梯度：$\frac{1}{\rho_0}\frac{\partial p}{\partial x} = g\frac{\partial h}{\partial x}$\n\nWilliamson et al. (1992) 用浅水方程在球面上测试数值方法——这些测试仍是验证新数值框架的标准基准。\n\n教学价值：用最简化的方程理解有限差分、稳定性（CFL 条件）、色散关系等数值概念，再推广到完整大气模型。` },
+      ]},
+    ],
+  },
+  {
+    id: 'ch3', num: 3, status: 'pending',
+    title: 'Numerical Solutions to the Equations',
+    titleZh: '方程的数值解法',
+    pages: 'p17-118',
+    sections: [],
+  },
+  {
+    id: 'ch4', num: 4, status: 'pending',
+    title: 'Physical-Process Parameterizations',
+    titleZh: '物理过程参数化',
+    pages: 'p119-170',
+    sections: [],
+  },
+  {
+    id: 'ch5', num: 5, status: 'pending',
+    title: 'Modeling Surface Processes',
+    titleZh: '地表过程建模',
+    pages: 'p171-197',
+    sections: [],
+  },
+  {
+    id: 'ch6', num: 6, status: 'pending',
+    title: 'Model Initialization',
+    titleZh: '模型初始化',
+    pages: 'p198-251',
+    sections: [],
+  },
+  {
+    id: 'ch7', num: 7, status: 'pending',
+    title: 'Ensemble Methods',
+    titleZh: '集成方法',
+    pages: 'p252-283',
+    sections: [],
+  },
+  {
+    id: 'ch8', num: 8, status: 'pending',
+    title: 'Predictability',
+    titleZh: '可预测性',
+    pages: 'p284-293',
+    sections: [],
+  },
+  {
+    id: 'ch9', num: 9, status: 'pending',
+    title: 'Verification Methods',
+    titleZh: '验证方法',
+    pages: 'p294-320',
+    sections: [],
+  },
+  {
+    id: 'ch10', num: 10, status: 'pending',
+    title: 'Experimental Design in Model-Based Research',
+    titleZh: '基于模型的研究实验设计',
+    pages: 'p321-342',
+    sections: [],
+  },
+  {
+    id: 'ch11', num: 11, status: 'pending',
+    title: 'Techniques for Analyzing Model Output',
+    titleZh: '模型输出分析技术',
+    pages: 'p343-357',
+    sections: [],
+  },
+  {
+    id: 'ch12', num: 12, status: 'pending',
+    title: 'Operational Numerical Weather Prediction',
+    titleZh: '业务数值天气预报',
+    pages: 'p358-?',
+    sections: [],
+  },
+  {
+    id: 'ch13', num: 13, status: 'pending',
+    title: 'Post Processing of Model Output',
+    titleZh: '模型输出后处理',
+    pages: '',
+    sections: [],
+  },
+  {
+    id: 'ch14', num: 14, status: 'pending',
+    title: 'Coupled Applications',
+    titleZh: '耦合应用',
+    pages: '',
+    sections: [],
+  },
+  {
+    id: 'ch15', num: 15, status: 'pending',
+    title: 'Computational Fluid Dynamics Models',
+    titleZh: 'CFD 模型',
+    pages: '',
+    sections: [],
+  },
+  {
+    id: 'ch16', num: 16, status: 'pending',
+    title: 'Using Models for Climate Studies',
+    titleZh: '气候研究中的模型应用',
+    pages: '',
+    sections: [],
+  },
 ];
 
 const done = chapters.filter(c => c.status === 'done').length;
@@ -30,34 +139,50 @@ const pct = Math.round(done / total * 100);
 <!doctype html>
 <html lang="zh">
 <head>
-  <BaseHead title="NWP Warner | Python Ship" description="Numerical Weather and Climate Prediction 精读笔记" />
+  <BaseHead title="NWP Warner 精读笔记 | Python Ship" description="Warner《数值天气与气候预测》精读笔记——NWP 动力核心、物理参数化、数据同化、集成方法、验证与后处理" />
   <meta name="color-scheme" content="dark" />
+  <link rel="stylesheet" href="/katex/katex.min.css" />
   <style>
-    .book-container { max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
-    .book-hero { text-align: center; padding: 2rem 0; }
-    .book-hero h1 { font-size: 2rem; font-weight: 800; background: linear-gradient(135deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .book-hero .subtitle { color: #94a3b8; margin-top: 0.3rem; }
-    .book-hero .author { color: #64748b; font-size: 0.9rem; margin-top: 0.5rem; }
-    .progress-section { margin: 1.5rem 0; text-align: center; }
-    .progress-bar { width: 100%; height: 8px; background: #2a2d3e; border-radius: 4px; overflow: hidden; margin: 0.5rem 0; }
-    .progress-fill { height: 100%; background: #38bdf8; border-radius: 4px; transition: width 0.3s; }
-    .progress-text { font-size: 0.85rem; color: #94a3b8; }
-    .chapter-list { list-style: none; padding: 0; margin: 2rem 0; }
-    .chapter-item { display: flex; align-items: center; gap: 1rem; padding: 0.8rem 1rem; background: #1a1d2e; border-radius: 8px; margin-bottom: 0.5rem; }
-    .chapter-item.done { border-left: 3px solid #4ade80; }
-    .chapter-item.pending { border-left: 3px solid #334155; opacity: 0.6; }
-    .ch-num { font-weight: 800; color: #38bdf8; min-width: 2rem; }
+    .book-container { max-width: 860px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+    .book-hero { text-align: center; padding: 2rem 0 1rem; }
+    .book-hero h1 { font-size: 2rem; font-weight: 800; background: linear-gradient(135deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: .3rem; }
+    .book-hero .subtitle { color: #94a3b8; font-size: 1.1rem; }
+    .book-hero .author { color: #64748b; font-size: .9rem; margin-top: .4rem; }
+    .progress-section { margin: 1.2rem 0; text-align: center; }
+    .progress-bar { width: 100%; height: 8px; background: #2a2d3e; border-radius: 4px; overflow: hidden; margin: .5rem 0; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, #38bdf8, #818cf8); border-radius: 4px; transition: width .4s; }
+    .progress-text { font-size: .85rem; color: #94a3b8; }
+    .ch-card { background: #1a1d2e; border-radius: 10px; margin-bottom: 1rem; overflow: hidden; border: 1px solid #2a2d3e; }
+    .ch-card.done { border-left: 3px solid #4ade80; }
+    .ch-card.pending { border-left: 3px solid #334155; opacity: .55; }
+    .ch-header { display: flex; align-items: center; padding: .8rem 1rem; cursor: pointer; gap: .8rem; user-select: none; }
+    .ch-header:hover { background: #222640; }
+    .ch-num { font-weight: 800; font-size: 1.1rem; color: #38bdf8; min-width: 2.2rem; }
     .ch-info { flex: 1; }
-    .ch-title { font-weight: 600; color: #f1f5f9; font-size: 0.95rem; }
-    .ch-title-en { font-size: 0.8rem; color: #64748b; font-style: italic; }
-    .ch-pages { font-size: 0.8rem; color: #475569; }
-    .ch-badge { font-size: 0.75rem; padding: 0.1rem 0.4rem; border-radius: 4px; }
+    .ch-title-zh { font-weight: 700; color: #f1f5f9; }
+    .ch-title-en { font-size: .82rem; color: #64748b; font-style: italic; }
+    .ch-meta { display: flex; gap: .6rem; align-items: center; }
+    .ch-pages { font-size: .78rem; color: #475569; }
+    .ch-badge { font-size: .72rem; padding: .12rem .45rem; border-radius: 4px; }
     .ch-badge.done { background: #166534; color: #4ade80; }
     .ch-badge.pending { background: #1e1e2e; color: #475569; }
-    .back-link { display: inline-block; margin-top: 1rem; color: #38bdf8; text-decoration: none; font-size: 0.9rem; }
-    .back-link:hover { text-decoration: underline; }
-    .blog-link { display: inline-block; margin-left: 0.5rem; font-size: 0.8rem; color: #4ade80; text-decoration: none; }
+    .ch-toggle { font-size: .85rem; color: #64748b; transition: transform .2s; }
+    .ch-card.open .ch-toggle { transform: rotate(90deg); }
+    .ch-body { display: none; padding: 0 1rem 1rem; }
+    .ch-card.open .ch-body { display: block; }
+    .blog-link { display: inline-block; margin-bottom: .8rem; font-size: .85rem; color: #4ade80; text-decoration: none; }
     .blog-link:hover { text-decoration: underline; }
+    .section { margin-bottom: .8rem; }
+    .section-id { color: #38bdf8; font-weight: 700; font-size: .85rem; margin-right: .4rem; }
+    .section-title { color: #e2e8f0; font-weight: 600; font-size: .95rem; cursor: pointer; }
+    .section-title:hover { color: #38bdf8; }
+    .note { display: none; background: #13152a; border-radius: 6px; padding: .8rem 1rem; margin-top: .4rem; font-size: .88rem; color: #cbd5e1; line-height: 1.7; white-space: pre-wrap; }
+    .section.open .note { display: block; }
+    .subsection { margin-left: 1.2rem; margin-top: .5rem; }
+    .subsection .section-id { color: #818cf8; font-size: .8rem; }
+    .subsection .section-title { font-size: .9rem; }
+    .back-link { display: inline-block; margin-top: 1.5rem; color: #38bdf8; text-decoration: none; font-size: .9rem; }
+    .back-link:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -67,9 +192,8 @@ const pct = Math.round(done / total * 100);
       <div class="book-hero">
         <h1>🌦️ Numerical Weather and Climate Prediction</h1>
         <div class="subtitle">数值天气与气候预测</div>
-        <div class="author">Thomas T. Warner · Cambridge University Press · 560p</div>
+        <div class="author">Thomas T. Warner · Cambridge University Press · 560p · 16 章</div>
       </div>
-
       <div class="progress-section">
         <div class="progress-bar">
           <div class="progress-fill" style={`width: ${pct}%`}></div>
@@ -77,26 +201,63 @@ const pct = Math.round(done / total * 100);
         <div class="progress-text">{done}/{total} 章完成 ({pct}%)</div>
       </div>
 
-      <ul class="chapter-list">
-        {chapters.map(ch => (
-          <li class={`chapter-item ${ch.status}`}>
+      {chapters.map(ch => (
+        <div class={`ch-card ${ch.status}`} id={ch.id}>
+          <div class="ch-header" onclick="this.parentElement.classList.toggle('open')">
             <span class="ch-num">{ch.num}</span>
             <div class="ch-info">
-              <div class="ch-title">
-                {ch.titleZh}
-                {(ch.status === 'done' && ch.num < 3) && <a href="/blog/2026-03-15-nwp-warner-ch01-02/" class="blog-link">📝 笔记</a>}
-              </div>
+              <div class="ch-title-zh">{ch.titleZh}</div>
               <div class="ch-title-en">{ch.title}</div>
             </div>
-            <span class="ch-pages">{ch.pages}</span>
-            <span class={`ch-badge ${ch.status}`}>{ch.status === 'done' ? '✅' : '⏳'}</span>
-          </li>
-        ))}
-      </ul>
+            <div class="ch-meta">
+              {ch.pages && <span class="ch-pages">{ch.pages}</span>}
+              <span class={`ch-badge ${ch.status}`}>{ch.status === 'done' ? '✅' : '⏳'}</span>
+              {ch.sections.length > 0 && <span class="ch-toggle">▶</span>}
+            </div>
+          </div>
+          {ch.sections.length > 0 && (
+            <div class="ch-body">
+              {ch.blogUrl && <a href={ch.blogUrl} class="blog-link">📝 感悟博客 →</a>}
+              {ch.sections.map(sec => (
+                <div class="section">
+                  <div onclick="this.parentElement.classList.toggle('open')">
+                    <span class="section-id">{sec.id}</span>
+                    <span class="section-title">{sec.title}</span>
+                  </div>
+                  {sec.note && <div class="note" set:html={sec.note.replace(/\\n/g, '<br/>')} />}
+                  {sec.subsections && sec.subsections.map(sub => (
+                    <div class="subsection section">
+                      <div onclick="this.parentElement.classList.toggle('open')">
+                        <span class="section-id">{sub.id}</span>
+                        <span class="section-title">{sub.title}</span>
+                      </div>
+                      {sub.note && <div class="note" set:html={sub.note.replace(/\\n/g, '<br/>')} />}
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      ))}
 
       <a href="/textbook/" class="back-link">← 返回教材目录</a>
     </div>
   </main>
   <Footer />
+  <script src="/katex/katex.min.js" defer></script>
+  <script src="/katex/auto-render.min.js" defer></script>
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof renderMathInElement === 'function') {
+        renderMathInElement(document.body, {
+          delimiters: [
+            { left: '$$', right: '$$', display: true },
+            { left: '$', right: '$', display: false },
+          ],
+        });
+      }
+    });
+  </script>
 </body>
 </html>

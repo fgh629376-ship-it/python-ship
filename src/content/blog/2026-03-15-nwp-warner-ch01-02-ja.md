@@ -8,7 +8,7 @@ series: nwp-warner
 tags: ['教材ノート', 'NWP', '原始方程式', 'Reynolds平均', '数値天気予報']
 ---
 
-> 📖 [教材目次に戻る](/textbook/)
+> 📖 本記事は [Warner NWP 教材](/textbook/nwp-warner/) Ch1-2 の感想ブログです | [教材目次に戻る](/textbook/)
 
 ## なぜこの本を学ぶのか？
 
