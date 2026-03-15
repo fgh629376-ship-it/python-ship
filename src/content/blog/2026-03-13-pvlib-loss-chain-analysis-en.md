@@ -22,39 +22,18 @@ Today we use pvlib to dissect every step from sunlight to the grid, covering **1
 
 ## Loss Chain Overview
 
-```
-Solar irradiance GHI (1640 kWh/m²/yr @ Shanghai)
-    │
-    ├── ① Transposition loss: GHI → POA (plane of array)
-    │   Horizontal → tilted surface; geometric gain or loss
-    │
-    ├── ② Angle of Incidence (AOI) loss: 2–4%
-    │   Glass reflectance increases at oblique angles
-    │
-    ├── ③ Spectral loss: 0.5–2%
-    │   Varying air mass shifts the spectrum away from AM1.5
-    │
-    ├── ④ Soiling loss: 2–5%
-    │   Dust, bird droppings, snow
-    │
-    ├── ⑤ Shading loss: 0–10%
-    │   Buildings, trees, inter-row shading
-    │
-    ├── ⑥ Temperature loss: 5–12%
-    │   Each 1 °C rise reduces efficiency by 0.3–0.5%
-    │
-    ├── ⑦ Module mismatch: 1–3%
-    │   Real-world power spread within a batch
-    │
-    ├── ⑧ DC wiring loss: 1–3%
-    │   Resistive losses in DC cables
-    │
-    ├── ⑨ Inverter loss: 2–5%
-    │   DC→AC conversion efficiency
-    │
-    └── ⑩ AC wiring loss: 0.5–1%
-        Transformer + cable to the grid connection point
-```
+**Solar irradiance GHI** ($1640$ $\text{kWh/m}^2$/yr @ Shanghai)
+
+1. **① Transposition loss**: GHI → POA (plane of array) — horizontal → tilted surface; geometric gain or loss
+2. **② Angle of Incidence (AOI) loss**: 2–4% — glass reflectance increases at oblique angles
+3. **③ Spectral loss**: 0.5–2% — varying air mass shifts the spectrum away from AM1.5
+4. **④ Soiling loss**: 2–5% — dust, bird droppings, snow
+5. **⑤ Shading loss**: 0–10% — buildings, trees, inter-row shading
+6. **⑥ Temperature loss**: 5–12% — each $1°\text{C}$ rise reduces efficiency by 0.3–0.5%
+7. **⑦ Module mismatch**: 1–3% — real-world power spread within a batch
+8. **⑧ DC wiring loss**: 1–3% — resistive losses in DC cables
+9. **⑨ Inverter loss**: 2–5% — DC$\rightarrow$AC conversion efficiency
+10. **⑩ AC wiring loss**: 0.5–1% — transformer + cable to the grid connection point
 
 **Overall system efficiency ≈ 54%–86%**, corresponding to a PR (Performance Ratio) of 0.54–0.86.
 
@@ -369,25 +348,20 @@ print(f"Specific yield: {e_annual/p_peak:.0f} kWh/kWp")
 
 ## Quick Reference Card 📌
 
-```
-PV Loss Chain — 10 Steps (ranked largest to smallest):
-  1. Temperature loss     5–12%  ← biggest hidden killer
-  2. Inverter loss        2–5%
-  3. Soiling loss         2–5%
-  4. AOI reflection       2–4%
-  5. Shading loss         0–10%  ← most variable
-  6. Module mismatch      1–3%
-  7. DC wiring loss       1–3%
-  8. Spectral loss        0.5–2%
-  9. AC wiring loss       0.5–1%
+**PV Loss Chain — 10 Steps** (ranked largest to smallest):
 
-Quick energy yield estimate:
-  PR ≈ 0.75–0.85 (most systems)
-  Annual yield ≈ P_peak × GHI × PR / 1000
+1. Temperature loss 5–12% ← biggest hidden killer
+2. Inverter loss 2–5%
+3. Soiling loss 2–5%
+4. AOI reflection 2–4%
+5. Shading loss 0–10% ← most variable
+6. Module mismatch 1–3%
+7. DC wiring loss 1–3%
+8. Spectral loss 0.5–2%
+9. AC wiring loss 0.5–1%
 
-Design optimisation priority:
-  ① Minimise shading (site selection, row spacing)
-  ② Control temperature (ventilation, mounting method)
-  ③ Regular cleaning (quarterly)
-  ④ Right-size the inverter (DC/AC ratio = 1.1–1.3)
-```
+**Quick energy yield estimate**: PR ≈ 0.75–0.85
+
+$$\text{Annual yield} \approx P_{\text{peak}} \times \text{GHI} \times \text{PR} / 1000$$
+
+**Design optimisation priority**: ① Minimise shading ② Control temperature ③ Regular cleaning ④ Right-size inverter (DC:AC = 1.1–1.3)

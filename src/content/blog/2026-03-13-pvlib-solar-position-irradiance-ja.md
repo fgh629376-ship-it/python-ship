@@ -83,7 +83,7 @@ print(f"日出: {sunrise}, 日没: {sunset}")
 
 **基本関係式：**
 ```
-GHI = DNI × cos(zenith) + DHI
+$\text{GHI} = \text{DNI} \times \cos(\theta_z) + \text{DHI}$
 ```
 
 気象観測所は通常 GHI のみを測定するため、モデルを使って DNI と DHI を分離する必要があります。

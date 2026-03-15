@@ -206,14 +206,10 @@ losses = pvlib.pvsystem.pvwatts_losses(
 
 純粋な物理モデルには限界があり、純粋な ML は物理的制約に欠けます。両者を組み合わせるのが主流のアプローチです：
 
-```
-手順：
-1. pvlib で物理ベースの基準予測値 P_phys を算出
-2. 残差を計算：residual = P_actual - P_phys
-3. XGBoost / LSTM で残差を学習
-   入力特徴：雲量指数、NWP バイアス、過去の残差
-4. 最終予測：P_final = P_phys + residual_pred
-```
+1. pvlib で物理ベースの基準予測値 $P_{\text{phys}}$ を算出
+2. 残差を計算：$\text{residual} = P_{\text{actual}} - P_{\text{phys}}$
+3. XGBoost / LSTM で残差を学習（入力特徴：雲量指数、NWP バイアス、過去の残差）
+4. 最終予測：$P_{\text{final}} = P_{\text{phys}} + \text{residual}_{\text{pred}}$
 
 物理制約により予測値が物理的に妥当な範囲に保たれ、ML が気象予報の誤差を補正します。
 

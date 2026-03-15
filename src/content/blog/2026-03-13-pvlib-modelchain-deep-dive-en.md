@@ -121,13 +121,11 @@ print(f'Inverter efficiency:   {(ac[daytime]/dc["p_mp"][daytime]).mean():.4f}') 
 
 Measured loss chain for the summer solstice day (28°C ambient, $700 \text{W/m}^2$ mean POA):
 
-```
-POA 700.2 W/m²
-  → AOI+spectral: ×0.9727 → Effective irrad 689.9 W/m²  (-2.73%)
-  → Temperature:  48.9°C  → DC Pmpp 2567 W
-  → Inverter:     ×0.9514 → AC output 2458 W             (-4.86%)
-  → System PR ≈ 79.7%
-```
+- POA $700.2$ $\text{W/m}^2$
+- → AOI+spectral: $\times 0.9727$ → Effective irrad $689.9$ $\text{W/m}^2$ (-2.73%)
+- → Temperature: 48.9°C → DC Pmpp 2567 W
+- → Inverter: $\times 0.9514$ → AC output 2458 W (-4.86%)
+- → System PR ≈ 79.7%
 
 ---
 

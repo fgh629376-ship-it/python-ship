@@ -206,14 +206,10 @@ losses = pvlib.pvsystem.pvwatts_losses(
 
 Pure physics models have a ceiling; pure ML lacks physical constraints. Combining them is the mainstream approach:
 
-```
-Steps:
-1. Run pvlib to get physics-based baseline forecast P_phys
-2. Compute residuals: residual = P_actual - P_phys
-3. Train XGBoost / LSTM on the residuals
-   Features: cloud index, NWP bias, historical residuals
-4. Final forecast: P_final = P_phys + residual_pred
-```
+1. Run pvlib to get physics-based baseline forecast $P_{\text{phys}}$
+2. Compute residuals: $\text{residual} = P_{\text{actual}} - P_{\text{phys}}$
+3. Train XGBoost / LSTM on the residuals (features: cloud index, NWP bias, historical residuals)
+4. Final forecast: $P_{\text{final}} = P_{\text{phys}} + \text{residual}_{\text{pred}}$
 
 Physics constraints keep forecasts physically plausible; ML corrects errors introduced by weather forecast uncertainty.
 

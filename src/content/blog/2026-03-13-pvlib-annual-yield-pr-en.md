@@ -241,14 +241,14 @@ The optimal tilt angle for Shanghai (31.2°N) is approximately 33-35°, but the 
 
 ## Part 5: Complete Loss Chain
 
-```
-Installed capacity:          5.0 kWp
-Theoretical maximum output:  8760h × 5kW = 43800 kWh (never achieved)
-Reference output:            9415 kWh  (theoretical full output based on POA irradiation)
-DC energy output:            9069 kWh  ← Temperature losses (-3.8%), AOI losses, etc.
-AC energy output:            8694 kWh  ← Inverter losses (-4.1%)
-Total loss ratio:            7.7% (PR = 92.3%)
-```
+| Item | Value | Note |
+|------|-------|------|
+| Installed capacity | 5.0 kWp | |
+| Theoretical max output | $8760\text{h} \times 5\text{kW} = 43800$ kWh | Never achieved |
+| Reference output | 9415 kWh | Theoretical full output based on POA |
+| DC energy output | 9069 kWh | ← Temperature losses (-3.8%), AOI, etc. |
+| AC energy output | 8694 kWh | ← Inverter losses (-4.1%) |
+| Total loss ratio | 7.7% | PR = 92.3% |
 
 ---
 

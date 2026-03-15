@@ -60,12 +60,7 @@ print(f"Rs={float(Rs):.4f}Ω  Rsh={float(Rsh):.1f}Ω")
 print(f"nNsVth={float(nNsVth):.3f}V")
 ```
 
-Output:
-```
-IL=8.882A  I0=1.22e-10A
-Rs=0.3214Ω  Rsh=237.5Ω
-nNsVth=1.488V
-```
+Output: $I_L = 8.882\text{A}$, $I_0 = 1.22 \times 10^{-10}\text{A}$, $R_s = 0.3214\Omega$, $R_{sh} = 237.5\Omega$, $nN_sV_{th} = 1.488\text{V}$
 
 > 🔥 **Gotcha**: `calcparams_cec` expects `R_sh_ref, R_s` (shunt first), which is reversed from the CEC database column order `R_s, R_sh_ref`! Swapping them produces no error but completely wrong results.
 
@@ -123,13 +118,13 @@ for g in [200, 400, 600, 800, 1000]:
           f"{float(r['v_oc']):.2f}V  {float(r['p_mp']):.1f}W")
 ```
 
-```
-   200 W/m²  1.776A  34.81V  49.6W
-   400 W/m²  3.551A  35.84V  100.8W
-   600 W/m²  5.325A  36.44V  151.5W
-   800 W/m²  7.098A  36.87V  201.2W
-  1000 W/m²  8.870A  37.20V  249.8W
-```
+| Irradiance | $I_{sc}$ | $V_{oc}$ | $P_{mp}$ |
+|-----------|----------|----------|----------|
+| $200$ $\text{W/m}^2$ | 1.776A | 34.81V | 49.6W |
+| $400$ $\text{W/m}^2$ | 3.551A | 35.84V | 100.8W |
+| $600$ $\text{W/m}^2$ | 5.325A | 36.44V | 151.5W |
+| $800$ $\text{W/m}^2$ | 7.098A | 36.87V | 201.2W |
+| $1000$ $\text{W/m}^2$ | 8.870A | 37.20V | 249.8W |
 
 **Pattern**: Isc scales linearly with irradiance; Voc varies only ~7% (logarithmic); power is nearly linear.
 

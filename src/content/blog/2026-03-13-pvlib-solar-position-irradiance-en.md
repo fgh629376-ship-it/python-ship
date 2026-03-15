@@ -83,7 +83,7 @@ When solar radiation reaches the Earth's surface, it is divided into three compo
 
 **Basic relationship:**
 ```
-GHI = DNI × cos(zenith) + DHI
+$\text{GHI} = \text{DNI} \times \cos(\theta_z) + \text{DHI}$
 ```
 
 Weather stations typically only measure GHI, so models are needed to decompose it into DNI and DHI.

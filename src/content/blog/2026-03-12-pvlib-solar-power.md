@@ -206,14 +206,10 @@ losses = pvlib.pvsystem.pvwatts_losses(
 
 纯物理模型有天花板，纯 ML 缺乏物理约束。结合起来才是主流：
 
-```
-步骤：
-1. pvlib 跑出物理基准预测值 P_phys
-2. 计算残差：residual = P_actual - P_phys
-3. 用 XGBoost / LSTM 学习残差
-   输入特征：云量指数、NWP 偏差、历史残差
-4. 最终预测：P_final = P_phys + residual_pred
-```
+1. pvlib 跑出物理基准预测值 $P_{\text{phys}}$
+2. 计算残差：$\text{residual} = P_{\text{actual}} - P_{\text{phys}}$
+3. 用 XGBoost / LSTM 学习残差（输入特征：云量指数、NWP 偏差、历史残差）
+4. 最终预测：$P_{\text{final}} = P_{\text{phys}} + \text{residual}_{\text{pred}}$
 
 物理约束保证预测值合理，ML 修正天气预报带来的误差。
 
