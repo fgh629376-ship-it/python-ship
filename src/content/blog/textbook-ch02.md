@@ -8,7 +8,7 @@ series: solar-book
 tags: ['教材笔记', 'Ch2', '批判性思维', '论文评审']
 ---
 
-> 📖 [返回总索引](/textbook/)
+> 📖 [返回总索引](/textbook/solar/)
 > 📚 《Solar Irradiance and PV Power Forecasting》Chapter 2, p26-49
 
 这是整本教材最独特的一章——**用哲学工具武装预测者**，教你识别和避免论文中的常见谬误。
@@ -125,4 +125,4 @@ Murphy (1993) 将预测的"好"还原为三个独立维度：
 | "新颖"算子 | 识别虚假创新 | 新组合 ≠ 真创新 |
 | 烟雾弹 | 识别故弄玄虚 | 复杂公式不等于好方法 |
 
-> 📖 [← 上一章](/blog/textbook-ch01/) | [返回总索引](/textbook/) | [下一章 →](/blog/textbook-ch03/)
+> 📖 [← 上一章](/blog/textbook-ch01/) | [返回总索引](/textbook/solar/) | [下一章 →](/blog/textbook-ch03/)

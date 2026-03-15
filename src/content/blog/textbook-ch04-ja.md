@@ -8,7 +8,7 @@ series: solar-book
 tags: ['教材ノート', 'Ch4', 'エネルギー予測', 'クリアスカイモデル', 'Model Chain']
 ---
 
-> 📖 [目次に戻る](/textbook/)
+> 📖 [目次に戻る](/textbook/solar/)
 > 📚 《Solar Irradiance and PV Power Forecasting》Chapter 4, p83-128
 
 ---
@@ -259,4 +259,4 @@ REST2クリアスカイモデルの中核方程式：
 | NWPの必要性 | 4時間超の予測の唯一の信頼できる情報源 |
 | Model Chain | 系統全体の最適化 > 個別最良モデルの組み合わせ |
 
-> 📖 [← 前の章](/blog/textbook-ch03/) | [目次に戻る](/textbook/) | [次の章 →](/blog/textbook-ch05/)
+> 📖 [← 前の章](/blog/textbook-ch03/) | [目次に戻る](/textbook/solar/) | [次の章 →](/blog/textbook-ch05/)

@@ -8,7 +8,7 @@ series: solar-book
 tags: ['教材笔记', 'Ch3', '概率预测', '集成学习', '数学基础']
 ---
 
-> 📖 [返回总索引](/textbook/)
+> 📖 [返回总索引](/textbook/solar/)
 > 📚 《Solar Irradiance and PV Power Forecasting》Chapter 3, p50-82
 
 ---
@@ -162,4 +162,4 @@ tags: ['教材笔记', 'Ch3', '概率预测', '集成学习', '数学基础']
 | Boosting | 顺序+聚焦错误 | 降偏差，XGBoost |
 | Stacking | 基学习器+超级学习器 | 最优组合 |
 
-> 📖 [← 上一章](/blog/textbook-ch02/) | [返回总索引](/textbook/) | [下一章 →](/blog/textbook-ch04/)
+> 📖 [← 上一章](/blog/textbook-ch02/) | [返回总索引](/textbook/solar/) | [下一章 →](/blog/textbook-ch04/)

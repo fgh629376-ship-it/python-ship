@@ -8,7 +8,7 @@ series: solar-book
 tags: ['教材ノート', 'Ch2', '批判的思考', '査読']
 ---
 
-> 📖 [目次に戻る](/textbook/)
+> 📖 [目次に戻る](/textbook/solar/)
 > 📚 《Solar Irradiance and PV Power Forecasting》Chapter 2, p26-49
 
 この章は教材の中で最もユニークだ——**哲学的ツールで予測者を武装し**、論文に潜む一般的な誤謬を見抜き、回避する方法を教えてくれる。
@@ -125,4 +125,4 @@ Murphy (1993) は予測の「良さ」を三つの独立した次元に還元し
 | 「新規性」演算子 | 偽の革新の見抜き方 | 新しい組み合わせ ≠ 真の革新 |
 | 煙幕弾 | 難解な見せかけの識別 | 複雑な数式 ≠ 良い手法 |
 
-> 📖 [← 前の章](/blog/textbook-ch01/) | [目次に戻る](/textbook/) | [次の章 →](/blog/textbook-ch03/)
+> 📖 [← 前の章](/blog/textbook-ch01/) | [目次に戻る](/textbook/solar/) | [次の章 →](/blog/textbook-ch03/)

@@ -8,7 +8,7 @@ series: solar-book
 tags: ['Textbook Notes', 'Ch1', 'Solar Forecasting', 'Grid Integration']
 ---
 
-> 📖 [Back to Index](/textbook/)
+> 📖 [Back to Index](/textbook/solar/)
 > 📚 《Solar Irradiance and PV Power Forecasting》Chapter 1, p1-25
 
 ---
@@ -85,4 +85,4 @@ The textbook's ultimate goal is not merely improving forecast accuracy, but achi
 | Three quality dimensions | Consistency / Quality / Value |
 | Ultimate goal | Dispatchable Solar Power |
 
-> 📖 [Back to Index](/textbook/) | [Next Chapter →](/blog/textbook-ch02/)
+> 📖 [Back to Index](/textbook/solar/) | [Next Chapter →](/blog/textbook-ch02/)

@@ -8,7 +8,7 @@ series: solar-book
 tags: ['教材笔记', 'Ch1', '光伏预测', '电网集成']
 ---
 
-> 📖 [返回总索引](/textbook/)
+> 📖 [返回总索引](/textbook/solar/)
 > 📚 《Solar Irradiance and PV Power Forecasting》Chapter 1, p1-25
 
 ---
@@ -85,4 +85,4 @@ Murphy (1993) 预测质量三维度：
 | 质量三维度 | 一致性 / 质量 / 价值 |
 | 终极目标 | 可调度太阳能 |
 
-> 📖 [返回总索引](/textbook/) | [下一章 →](/blog/textbook-ch02/)
+> 📖 [返回总索引](/textbook/solar/) | [下一章 →](/blog/textbook-ch02/)

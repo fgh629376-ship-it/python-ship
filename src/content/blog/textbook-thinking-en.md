@@ -9,7 +9,7 @@ series: solar-book
 tags: ['Thinking Training', 'Logic Reasoning', 'Solar Forecasting', 'Knowledge Integration']
 ---
 
-> 📖 [Back to Index](/textbook/)
+> 📖 [Back to Index](/textbook/solar/)
 
 Knowing knowledge is not the same as being able to use it. This page provides **logic reasoning training** after completing all 12 chapters of the textbook — connecting isolated knowledge points into causal chains and developing the ability to think in terms of "why" and "therefore."
 
@@ -504,7 +504,7 @@ Initial condition error (Ch7.1.4 data assimilation)
 
 ---
 
-> 📖 [Back to Index](/textbook/)
+> 📖 [Back to Index](/textbook/solar/)
 >
 > *All 12 chapters completed. From "why forecast" to "dispatchable solar energy," every step has a causal chain.*
 > *Logical thinking ability is not innate — it is trained.*

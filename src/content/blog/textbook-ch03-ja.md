@@ -8,7 +8,7 @@ series: solar-book
 tags: ['教材ノート', 'Ch3', '確率的予測', 'アンサンブル学習', '数学的基礎']
 ---
 
-> 📖 [目次に戻る](/textbook/)
+> 📖 [目次に戻る](/textbook/solar/)
 > 📚 《Solar Irradiance and PV Power Forecasting》Chapter 3, p50-82
 
 ---
@@ -162,4 +162,4 @@ tags: ['教材ノート', 'Ch3', '確率的予測', 'アンサンブル学習', 
 | Boosting | 逐次＋誤りへの集中 | バイアス低減、XGBoost |
 | Stacking | 基本学習器＋スーパー学習器 | 最適な組み合わせ |
 
-> 📖 [← 前の章](/blog/textbook-ch02/) | [目次に戻る](/textbook/) | [次の章 →](/blog/textbook-ch04/)
+> 📖 [← 前の章](/blog/textbook-ch02/) | [目次に戻る](/textbook/solar/) | [次の章 →](/blog/textbook-ch04/)

@@ -8,7 +8,7 @@ series: solar-book
 tags: ['Textbook Notes', 'Ch3', 'Probabilistic Forecasting', 'Ensemble Learning', 'Mathematical Foundations']
 ---
 
-> 📖 [Back to Index](/textbook/)
+> 📖 [Back to Index](/textbook/solar/)
 > 📚 《Solar Irradiance and PV Power Forecasting》Chapter 3, p50-82
 
 ---
@@ -162,4 +162,4 @@ The distinction between statistical ensembles and ensemble learning: fundamental
 | Boosting | Sequential + focus on errors | Reduces bias; XGBoost |
 | Stacking | Base learners + super learner | Optimal combination |
 
-> 📖 [← Previous Chapter](/blog/textbook-ch02/) | [Back to Index](/textbook/) | [Next Chapter →](/blog/textbook-ch04/)
+> 📖 [← Previous Chapter](/blog/textbook-ch02/) | [Back to Index](/textbook/solar/) | [Next Chapter →](/blog/textbook-ch04/)

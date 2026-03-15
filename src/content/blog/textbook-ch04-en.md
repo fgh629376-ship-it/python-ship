@@ -8,7 +8,7 @@ series: solar-book
 tags: ['Textbook Notes', 'Ch4', 'Energy Forecasting', 'Clear-Sky Model', 'Model Chain']
 ---
 
-> 📖 [Back to Index](/textbook/)
+> 📖 [Back to Index](/textbook/solar/)
 > 📚 *Solar Irradiance and PV Power Forecasting* Chapter 4, p83–128
 
 ---
@@ -259,4 +259,4 @@ The textbook's ultimate conclusions:
 | Necessity of NWP | The only reliable source for forecasts beyond 4h |
 | Model Chain | Holistic optimization > stitching together individually optimal sub-models |
 
-> 📖 [← Previous Chapter](/blog/textbook-ch03/) | [Back to Index](/textbook/) | [Next Chapter →](/blog/textbook-ch05/)
+> 📖 [← Previous Chapter](/blog/textbook-ch03/) | [Back to Index](/textbook/solar/) | [Next Chapter →](/blog/textbook-ch05/)

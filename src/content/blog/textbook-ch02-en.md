@@ -8,7 +8,7 @@ series: solar-book
 tags: ['Textbook Notes', 'Ch2', 'Critical Thinking', 'Peer Review']
 ---
 
-> 📖 [Back to Index](/textbook/)
+> 📖 [Back to Index](/textbook/solar/)
 > 📚 《Solar Irradiance and PV Power Forecasting》Chapter 2, p26-49
 
 This is the most distinctive chapter in the entire textbook — **arming forecasters with philosophical tools** to identify and avoid the common fallacies found in academic papers.
@@ -125,4 +125,4 @@ Two modes of scientific progress:
 | "Novel" Operator | Identifying false innovation | New combinations ≠ true innovation |
 | Smoke Grenade | Detecting obfuscation | Complex formulas ≠ good methods |
 
-> 📖 [← Previous Chapter](/blog/textbook-ch01/) | [Back to Index](/textbook/) | [Next Chapter →](/blog/textbook-ch03/)
+> 📖 [← Previous Chapter](/blog/textbook-ch01/) | [Back to Index](/textbook/solar/) | [Next Chapter →](/blog/textbook-ch03/)

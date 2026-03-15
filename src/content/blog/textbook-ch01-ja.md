@@ -8,7 +8,7 @@ series: solar-book
 tags: ['教材ノート', 'Ch1', '太陽光発電予測', '系統連系']
 ---
 
-> 📖 [目次に戻る](/textbook/)
+> 📖 [目次に戻る](/textbook/solar/)
 > 📚 《Solar Irradiance and PV Power Forecasting》Chapter 1, p1-25
 
 ---
@@ -85,4 +85,4 @@ Murphy (1993) が提唱した予測品質の三つの次元：
 | 品質の三次元 | 一貫性 / 品質 / 価値 |
 | 究極の目標 | 調整可能な太陽光発電 |
 
-> 📖 [目次に戻る](/textbook/) | [次の章 →](/blog/textbook-ch02/)
+> 📖 [目次に戻る](/textbook/solar/) | [次の章 →](/blog/textbook-ch02/)
