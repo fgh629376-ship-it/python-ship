@@ -225,15 +225,17 @@ Conclusion: Aerosol uncertainty → clear-sky model uncertainty + NWP cloud simu
 
 As later chapters are studied, the following hypotheses need verification:
 
-1. **Ch3 should explain the derivation of the CFL condition** — how does the time-step constraint affect the real-time capability of NWP? How fast can a high-resolution model (e.g., 1 km WRF) run on a RTX 4050?
+1. **Ch5 Surface Processes** — how does the parameterization accuracy of the surface energy balance affect boundary-layer development? Ch4 says "radiation→surface→PBL→convection" is the starting point of the cycle — how large is the error contribution from surface parameterization? Could vegetation/soil parameter uncertainty be another underestimated error source?
 
-2. **Ch4 cloud microphysics parameterization** — is it really the largest source of irradiance forecast error? Yang Ch7.1.2 says so; what does Warner say?
+2. **Ch6 Data Assimilation** — how much better is ECMWF's 4D-Var than 3D-Var? What is the marginal improvement for irradiance forecasting? The assimilation quality of the cloud field in initial conditions directly determines short-term forecasts — what does Warner say?
 
-3. **Ch6 data assimilation** — how much better is ECMWF's 4D-Var than 3D-Var? What is the marginal improvement for irradiance forecasting?
+3. **Ch7 Ensemble Methods** — do Warner's meteorological ensembles correspond fully to the statistical ensembles in Yang Ch3.3? Ch4 mentions stochastic parameterization (adding noise to parameters) — is this the same thing as "model uncertainty perturbation" in ensemble methods?
 
-4. **Ch7 ensemble methods** — do Warner's meteorological ensembles correspond fully to the statistical ensembles in Yang Ch3.3, or are there conceptual differences?
+4. **Ch9 Verification Methods** — how much overlap is there between Warner's NWP verification and Yang's Ch9-10 forecast verification framework? What is special about irradiance forecast verification?
 
-5. **Ch9 verification methods** — how much overlap is there between Warner's NWP verification methods and Yang's Ch9-10 forecast verification framework?
+5. **Optimal parameterization combinations** — Ch4 says parameterization schemes are deeply coupled, so are there certain scheme combinations particularly suited for PV forecasting scenarios? Which schemes did WRF-Solar select, and why?
+
+6. **Gray-zone impacts in practice** — Ch4 says 3-9 km is the gray zone for convection parameterization. How is this handled operationally? Turning off convection parameterization entirely vs. using scale-aware schemes vs. using coarser resolution — which strategy works better for PV forecasting?
 
 ---
 
@@ -246,6 +248,14 @@ As later chapters are studied, the following hypotheses need verification:
 ### ❓ Yang Ch7.1.2 says "parameterization is the most controversial topic in NWP," but it was unclear why
 
 ✅ **Warner Ch2's Reynolds averaging provides the answer.** The mathematical origin of parameterization is the Reynolds stress term — it is fundamentally a **closure problem** (fewer equations than unknowns). Any parameterization scheme is one approximation to this closure problem, and there is no "uniquely correct answer." That is why controversy is permanent.
+
+### ❓ What exactly is the CFL condition derivation? How does the time-step constraint affect NWP real-time capability?
+
+✅ **Warner Ch3 provides the full derivation.** CFL condition: $\Delta t \leq \Delta x / c$, where $c$ is the fastest signal propagation speed (sound waves ~340 m/s). This means at $\Delta x = 1$ km, $\Delta t \leq 3$ s — simulating one day requires 28,800 time steps. This is the fundamental reason why high-resolution NWP computational costs explode. Semi-implicit methods can relax the CFL constraint but introduce accuracy loss.
+
+### ❓ Is cloud microphysics parameterization really the largest source of irradiance forecast error?
+
+✅ **Warner Ch4 confirms and deepens this understanding.** Not only is cloud microphysics itself a bottleneck, the entire parameterization feedback loop (radiation→surface→PBL→convection→microphysics→cloud→radiation) is coupled. The radiation scheme physics is already mature; the bottleneck is its **input** — the 3D distribution of clouds. Cloud quality depends on the coordination of all upstream parameterization schemes. Aerosol (CCN concentration) uncertainty further amplifies errors through its effect on cloud droplet size distribution.
 
 ---
 
