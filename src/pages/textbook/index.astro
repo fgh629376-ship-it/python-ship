@@ -510,7 +510,7 @@ const allNotes = getAllNotes(chapters);
         <div class="note-panel" id={`note-${n.id}`}>
           <div class="note-breadcrumb">Ch{n.chNum} › {n.secId}</div>
           <h2>{n.secId} {n.title}</h2>
-          <div class="note-body">{n.note}</div>
+          <div class="note-body" set:html={n.note.replace(/\\n/g, '<br/>')} />
         </div>
       ))}
     </main>
