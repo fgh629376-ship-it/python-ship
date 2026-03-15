@@ -470,8 +470,8 @@ const allNotes = getAllNotes(chapters);
           Yang & Kleissl · CRC Press, 2024
         </div>
         <div class="progress">
-          <div class="progress-track"><div class="progress-fill" style="width:33.3%"></div></div>
-          <span class="progress-text">4/12</span>
+          <div class="progress-track"><div class="progress-fill" style={`width:${(chapters.filter(c => c.status === 'done').length / chapters.length * 100).toFixed(1)}%`}></div></div>
+          <span class="progress-text">{chapters.filter(c => c.status === 'done').length}/{chapters.length}</span>
         </div>
       </div>
       <nav class="tb-tree" id="tree">
