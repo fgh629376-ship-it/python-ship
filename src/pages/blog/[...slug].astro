@@ -4,17 +4,113 @@ import BlogPost from '../../layouts/BlogPost.astro';
 
 export async function getStaticPaths() {
 	const posts = await getCollection('blog');
-	return posts.map((post) => ({
-		params: { slug: post.id },
-		props: post,
-	}));
+	// Sort all posts by pubDate ascending
+	const sorted = [...posts].sort((a, b) => 
+		new Date(a.data.pubDate).getTime() - new Date(b.data.pubDate).getTime()
+	);
+	return sorted.map((post, idx) => {
+		// Find prev/next within the same language
+		const lang = post.data.lang || 'zh';
+		const sameLang = sorted.filter(p => (p.data.lang || 'zh') === lang);
+		const langIdx = sameLang.findIndex(p => p.id === post.id);
+		const prev = langIdx > 0 ? sameLang[langIdx - 1] : null;
+		const next = langIdx < sameLang.length - 1 ? sameLang[langIdx + 1] : null;
+		return {
+			params: { slug: post.id },
+			props: { 
+				post, 
+				prevPost: prev ? { slug: prev.id, title: prev.data.title } : null,
+				nextPost: next ? { slug: next.id, title: next.data.title } : null,
+			},
+		};
+	});
 }
-type Props = CollectionEntry<'blog'>;
 
-const post = Astro.props;
+interface Props {
+	post: CollectionEntry<'blog'>;
+	prevPost: { slug: string; title: string } | null;
+	nextPost: { slug: string; title: string } | null;
+}
+
+const { post, prevPost, nextPost } = Astro.props;
 const { Content } = await render(post);
 ---
 
 <BlogPost {...post.data}>
 	<Content />
+	{(prevPost || nextPost) && (
+		<nav class="post-nav">
+			<div class="post-nav-item prev">
+				{prevPost && (
+					<a href={`/blog/${prevPost.slug}/`}>
+						<span class="post-nav-label" data-i18n="prevPost">← 上一篇</span>
+						<span class="post-nav-title">{prevPost.title}</span>
+					</a>
+				)}
+			</div>
+			<div class="post-nav-item next">
+				{nextPost && (
+					<a href={`/blog/${nextPost.slug}/`}>
+						<span class="post-nav-label" data-i18n="nextPost">下一篇 →</span>
+						<span class="post-nav-title">{nextPost.title}</span>
+					</a>
+				)}
+			</div>
+		</nav>
+	)}
 </BlogPost>
+
+<style>
+	.post-nav {
+		display: flex;
+		justify-content: space-between;
+		gap: 1.5rem;
+		margin-top: 3rem;
+		padding-top: 2rem;
+		border-top: 1px solid var(--border);
+	}
+	.post-nav-item {
+		flex: 1;
+		min-width: 0;
+	}
+	.post-nav-item.next {
+		text-align: right;
+	}
+	.post-nav-item a {
+		display: block;
+		padding: 1rem 1.2rem;
+		border-radius: 8px;
+		background: var(--bg-card, #1a1d2e);
+		border: 1px solid var(--border, #2a2d3e);
+		text-decoration: none;
+		transition: all 0.3s;
+	}
+	.post-nav-item a:hover {
+		border-color: var(--accent, #4ade80);
+		background: rgba(74, 222, 128, 0.05);
+	}
+	.post-nav-label {
+		display: block;
+		font-size: 0.8rem;
+		color: var(--text-muted, #888);
+		margin-bottom: 0.3rem;
+	}
+	.post-nav-title {
+		display: block;
+		font-size: 0.95rem;
+		color: var(--text, #e0e0e0);
+		line-height: 1.4;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+	@media (max-width: 600px) {
+		.post-nav {
+			flex-direction: column;
+			gap: 0.8rem;
+		}
+		.post-nav-item.next {
+			text-align: left;
+		}
+	}
+</style>
