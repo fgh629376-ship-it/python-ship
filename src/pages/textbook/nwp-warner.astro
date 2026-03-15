@@ -32,11 +32,32 @@ const chapters = [
     ],
   },
   {
-    id: 'ch3', num: 3, status: 'pending',
+    id: 'ch3', num: 3, status: 'done',
     title: 'Numerical Solutions to the Equations',
     titleZh: '方程的数值解法',
     pages: 'p17-118',
-    sections: [],
+    blogUrl: '/blog/2026-03-15-nwp-warner-ch03/',
+    sections: [
+      { id: '3.1', title: '基本概念概述', note: String.raw`NWP 数值求解的五大基本概念：\n\n①网格点法 vs 谱方法：网格点法在离散网格上近似导数（有限差分/体积/元），谱方法用球谐函数展开（导数精确但非线性需回网格空间）。\n\n②时间积分：从初始条件出发，逐时间步求解方程。前向差分启动 → Leap-frog 推进。CFL 条件约束时间步长：$U\Delta t / \Delta x < 1$。\n\n③边界条件：全球模型无侧边界（自然周期）；区域模型需外部指定侧边界（来自全球模型）。还有上边界（大气不到无穷）和下边界（地表通量）。\n\n④初始条件：初值问题——预测质量不可能超过初始条件质量。"冷启动"vs"热启动"：数据同化提供 spun-up 的初始场。\n\n⑤物理参数化：次网格过程的计算量往往超过动力核心所有其他项之和。` },
+      { id: '3.2', title: '数值框架', subsections: [
+        { id: '3.2.1', title: '有限差分/网格点法', note: String.raw`三种地图投影用于区域模型网格：\n- Mercator：热带（赤道附近 m≈1）\n- Lambert Conformal：中纬度（标准用法）\n- Polar Stereographic：高纬度\n\n地图缩放因子 $m = dx_G / dx_E$（投影面距离/地球面距离），理想值为 1。选投影时目标：①m 尽量接近 1 ②dm/d纬度 尽量小。\n\n经纬度网格的问题：极点处经线汇聚 → 网格间距趋近零 → CFL 要求极小时间步 → 极点附近计算量爆炸。解决方案：reduced Gaussian grid（高纬度减少经向网格点数）。` },
+        { id: '3.2.2', title: '谱方法', note: String.raw`将大气变量用球谐函数（Fourier-Legendre）展开：\n$A(x) = \sum_{|m| \leq K} C_m(t) e^{imkx}$\n\n导数变成乘法：$\partial A / \partial x = \sum imk \cdot C_m \cdot e^{imkx}$——精确，无截断误差！\n\n但非线性项（如 $u \cdot \partial u / \partial x$）需要回到网格空间计算乘积，再正变换回谱空间。这个过程（spectral transform）引入 aliasing。\n\n截断波数 K 决定分辨率：ECMWF Tco1279 → 保留 1279 阶球谐函数。\n\n谱方法统治全球建模数十年（1970s-2010s），但新一代超级计算机架构（GPU/大规模并行）更适合网格点法 → ECMWF 正在向有限体积转型（IFS-FVM）。` },
+        { id: '3.2.3', title: '有限元法', note: '用局部基函数（分片多项式）近似解，特别适合不规则边界和自适应网格。在 NWP 中使用较少，主要见于海洋模型。' },
+        { id: '3.2.4', title: '有限体积法', note: '守恒量在控制体积上积分。天然守恒质量/能量。DCISL 和 FFSL 两种变体。代表模型：HIRLAM、NCAR CAM。新趋势——ECMWF IFS-FVM 正向有限体积转型。' },
+      ]},
+      { id: '3.3', title: '有限差分方法', subsections: [
+        { id: '3.3.1', title: '时间差分方法', note: String.raw`显式 vs 隐式 vs 半隐式：\n\n【显式】新时刻值只依赖旧时刻：$\phi^{\tau+1} = \phi^{\tau-1} + 2\Delta t \cdot F^\tau$\n- Leap-frog（中心差分）、Lax-Wendroff（预测-校正）、Runge-Kutta\n- WRF 用三阶 Runge-Kutta（Wicker & Skamarock 2002）\n- 受 CFL 约束\n\n【隐式】新时刻值出现在方程两侧 → 需迭代求解 Helmholtz 方程\n- 无条件稳定，时间步长不受 CFL 限制\n- 但每步计算量远大于显式\n\n【半隐式】快波（声波/重力波）用隐式，慢波（气象波）用显式\n- 兼顾稳定性和效率\n- ECMWF IFS 用此方法\n\n【分裂显式 (Split-Explicit)】\n- 快波项用小时间步，慢波项用大时间步\n- WRF 用此方法——声波/重力波用 $\Delta t_{small}$，气象过程用 $\Delta t_{large}$` },
+        { id: '3.3.2', title: '空间差分方法', note: String.raw`交错网格(Staggered Grid)：Arakawa 五种网格（A/B/C/D/E）。\n\nArakawa-C 网格最常用（WRF/HRRR）：质量变量在格心，u 在东西面中点，v 在南北面中点。优势：散度和气压梯度力的计算自然准确。\n\n四阶精度差分 vs 二阶：\n- 四阶跨 5 个网格点，更精确但计算量更大\n- 对短波（6Δx 以下）改善明显` },
+      ]},
+      { id: '3.4', title: '数值近似的影响', subsections: [
+        { id: '3.4.1', title: '截断误差', note: String.raw`Taylor 展开推导有限差分精度：\n\n三点中心差分（二阶精度）：\n$\frac{df}{dx} \approx \frac{f(a+\Delta x) - f(a-\Delta x)}{2\Delta x}$\n\n截断误差比 = $\sin(k\Delta x) / (k\Delta x)$：\n- $6\Delta x$ 波 → 17% 误差\n- $10\Delta x$ 波 → 6% 误差\n- $2\Delta x$ 波 → 100% 误差（导数 = 0！）\n\n经验法则：10 个网格点才能合理表示一个波。\n\n每次求导都在丢信息——气压梯度误差 → 地转风误差 → 散度误差 → 垂直运动误差 → 云误差 → 辐照度误差。` },
+        { id: '3.4.2', title: '线性稳定性与阻尼', note: String.raw`CFL 条件的严格推导：\n\n对线性平流方程的中心差分格式做 von Neumann 分析：\n- 设解为 $\phi_j^n = A^n e^{ikj\Delta x}$\n- 代入差分方程求增长因子 $|A|$\n- $|A| \leq 1$ 要求 Courant 数 $\leq 1$\n\n不同格式的稳定性：\n- 前向时间+中心空间：无条件不稳定！（纯增长）\n- 前向时间+后向空间：条件稳定但有阻尼\n- 中心时间+中心空间（Leap-frog）：条件稳定，无阻尼，但有计算模态\n- Runge-Kutta：稳定性更好\n\n计算模态(Computational Mode)：Leap-frog 方案产生的虚假波——每个时间步振荡一次，无物理对应。需要 Robert-Asselin 滤波器控制。` },
+        { id: '3.4.3', title: '相速度/群速度误差', note: String.raw`数值色散(Numerical Dispersion)：有限差分使波的传播速度依赖波长——即使物理波是非色散的。\n\n结果：\n- 短波移动太慢（$2\Delta x$ 波完全停滞）\n- 长波接近正确速度\n- Courant 数接近 1 时色散最小\n\n实际后果：锋面（由短波分量组成的急梯度）在数值解中被"抹开"——短波分量掉队，长波分量先行。\n\n与光伏预测的联系：NWP 中锋面过境导致的辐照度急变（ramp 事件），在数值解中会被平滑化，导致 ramp 预测的时间和幅度都有误差。` },
+      ]},
+      { id: '3.5', title: '侧边界条件 (LBC)', note: String.raw`区域模型（如 WRF-Solar）的不可避免误差源。六大 LBC 误差来源：\n\n①分辨率降级：LBC 来自粗分辨率全球模型 → 插值丢失小尺度信息\n②气象预报错误：全球模型本身的误差传入\n③缺乏跨尺度反馈：LAM 细尺度解无法反馈修正全球模型\n④噪声生成：LBC 公式产生非气象惯性重力波\n⑤参数化不一致：全球模型和 LAM 用不同物理方案\n⑥数值折射：不同网格间距导致波传播速度不同\n\n关键实验（Baumhefner & Perkey 1982）：48h 内 LBC 误差传播导致 500hPa 气压偏差 5-10 hPa。\n\n实用建议：域越小 → LBC 影响越大；域越大 → 计算越贵。必须做域大小敏感性测试。` },
+      { id: '3.6', title: '上边界条件', note: '大气不到无穷——必须定义人工上边界。Rayleigh 阻尼层或海绵层：在模型顶部几层逐渐衰减扰动，防止内重力波从上边界反射回来。厚度通常需要 5-10 个垂直层。' },
+      { id: '3.8', title: '模型设置实用清单', note: '①明确目的——要模拟什么物理过程？\n②选网格间距——足够小以解析目标过程\n③定垂直层——充分解析边界层/急流/对流层顶\n④选地图投影——热带Mercator/中纬Lambert/高纬极投影\n⑤验证——与观测对比，多案例全季节\n⑥域大小测试——确认 LBC 影响可接受\n⑦分辨率测试——确认增加分辨率真的改善解\n\n核心哲学：不要假设高分辨率一定更好——CFL 代价（分辨率×2 → 成本×8）可能不值得。' },
+    ],
   },
   {
     id: 'ch4', num: 4, status: 'pending',
@@ -240,6 +261,11 @@ const pct = Math.round(done / total * 100);
           )}
         </div>
       ))}
+
+      <div style="margin-top: 2rem; padding: 1rem; background: #1a1d2e; border-radius: 8px; border-left: 3px solid #f59e0b;">
+        <a href="/blog/nwp-warner-thinking/" style="color: #f59e0b; text-decoration: none; font-weight: 700; font-size: 1rem;">🧠 思维训练 — NWP 教材逻辑串联 →</a>
+        <div style="color: #94a3b8; font-size: .85rem; margin-top: .3rem;">因果推理链、跨教材知识网络、待验证假设</div>
+      </div>
 
       <a href="/textbook/" class="back-link">← 返回教材目录</a>
     </div>
