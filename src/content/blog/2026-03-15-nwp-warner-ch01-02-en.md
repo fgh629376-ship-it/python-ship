@@ -1,6 +1,6 @@
 ---
 title: '📖 NWP Textbook Notes Ch1-2: From Primitive Equations to Numerical Weather Prediction'
-description: 'A close reading of the first two chapters of Warner\'s "Numerical Weather and Climate Prediction." The big-picture view of NWP, physical meaning of the primitive equations, Reynolds averaging and turbulence parameterization, three families of approximate equations — the mathematical foundation of weather physics for solar forecasting.'
+description: "A close reading of the first two chapters of Warner's Numerical Weather and Climate Prediction. The big-picture view of NWP, physical meaning of the primitive equations, Reynolds averaging and turbulence parameterization, three families of approximate equations."
 pubDate: 2026-03-15
 lang: en
 category: solar
