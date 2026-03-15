@@ -30,21 +30,23 @@ The three base methods, ranked by importance:
 
 At the core of Numerical Weather Prediction lie the **Primitive Equations** — 7 equations solving for 7 variables (u, v, w, T, q, ρ, p):
 
-```
 ① Newton's 2nd Law → 3 momentum equations (predicting 3D wind)
-   Du/Dt = -∇p/ρ + f×u + F_friction + curvature terms
-   
-② 1st Law of Thermodynamics → Temperature prediction
-   Dθ/Dt = (θ/T)(Q/cp)    // θ = potential temperature
-   
-③ Water vapor conservation → Moisture prediction
-   Dq/Dt = E - C           // E = evaporation, C = condensation
-   
+
+$$\frac{Du}{Dt} = -\frac{\nabla p}{\rho} + f \times u + F_{\text{friction}}$$
+
+② 1st Law of Thermodynamics → Temperature prediction ($\theta$ = potential temperature, $Q$ = heating rate)
+
+$$\frac{D\theta}{Dt} = \frac{\theta}{T} \cdot \frac{Q}{c_p}$$
+
+③ Water vapor conservation → Moisture prediction ($E$ = evaporation, $C$ = condensation)
+
+$$\frac{Dq}{Dt} = E - C$$
+
 ④ Mass conservation → Continuity equation
-   
-⑤ Ideal gas law → Diagnostic relation
-   p = ρRT                  // No time derivative
-```
+
+⑤ Ideal gas law → Diagnostic relation (no time derivative)
+
+$$p = \rho R T$$
 
 The first 6 are **prognostic equations** (containing D/Dt, the Lagrangian total derivative); the 7th is **diagnostic**.
 
@@ -92,7 +94,7 @@ Three approaches:
 
 Satellite forecasting extracts current cloud motion, assumes clouds remain "frozen" short-term, and advects the irradiance field forward.
 
-**Lucas-Kanade optical flow**: Brightness constancy constraint → `Ix·U + Iy·V = -It` → solve (U,V) via neighborhood least squares.
+**Lucas-Kanade optical flow**: Brightness constancy $I(x,y,t) = I(x+\Delta x, y+\Delta y, t+\Delta t)$ → optical flow equation $I_x U + I_y V = -I_t$ → solve $(U,V)$ via neighborhood least squares.
 
 **Block matching (three-step search)**: Find maximum cross-correlation blocks between consecutive frames.
 

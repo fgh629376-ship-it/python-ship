@@ -29,7 +29,7 @@ tags: ["pvlib", "両面モジュール", "bifacial", "太陽光モデリング",
 基本方程式：
 
 ```
-E_back = ρ × GHI × VF(back→ground) + DHI × VF(back→sky)
+$$E_{\text{back}} = \rho \times \text{GHI} \times VF_{\text{back→ground}} + \text{DHI} \times VF_{\text{back→sky}}$$
 ```
 
 **VF（視野係数）** は幾何学的関係を定量的に記述し、裏面がどれだけの地面と空を「見る」かを決定します。

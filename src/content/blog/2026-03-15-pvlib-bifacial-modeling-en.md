@@ -29,7 +29,7 @@ The backside of a bifacial module receives three irradiance components:
 Core equation:
 
 ```
-E_back = ρ × GHI × VF(back→ground) + DHI × VF(back→sky)
+$$E_{\text{back}} = \rho \times \text{GHI} \times VF_{\text{back→ground}} + \text{DHI} \times VF_{\text{back→sky}}$$
 ```
 
 Where **VF (View Factor)** quantitatively describes geometric relationships, determining how much ground and sky the backside "sees."

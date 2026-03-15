@@ -28,9 +28,7 @@ tags: ["pvlib", "双面组件", "bifacial", "光伏建模", "视角因子"]
 
 核心方程：
 
-```
-E_back = ρ × GHI × VF(back→ground) + DHI × VF(back→sky)
-```
+$$E_{\text{back}} = \rho \times \text{GHI} \times VF_{\text{back→ground}} + \text{DHI} \times VF_{\text{back→sky}}$$
 
 其中 **VF（视角因子）** 是几何关系的定量描述，决定了背面「看到」多少地面和天空。
 
