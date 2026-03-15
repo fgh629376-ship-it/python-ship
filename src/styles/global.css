@@ -27,7 +27,7 @@
 html {
 	background: var(--bg);
 	color: var(--text);
-	font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace, system-ui, sans-serif;
+	font-family: system-ui, -apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
 }
 
 body {
