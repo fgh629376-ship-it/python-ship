@@ -30,7 +30,7 @@ $$PR = \frac{E_{ac}}{P_{peak} \times H_{POA}}$$
 
 - $E_{ac}$：年間 AC 発電量（kWh）
 - $P_{peak}$：設備容量（kWp）
-- $H_{POA}$：パネル面（POA）年間日射量（kWh/m²）
+- $H_{POA}$：パネル面（POA）年間日射量（$\text{kWh/m}^2$）
 
 **重要**：分母は POA 日射量であって、水平面 GHI ではありません！
 

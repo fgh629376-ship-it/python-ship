@@ -273,7 +273,7 @@ print(f"\n日積算日射量: {daily_irradiation:.2f} kWh/m²")
 | ポイント | 内容 |
 |---------|------|
 | **太陽位置** | pvlib は SPA アルゴリズムを使用、精度 ±0.0003°、zenith/azimuth を出力 |
-| **日射量の三要素** | GHI = DNI×cos(z) + DHI；気象観測所は GHI を測定、モデルで分解 |
+| **日射量の三要素** | $\text{GHI} = \text{DNI} \times \cos(z) + \text{DHI}$；気象観測所は GHI を測定、モデルで分解 |
 | **分解モデル** | DISC、DIRINT — GHI から DNI を抽出 |
 | **POA 変換** | 水平面日射量 → パネル傾斜面日射量；Perez モデルを推奨 |
 | **入射角 AOI** | 反射損失に影響、IAM モデルで補正 |

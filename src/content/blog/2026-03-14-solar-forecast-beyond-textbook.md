@@ -57,9 +57,9 @@ for i, m in enumerate(benchmark_results['最佳模型Top5'], 1):
 
 **对我们的启示**：别花太多时间在模型选择上。**先把 XGBoost 跑通**，90% 的情况下它就是最优解。深度学习在日前预测上并没有碾压优势。
 
-## 2. κ vs kt：数学上为什么 κ 更好
+## 2. $\kappa$ vs kt：数学上为什么 $\kappa$ 更好
 
-Lauret et al. (2022) 和 Yang (2020) 从数学上证明了为什么晴空指数 κ 比混浊指数 kt 更适合预测：
+Lauret et al. (2022) 和 Yang (2020) 从数学上证明了为什么晴空指数 $\kappa$ 比混浊指数 kt 更适合预测：
 
 ```python
 import numpy as np
@@ -109,7 +109,7 @@ demonstrate_kappa_vs_kt()
 # 基于模型计算，非实测
 ```
 
-**核心**：κ 的标准差比 kt 小一个量级——说明 κ 把天文周期去除得更干净，剩下的波动才是模型需要学的**天气信号**。
+**核心**：$\kappa$ 的标准差比 kt 小一个量级——说明 $\kappa$ 把天文周期去除得更干净，剩下的波动才是模型需要学的**天气信号**。
 
 ## 3. 晴空模型的选择影响比你想象的大
 
@@ -382,12 +382,12 @@ for name, info in DEPLOYMENT_ISSUES.items():
 |---------|------|---------|
 | Markovics & Mayer (2022) | R&SE Reviews (1区Top) | XGBoost 是日前预测最优解，深度学习无显著优势 |
 | Yang (2020) | JRSE (2区) | 晴空模型选择影响 Skill 5-10%，Ineichen-Perez 最佳性价比 |
-| Lauret et al. (2022) | Solar (2区) | κ 比 kt 标准差小一个量级，去天文信号更干净 |
+| Lauret et al. (2022) | Solar (2区) | $\kappa$ 比 kt 标准差小一个量级，去天文信号更干净 |
 | Yang et al. (2021) | Solar Energy (2区) | 运营化预测要考虑数据延迟、备用方案、滚动更新 |
 | Prema & Bhaskar (2021) | IEEE Access (2区) | 概率预测不是可选项，电网调度必须要 |
 
 > **核心原则**：
 > 1. 先跑 XGBoost，90% 情况下够用
-> 2. κ 归一化 + Ineichen-Perez 晴空模型 = 最佳性价比
+> 2. $\kappa$ 归一化 + Ineichen-Perez 晴空模型 = 最佳性价比
 > 3. 概率预测是电网的真正需求
 > 4. 部署 ≠ 训练，要考虑漂移/延迟/异常/回退

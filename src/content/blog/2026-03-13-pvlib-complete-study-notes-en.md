@@ -156,7 +156,7 @@ cell_temp = mc.results.cell_temperature
 
 ## Temperature Model Comparison (Measured)
 
-Under conditions of POA ≈ 1000 W/m², ambient temperature 32°C, wind speed 1.5 m/s:
+Under conditions of POA ≈ $1000 \text{W/m}^2$, ambient temperature 32°C, wind speed 1.5 m/s:
 
 | Model | Cell Temperature | Characteristics |
 |-------|-----------------|-----------------|
@@ -193,7 +193,7 @@ CEC vs PVWatts annual energy yield difference: approximately **13%** — model s
 
 ## Inverter Efficiency Measurements
 
-PVWatts inverter model DC→AC efficiency:
+PVWatts inverter model DC$\rightarrow$AC efficiency:
 - **96.2%** @200W (near rated power, peak efficiency)
 - **94.9%** @50W (light load efficiency drops)
 - **85.7%** @280W (overload power clipping)
@@ -214,7 +214,7 @@ Shanghai region, fixed 30° south-facing vs. single-axis tracking:
 
 | Comparison | Fixed 30° | Single-Axis Tracking | Gain |
 |------------|-----------|---------------------|------|
-| Annual POA | 2469 kWh/m² | 2848 kWh/m² | **+15.3%** |
+| Annual POA | $2469 \text{kWh/m}^2$ | $2848 \text{kWh/m}^2$ | **+15.3%** |
 | Peak summer month | 207.8 | 290.1 | +39.6% |
 | Worst winter month | 185.3 | 161.6 | **-12.8%** |
 
@@ -230,8 +230,8 @@ Shanghai region, fixed 30° south-facing vs. single-axis tracking:
 | Metric | Value |
 |--------|-------|
 | Installed capacity | 5.0 kWp (20 × CS6P-250P) |
-| Annual GHI | 1640 kWh/m² |
-| Annual POA (30° south) | 1883 kWh/m² |
+| Annual GHI | $1640 \text{kWh/m}^2$ |
+| Annual POA (30° south) | $1883 \text{kWh/m}^2$ |
 | DC energy yield | 9069 kWh/year |
 | AC energy yield | 8694 kWh/year |
 | PR | **92.3%** |

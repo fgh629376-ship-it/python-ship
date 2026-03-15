@@ -27,9 +27,9 @@ Markovics & Mayer (2022) compared **68 ML methods** on the same data with the sa
 
 **Takeaway**: Start with XGBoost. It's the optimal answer 90% of the time.
 
-## 2. κ vs kt: Mathematical Proof
+## 2. $\kappa$ vs kt: Mathematical Proof
 
-Lauret et al. (2022) proved that clear-sky index (κ) has an order of magnitude lower standard deviation than clearness index (kt) throughout the day — meaning κ removes astronomical signals much more thoroughly.
+Lauret et al. (2022) proved that clear-sky index ($\kappa$) has an order of magnitude lower standard deviation than clearness index (kt) throughout the day — meaning $\kappa$ removes astronomical signals much more thoroughly.
 
 ## 3. Clear-sky Model Choice: 5-10% Impact on Skill
 
@@ -55,8 +55,8 @@ Grid operators need probability distributions, not single numbers. Recommended: 
 |-------|---------|-------------|
 | Markovics & Mayer (2022) | R&SE Reviews (Q1 Top) | XGBoost is optimal for day-ahead; DL has no significant edge |
 | Yang (2020) | JRSE (Q2) | Clear-sky model choice affects Skill by 5-10% |
-| Lauret et al. (2022) | Solar (Q2) | κ removes astronomical signal much better than kt |
+| Lauret et al. (2022) | Solar (Q2) | $\kappa$ removes astronomical signal much better than kt |
 | Yang et al. (2021) | Solar Energy (Q2) | Operational forecasting needs fallback plans and rolling updates |
 | Prema & Bhaskar (2021) | IEEE Access (Q2) | Probabilistic forecasting is required for grid dispatch |
 
-> **Core principles**: (1) XGBoost first, (2) κ + Ineichen-Perez = best value, (3) probabilistic output is the real need, (4) deployment ≠ training.
+> **Core principles**: (1) XGBoost first, (2) $\kappa$ + Ineichen-Perez = best value, (3) probabilistic output is the real need, (4) deployment ≠ training.

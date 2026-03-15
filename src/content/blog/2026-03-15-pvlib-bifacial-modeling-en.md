@@ -80,11 +80,11 @@ Shanghai summer solstice (June 21), GCR=0.4, tilt=30°:
 
 | Ground Type | Albedo | Rear Daily Irrad. | Bifacial Gain |
 |-------------|--------|-------------------|---------------|
-| Dark asphalt | 0.15 | 0.77 kWh/m² | **11.3%** |
-| Light soil | 0.25 | 1.22 kWh/m² | **18.0%** |
-| Light concrete | 0.35 | 1.67 kWh/m² | **24.5%** |
-| White gravel | 0.50 | 2.35 kWh/m² | **34.3%** |
-| Fresh snow | 0.70 | 3.25 kWh/m² | **47.2%** |
+| Dark asphalt | 0.15 | $0.77 \text{kWh/m}^2$ | **11.3%** |
+| Light soil | 0.25 | $1.22 \text{kWh/m}^2$ | **18.0%** |
+| Light concrete | 0.35 | $1.67 \text{kWh/m}^2$ | **24.5%** |
+| White gravel | 0.50 | $2.35 \text{kWh/m}^2$ | **34.3%** |
+| Fresh snow | 0.70 | $3.25 \text{kWh/m}^2$ | **47.2%** |
 
 **Takeaway**: Increasing albedo from 0.15→0.50 triples bifacial gain. This is why many plants install white ground covers — **investing a few thousand in ground treatment yields 10-15% more energy, paying back in 2-3 years**.
 

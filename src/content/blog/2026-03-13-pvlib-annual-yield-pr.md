@@ -30,7 +30,7 @@ $$PR = \frac{E_{ac}}{P_{peak} \times H_{POA}}$$
 
 - $E_{ac}$：年 AC 发电量（kWh）
 - $P_{peak}$：装机容量（kWp）
-- $H_{POA}$：面板平面（POA）年辐照量（kWh/m²）
+- $H_{POA}$：面板平面（POA）年辐照量（$\text{kWh/m}^2$）
 
 **重点**：分母用的是 POA 辐照量，不是水平面 GHI！
 

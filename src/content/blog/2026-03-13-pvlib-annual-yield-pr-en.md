@@ -30,7 +30,7 @@ $$PR = \frac{E_{ac}}{P_{peak} \times H_{POA}}$$
 
 - $E_{ac}$: Annual AC energy output (kWh)
 - $P_{peak}$: Installed capacity (kWp)
-- $H_{POA}$: Annual plane-of-array (POA) irradiation (kWh/m²)
+- $H_{POA}$: Annual plane-of-array (POA) irradiation ($\text{kWh/m}^2$)
 
 **Key point**: The denominator uses POA irradiation, not horizontal GHI!
 

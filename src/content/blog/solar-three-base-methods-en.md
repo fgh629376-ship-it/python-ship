@@ -86,7 +86,7 @@ Three approaches:
 
 **Physical (FARMS/NSRDB)**: `Gh = η·Gho + (1-η)·Ghc` — cloud fraction weighted combination of overcast and clear-sky GHI. Requires cloud properties (GOES), atmospheric profiles (MERRA-2), aerosols (MODIS). FARMS achieves 1000× speedup via lookup tables.
 
-**Semi-empirical (Heliosat-2/SolarGIS/SolarAnywhere)**: `Gh = g(ν)·Ghc` — maps cloud index ν to clear-sky index κ via a simple piecewise function. Uses only the visible channel, achieving 0.5km resolution. The workhorse of commercial solar resource assessment.
+**Semi-empirical (Heliosat-2/SolarGIS/SolarAnywhere)**: `Gh = g(ν)·Ghc` — maps cloud index ν to clear-sky index $\kappa$ via a simple piecewise function. Uses only the visible channel, achieving 0.5km resolution. The workhorse of commercial solar resource assessment.
 
 **Pure ML**: Random Forest/CNN directly regressing satellite channels to GHI. Lower accuracy but valuable for new satellites lacking mature cloud property products.
 

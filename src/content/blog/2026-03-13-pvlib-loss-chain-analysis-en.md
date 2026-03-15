@@ -102,8 +102,8 @@ print(f"Transposition gain: {(poa_annual/ghi_annual - 1)*100:+.1f}%")
 **Shanghai measured values:**
 | Metric | Value |
 |--------|-------|
-| Annual GHI | 1640 kWh/m² |
-| Annual POA (30° south) | 1883 kWh/m² |
+| Annual GHI | $1640 \text{kWh/m}^2$ |
+| Annual POA (30° south) | $1883 \text{kWh/m}^2$ |
 | Transposition gain | **+14.8%** |
 
 ---
@@ -346,8 +346,8 @@ print(f"Specific yield: {e_annual/p_peak:.0f} kWh/kWp")
 | Summary metric | Value |
 |---------------|-------|
 | Installed capacity | 5.0 kWp |
-| Annual GHI | 1640 kWh/m² |
-| Annual POA | 1883 kWh/m² |
+| Annual GHI | $1640 \text{kWh/m}^2$ |
+| Annual POA | $1883 \text{kWh/m}^2$ |
 | System efficiency | ~79.6% |
 | PR | 0.796 |
 | Annual energy yield | ~7500 kWh |

@@ -21,7 +21,7 @@ Markovics & Mayer (2022) の核心発見：
 - 深層学習は日前予測で従来MLに対し有意な優位性なし
 - モデル選択 < 特徴エンジニアリングとデータ品質
 
-## 2. κ vs kt：数学的に κ が優れる理由
+## 2. $\kappa$ vs kt：数学的に $\kappa$ が優れる理由
 
 κ（clear-sky index）はkt（clearness index）より一桁小さい標準偏差 → 天文信号の除去がより徹底的。
 
@@ -50,4 +50,4 @@ Ineichen-Perez = 最適コストパフォーマンス。
 | Lauret et al. (2022) | Solar (Q2) | κはktより天文信号除去が徹底 |
 | Yang et al. (2021) | Solar Energy (Q2) | 運用予測にはフォールバック計画必要 |
 
-> **核心原則**：(1) まずXGBoost、(2) κ + Ineichen-Perez = 最適、(3) 確率出力が真の需要、(4) デプロイ ≠ 訓練
+> **核心原則**：(1) まずXGBoost、(2) $\kappa$ + Ineichen-Perez = 最適、(3) 確率出力が真の需要、(4) デプロイ ≠ 訓練

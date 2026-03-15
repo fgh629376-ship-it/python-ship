@@ -47,15 +47,15 @@ The 12 chapters can be divided into **four major modules**:
 
 **Q1: A paper only reports $R^2 = 0.95$ without reporting RMSE — what might it be "sweeping under the rug"?**
 
-> **Thought Process:** Solar PV output has a strong daily cycle (daytime on, nighttime off), and this cycle alone can contribute a very high $R^2$. $R^2$ measures "how much variance does the model explain" — when data has an obvious trend (like rising from 0 in the morning to a noon peak and back to 0 each day), even a rough forecast can easily achieve $R^2 > 0.9$. RMSE, on the other hand, measures "how far does the forecast deviate from observation in W/m²" — directly reflecting forecasting skill. Reporting only $R^2$ without RMSE is likely because RMSE looks bad — the model may have huge errors near sunrise/sunset or on cloudy days, masked by the "false prosperity" of $R^2$.
+> **Thought Process:** Solar PV output has a strong daily cycle (daytime on, nighttime off), and this cycle alone can contribute a very high $R^2$. $R^2$ measures "how much variance does the model explain" — when data has an obvious trend (like rising from 0 in the morning to a noon peak and back to 0 each day), even a rough forecast can easily achieve $R^2 > 0.9$. RMSE, on the other hand, measures "how far does the forecast deviate from observation in $\text{W/m}^2$" — directly reflecting forecasting skill. Reporting only $R^2$ without RMSE is likely because RMSE looks bad — the model may have huge errors near sunrise/sunset or on cloudy days, masked by the "false prosperity" of $R^2$.
 >
 > **Answer:** It may be "sweeping" the true forecast error. $R^2 = 0.95$ has almost no discriminative power in solar forecasting (even a persistence model can achieve this) — both RMSE and MAE must be reported to reflect true forecast quality. This is a classic "Occam's Broom" — selectively displaying favorable metrics.
 
-**Q2: XGBoost's RMSE is only 1 W/m² lower than a 20-layer DNN — which should you choose? Why?**
+**Q2: XGBoost's RMSE is only $1 \text{W/m}^2$ lower than a 20-layer DNN — which should you choose? Why?**
 
-> **Thought Process:** A 1 W/m² difference may not be statistically significant (a DM test is needed), but even if it is, Occam's Razor applies. XGBoost is a relatively simple ensemble tree model: fast to train, interpretable (feature contributions visible), easy to tune, simple to deploy. A 20-layer DNN takes tens of times longer to train, is uninterpretable, sensitive to hyperparameters, prone to overfitting, and requires GPUs for deployment. A 1 W/m² improvement is nowhere near worth these costs.
+> **Thought Process:** A $1 \text{W/m}^2$ difference may not be statistically significant (a DM test is needed), but even if it is, Occam's Razor applies. XGBoost is a relatively simple ensemble tree model: fast to train, interpretable (feature contributions visible), easy to tune, simple to deploy. A 20-layer DNN takes tens of times longer to train, is uninterpretable, sensitive to hyperparameters, prone to overfitting, and requires GPUs for deployment. A $1 \text{W/m}^2$ improvement is nowhere near worth these costs.
 >
-> **Answer:** Choose XGBoost. Reasons: ① The 1 W/m² difference may not be significant (DM test required); ② Occam's Razor — trading 10× complexity for less than 1% improvement is not worthwhile; ③ The 68-model comparison by Markovics & Mayer (2022) confirmed that XGBoost/LightGBM are overall optimal at typical data volumes.
+> **Answer:** Choose XGBoost. Reasons: ① The $1 \text{W/m}^2$ difference may not be significant (DM test required); ② Occam's Razor — trading 10× complexity for less than 1% improvement is not worthwhile; ③ The 68-model comparison by Markovics & Mayer (2022) confirmed that XGBoost/LightGBM are overall optimal at typical data volumes.
 
 ---
 
@@ -146,7 +146,7 @@ The 12 chapters can be divided into **four major modules**:
 
 **Q7: Why must QC be performed before temporal aggregation?**
 
-> **Thought Process:** Suppose 1-minute data contains an anomalous spike (e.g., sensor malfunction causing GHI = 5000 W/m²). If aggregated to hourly averages first, this spike is diluted by 60 normal values — the hourly mean may only be a few tens of W/m² higher, falling within QC thresholds and escaping detection. But if QC is applied at 1-minute resolution, the spike far exceeds the PPL upper limit ($1.5E_{0n}\cos^{1.2}Z + 100$) and is immediately flagged for removal. QC after aggregation = information loss → missed detections.
+> **Thought Process:** Suppose 1-minute data contains an anomalous spike (e.g., sensor malfunction causing GHI = $5000 \text{W/m}^2$). If aggregated to hourly averages first, this spike is diluted by 60 normal values — the hourly mean may only be a few tens of $\text{W/m}^2$ higher, falling within QC thresholds and escaping detection. But if QC is applied at 1-minute resolution, the spike far exceeds the PPL upper limit ($1.5E_{0n}\cos^{1.2}Z + 100$) and is immediately flagged for removal. QC after aggregation = information loss → missed detections.
 >
 > **Answer:** Because temporal aggregation (averaging) **dilutes outliers**, hiding them within the normal range and allowing them to escape QC detection. An extreme spike at 1-minute resolution gets washed out by 59 normal values in the hourly mean. Therefore, QC must come before aggregation — catch anomalies at the highest resolution, then use clean data for temporal averaging.
 
@@ -174,7 +174,7 @@ The 12 chapters can be divided into **four major modules**:
 
 **Q9: NWP grid points represent 5–50 km² averages, while ground observations are single points. What problems arise from direct comparison?**
 
-> **Thought Process:** Clouds have high spatial variability — a cumulus cloud may be only 500m wide. NWP grid points represent the average irradiance over a 10km×10km area, while a ground station measures a **single point**. If a cloud happens to cover the ground station but not the surrounding area, the ground GHI will be low while the NWP grid-average GHI remains reasonable — this "error" is not because NWP forecasts poorly, but due to representativeness error from spatial scale mismatch.
+> **Thought Process:** Clouds have high spatial variability — a cumulus cloud may be only 500m wide. NWP grid points represent the average irradiance over a 10km$\times 10$km area, while a ground station measures a **single point**. If a cloud happens to cover the ground station but not the surrounding area, the ground GHI will be low while the NWP grid-average GHI remains reasonable — this "error" is not because NWP forecasts poorly, but due to representativeness error from spatial scale mismatch.
 >
 > **Answer:** This introduces **representativeness error**. Single-point ground observations contain sub-grid-scale variability (especially rapid fluctuations caused by clouds) that NWP cannot resolve. This error is not a problem with the forecasting method but a deficiency in the validation approach. Solutions: ① Use multi-station averages to match the NWP grid scale; ② Use satellite irradiance (which is already an area average) for validation; ③ Account for the contribution of representativeness error in assessments.
 
@@ -282,13 +282,13 @@ Post-processing = without changing the forecast variable (GHI remains GHI), only
 
 **Q15: Model A has MAE = 50, Model B has MAE = 52 — can you say A is better?**
 
-> **Thought Process:** A 2 W/m² difference may come from random variation. On one test set A happens to beat B by 2; on another test set B might overtake A. Statistics requires us to distinguish "real difference" from "random noise." The Diebold-Mariano (DM) test does exactly this: compute $d_t = L(e_{A,t}) - L(e_{B,t})$ (the loss difference between the two models at each time step) and test $H_0: E[d_t] = 0$. The DM statistic is approximately $N(0,1)$; p-value < 0.05 is needed to claim a significant difference.
+> **Thought Process:** A $2 \text{W/m}^2$ difference may come from random variation. On one test set A happens to beat B by 2; on another test set B might overtake A. Statistics requires us to distinguish "real difference" from "random noise." The Diebold-Mariano (DM) test does exactly this: compute $d_t = L(e_{A,t}) - L(e_{B,t})$ (the loss difference between the two models at each time step) and test $H_0: E[d_t] = 0$. The DM statistic is approximately $N(0,1)$; p-value < 0.05 is needed to claim a significant difference.
 >
 > **Answer:** You cannot directly say A is better. A **Diebold-Mariano test** is required: $H_0: E[d_t] = 0$, $d_t = |e_{A,t}| - |e_{B,t}|$ (absolute error loss for MAE). Only if the p-value is sufficiently small (e.g., < 0.05) can one statistically say A is significantly better than B. Solar forecasting papers rarely perform this test — most only compare numbers, which is statistically unsound.
 
 **Q16: Why does "the MAPE-optimal forecast incur higher penalties"?**
 
-> **Thought Process:** MAPE penalizes percentage errors — when irradiance is near zero (around sunrise/sunset), even a small absolute error (e.g., 5 W/m²) yields an enormous MAPE because the denominator is small (e.g., 10 W/m²), sending MAPE to 50%. A MAPE-optimal model "optimizes" these edge time periods, making forecasts very accurate at low irradiance — but these periods have negligible generation, carrying almost no grid value. Meanwhile, it may ignore large absolute errors at midday (500 W/m² forecast for 50 W/m² actual; MAPE only 10%), and those errors are the primary source of imbalance penalties.
+> **Thought Process:** MAPE penalizes percentage errors — when irradiance is near zero (around sunrise/sunset), even a small absolute error (e.g., $5 \text{W/m}^2$) yields an enormous MAPE because the denominator is small (e.g., $10 \text{W/m}^2$), sending MAPE to 50%. A MAPE-optimal model "optimizes" these edge time periods, making forecasts very accurate at low irradiance — but these periods have negligible generation, carrying almost no grid value. Meanwhile, it may ignore large absolute errors at midday ($500 \text{W/m}^2$ forecast for $50 \text{W/m}^2$ actual; MAPE only 10%), and those errors are the primary source of imbalance penalties.
 >
 > **Answer:** Because MAPE assigns excessive weight to small errors at low-irradiance periods (sunrise/sunset), leading the model to "optimize" the periods of lowest economic value while ignoring large absolute errors at high-irradiance periods — and grid penalties are typically proportional to absolute deviations. This is the core finding of Ch9.5: **quality (good metrics) and value (economic benefit) have a nonlinear relationship** — a 9% quality difference can cause a 5× penalty difference.
 
@@ -316,9 +316,9 @@ Post-processing = without changing the forecast variable (GHI remains GHI), only
 
 **Q17: What are the units of CRPS? Are they the same as MAE?**
 
-> **Thought Process:** CRPS is defined as $\int[F(x) - \mathbb{1}(x \geq y)]^2 dx$. The integrand $[F(x) - \mathbb{1}]^2$ is dimensionless (squared probability difference), while the integration variable $dx$ has the same units as the forecast variable (W/m²). So the units of CRPS = units of the forecast variable. When the forecast distribution degenerates to a point forecast $\delta(\hat{y})$, $\text{CRPS} = |y - \hat{y}| = \text{MAE}$. The two have the same units, and CRPS can be directly compared numerically with MAE.
+> **Thought Process:** CRPS is defined as $\int[F(x) - \mathbb{1}(x \geq y)]^2 dx$. The integrand $[F(x) - \mathbb{1}]^2$ is dimensionless (squared probability difference), while the integration variable $dx$ has the same units as the forecast variable ($\text{W/m}^2$). So the units of CRPS = units of the forecast variable. When the forecast distribution degenerates to a point forecast $\delta(\hat{y})$, $\text{CRPS} = |y - \hat{y}| = \text{MAE}$. The two have the same units, and CRPS can be directly compared numerically with MAE.
 >
-> **Answer:** CRPS has the same units as the forecast variable (W/m²), the same as MAE. This is an important advantage of CRPS — it is both a probabilistic score and retains physical interpretability. When a probabilistic forecast degenerates to a point forecast, CRPS exactly equals MAE, so the two can be directly compared numerically.
+> **Answer:** CRPS has the same units as the forecast variable ($\text{W/m}^2$), the same as MAE. This is an important advantage of CRPS — it is both a probabilistic score and retains physical interpretability. When a probabilistic forecast degenerates to a point forecast, CRPS exactly equals MAE, so the two can be directly compared numerically.
 
 **Q18: What does "strictly proper" mean? What happens if a scoring rule is not strictly proper?**
 

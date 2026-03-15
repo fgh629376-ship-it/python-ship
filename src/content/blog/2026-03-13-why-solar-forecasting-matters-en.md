@@ -203,9 +203,9 @@ So solar forecasting is not an academic exercise — **every percentage point of
 
 ## Probabilistic Forecasting: More Than a Single Number
 
-Traditional forecasting gives a single value: "Tomorrow at noon, irradiance will be 800 W/m²."
+Traditional forecasting gives a single value: "Tomorrow at noon, irradiance will be $800 \text{W/m}^2$."
 
-Probabilistic forecasting gives an entire distribution: "Tomorrow at noon, the 90% confidence interval for GHI is 650–950 W/m², most likely value 820 W/m²."
+Probabilistic forecasting gives an entire distribution: "Tomorrow at noon, the 90% confidence interval for GHI is 650–$950 \text{W/m}^2$, most likely value $820 \text{W/m}^2$."
 
 ```python
 import numpy as np

@@ -36,7 +36,7 @@ transposition → aoi → spectral → effective_irradiance
 | `dc_model` | `sapm` | DC 電力（I-V 曲線） |
 | `dc_ohmic_model` | `no_dc_ohmic_loss` | DC オーム損失 |
 | `losses_model` | `no_extra_losses` | カスタム追加損失 |
-| `ac_model` | `sandia_inverter` | インバーター DC→AC |
+| `ac_model` | `sandia_inverter` | インバーター DC$\rightarrow$AC |
 
 各ノードは置き換え可能です。文字列を渡すと組み込みモデルを使用し、関数を渡すと完全なカスタマイズが可能です。
 
@@ -119,7 +119,7 @@ print(f'セル温度平均:      {t_cell[daytime].mean():.1f}°C')   # 48.9°C
 print(f'インバーター効率:  {(ac[daytime]/dc["p_mp"][daytime]).mean():.4f}')  # 0.9514
 ```
 
-夏至日の実測損失チェーン（28°C 環境、POA 平均 700 W/m²）：
+夏至日の実測損失チェーン（28°C 環境、POA 平均 $700 \text{W/m}^2$）：
 
 ```
 POA 700.2 W/m²

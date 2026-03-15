@@ -513,9 +513,9 @@ solar_forecast_pipeline(Path("data/"), {})
 | 环节 | 致命错误 | 正确做法 |
 |------|---------|---------|
 | 辐照度输入 | 直接用 GHI | 转为 POA（Perez 转置模型） |
-| 归一化 | 用 clearness index kt | 用 clear-sky index κ |
+| 归一化 | 用 clearness index kt | 用 clear-sky index $\kappa$ |
 | 质量控制 | 不做 QC | BSRN PPL 测试 + 人工目视 |
-| 缺失值 | 填 0 或均值 | κ 插值（短缺失）/ 标记不可用（长缺失） |
+| 缺失值 | 填 0 或均值 | $\kappa$ 插值（短缺失）/ 标记不可用（长缺失） |
 | 数据划分 | random split | 严格时间顺序 |
 | 特征 | 堆 50 个变量 | 每个变量要有物理因果 |
 | Baseline | 不跑 | 持续性模型是必须 benchmark |

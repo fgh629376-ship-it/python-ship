@@ -36,7 +36,7 @@ transposition → aoi → spectral → effective_irradiance
 | `dc_model` | `sapm` | DC 功率（I-V 曲线） |
 | `dc_ohmic_model` | `no_dc_ohmic_loss` | 直流欧姆损耗 |
 | `losses_model` | `no_extra_losses` | 自定义额外损耗 |
-| `ac_model` | `sandia_inverter` | 逆变器 DC→AC |
+| `ac_model` | `sandia_inverter` | 逆变器 DC$\rightarrow$AC |
 
 每个节点都可以替换——传字符串用内置模型，传函数实现完全自定义。
 
@@ -119,7 +119,7 @@ print(f'电池温度均值:  {t_cell[daytime].mean():.1f}°C')   # 48.9°C
 print(f'逆变器效率:    {(ac[daytime]/dc["p_mp"][daytime]).mean():.4f}')  # 0.9514
 ```
 
-夏至日实测损耗链（28°C 环境，700 W/m² POA 均值）：
+夏至日实测损耗链（28°C 环境，$700 \text{W/m}^2$ POA 均值）：
 
 ```
 POA 700.2 W/m²

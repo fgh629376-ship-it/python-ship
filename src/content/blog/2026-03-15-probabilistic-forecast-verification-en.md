@@ -10,7 +10,7 @@ tags: ["probabilistic forecasting", "CRPS", "Brier Score", "calibration", "solar
 
 ## From "Predicting a Number" to "Predicting a Distribution"
 
-Deterministic forecasts tell you "tomorrow's GHI is 500 W/m²." Probabilistic forecasts tell you "there's a 90% chance GHI will be between 350-650 W/m²." The latter is far more useful for grid operations — dispatchers need to know **how uncertain things are** to decide on reserve capacity.
+Deterministic forecasts tell you "tomorrow's GHI is $500 \text{W/m}^2$." Probabilistic forecasts tell you "there's a 90% chance GHI will be between 350-$650 \text{W/m}^2$." The latter is far more useful for grid operations — dispatchers need to know **how uncertain things are** to decide on reserve capacity.
 
 But verifying probabilistic forecasts is much harder than deterministic ones. You can't simply compute RMSE when the forecast is a distribution, not a number. Based on Chapter 10 of Yang & Kleissl (2024).
 
@@ -121,7 +121,7 @@ Box plots of prediction interval width at various nominal coverage rates. A prop
 3. **QR produces flattest PIT histogram** → nonparametric calibration advantage
 4. **No single method dominates all aspects** — the recurring theme
 
-### CRPS Results (W/m²)
+### CRPS Results ($\text{W/m}^2$)
 
 | Method | BON | DRA | PSU |
 |--------|-----|-----|-----|

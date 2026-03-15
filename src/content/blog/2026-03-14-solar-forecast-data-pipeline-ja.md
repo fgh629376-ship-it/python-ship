@@ -45,14 +45,14 @@ def clear_sky_index(ghi: np.ndarray, ghi_clear: np.ndarray) -> np.ndarray:
     return kappa
 ```
 
-**罠**: 多くの論文がclear-sky index (κ) とclearness index (kt = GHI/E₀) を混同。ktの正規化は不完全——κを使うべき。
+**罠**: 多くの論文がclear-sky index ($\kappa$) とclearness index (kt = GHI/E₀) を混同。ktの正規化は不完全——κを使うべき。
 
 ## 3-10. 要約
 
 | ステップ | 致命的ミス | 正しいアプローチ |
 |---------|-----------|----------------|
 | 日射量入力 | GHI直接使用 | POAに変換（Perezモデル） |
-| 正規化 | Clearness index kt | Clear-sky index κ |
+| 正規化 | Clearness index kt | Clear-sky index $\kappa$ |
 | 品質管理 | 省略 | BSRN PPLテスト + 目視検査 |
 | 欠損値 | 0や平均値で埋める | κ補間（短欠損）/ 使用不可マーク（長欠損） |
 | データ分割 | ランダム分割 | 厳密な時間順序 |

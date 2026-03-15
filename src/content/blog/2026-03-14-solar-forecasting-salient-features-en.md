@@ -18,13 +18,13 @@ We can precisely calculate "how much irradiance there should be without clouds."
 
 **GEFCom2014 fact**: 581 participants, 61 countries. The ONLY team that used a clear-sky model won the championship.
 
-## Feature 2: Bimodal κ Distribution
+## Feature 2: Bimodal $\kappa$ Distribution
 
 Clear-sky index distribution is typically bimodal (clear peak ~1.0, cloudy peak ~0.3-0.5). Model with Gaussian mixture, NOT Beta distribution.
 
 ## Feature 3: Cloud Enhancement — Upper Bound ≠ Clear-sky Value
 
-GHI can reach ~1.5× clear-sky value due to cloud enhancement. At 1-second resolution, up to ~1900 W/m². Don't clip at clear-sky value.
+GHI can reach ~1.5× clear-sky value due to cloud enhancement. At 1-second resolution, up to ~$1900 \text{W/m}^2$. Don't clip at clear-sky value.
 
 ## Feature 4: Spatio-temporal Dependence
 
@@ -45,7 +45,7 @@ GHI can reach ~1.5× clear-sky value due to cloud enhancement. At 1-second resol
 
 ## Lessons from Other Domains
 
-- **Load**: Two-stage modeling (non-black-box + black-box on residuals) → Solar: clear-sky model + ML on κ
+- **Load**: Two-stage modeling (non-black-box + black-box on residuals) → Solar: clear-sky model + ML on $\kappa$
 - **Wind**: >3h requires NWP, no substitute → Solar: same rule applies
 - **Price**: Late start on probabilistic → Solar: do probabilistic from day one
 

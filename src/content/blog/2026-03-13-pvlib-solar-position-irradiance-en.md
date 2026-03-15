@@ -273,7 +273,7 @@ print(f"\nDaily irradiation: {daily_irradiation:.2f} kWh/m²")
 | Key Point | Details |
 |-----------|---------|
 | **Solar position** | pvlib uses SPA algorithm, accuracy ±0.0003°, outputs zenith/azimuth |
-| **The irradiance trio** | GHI = DNI×cos(z) + DHI; weather stations measure GHI, models decompose it |
+| **The irradiance trio** | $\text{GHI} = \text{DNI} \times \cos(z) + \text{DHI}$; weather stations measure GHI, models decompose it |
 | **Decomposition models** | DISC, DIRINT — extract DNI from GHI |
 | **POA conversion** | Horizontal → tilted panel irradiance; Perez model recommended |
 | **AOI** | Affects reflection losses; corrected with IAM models |

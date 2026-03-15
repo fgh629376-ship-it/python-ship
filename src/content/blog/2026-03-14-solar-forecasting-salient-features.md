@@ -70,7 +70,7 @@ print(f"\n⚡ GEFCom2014 中唯一使用晴空模型的团队 = 冠军")
 
 **GEFCom2014 竞赛事实**：581 名参赛者，来自 61 个国家。唯一使用了晴空模型的团队获得了冠军——其他所有团队的预测在它面前"黯然失色"（"pale in comparison"）。
 
-## 特征 2：晴空指数 κ 的双峰分布
+## 特征 2：晴空指数 $\kappa$ 的双峰分布
 
 ```python
 def explain_bimodal_distribution():
@@ -104,7 +104,7 @@ def explain_bimodal_distribution():
 explain_bimodal_distribution()
 ```
 
-**教材原话**：假设 GHI 服从 Beta 分布的做法是"不恰当的"（inappropriate）。正确做法是对 κ 建模，使用混合高斯分布。
+**教材原话**：假设 GHI 服从 Beta 分布的做法是"不恰当的"（inappropriate）。正确做法是对 $\kappa$ 建模，使用混合高斯分布。
 
 ## 特征 3：云增强——上界不是晴空值
 
@@ -294,7 +294,7 @@ for domain, info in LESSONS_FROM_OTHER_DOMAINS.items():
 | 特征 | 核心要点 | 实践意义 |
 |------|---------|---------|
 | 晴空模型 | 能精确算出无云辐照度 | GEFCom2014 冠军的秘密武器 |
-| κ 双峰分布 | 晴天+阴天两个峰 | 用混合高斯建模，不用 Beta |
+| $\kappa$ 双峰分布 | 晴天+阴天两个峰 | 用混合高斯建模，不用 Beta |
 | 云增强 | 上界 ≈ 1.5×晴空值 | QC 和 clip 不能用晴空值做上界 |
 | 时空依赖 | 云运动是核心信息 | >4h 必须用 NWP |
 | Model Chain | 5 步物理链 | 整体优化，不是拼接最优个体模型 |

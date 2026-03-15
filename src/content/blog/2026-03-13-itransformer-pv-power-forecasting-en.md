@@ -48,9 +48,9 @@ Typical input features for PV power forecasting include:
 
 | Variable | Description | Typical Unit |
 |----------|-------------|--------------|
-| GHI | Global Horizontal Irradiance | W/m² |
-| DHI | Diffuse Horizontal Irradiance | W/m² |
-| DNI | Direct Normal Irradiance | W/m² |
+| GHI | Global Horizontal Irradiance | $\text{W/m}^2$ |
+| DHI | Diffuse Horizontal Irradiance | $\text{W/m}^2$ |
+| DNI | Direct Normal Irradiance | $\text{W/m}^2$ |
 | Temp | Ambient Temperature | °C |
 | Wind | Wind Speed | m/s |
 | Humidity | Relative Humidity | % |

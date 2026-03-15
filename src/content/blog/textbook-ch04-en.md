@@ -151,10 +151,10 @@ Clear-sky model taxonomy:
 
 - **Lower bound**: theoretically 0 (thermocouple offset can produce slightly negative readings; ignored in practice)
 - **Upper bound**: ≈ 1.5 × clear-sky value (cloud enhancement + albedo enhancement)
-  - 1-second resolution: ~1900 W/m²
-  - 1-minute resolution: ~1600 W/m²
+  - 1-second resolution: ~$1900 \text{W/m}^2$
+  - 1-minute resolution: ~$1600 \text{W/m}^2$
   - > 5 minutes: cloud enhancement tends to average out
-  - 100 kW PV plant: peak can reach ~1400 W/m² (~1.5 × clear-sky)
+  - 100 kW PV plant: peak can reach ~$1400 \text{W/m}^2$ (~1.5 × clear-sky)
 - **AC power ceiling**: inverter rated capacity (clipping occurs when DC:AC > 2 in over-paneled systems)
 - **Gaussian distribution is inappropriate for irradiance**: physical bounds exist, whereas Gaussian extends to ±∞
 
@@ -254,7 +254,7 @@ The textbook's ultimate conclusions:
 | Lesson from wind forecasting | NWP required for > 3h → same applies to solar |
 | Tricks from price forecasting | VST / decomposition / window averaging → all transferable |
 | Clear-sky model | The most powerful weapon; the secret behind GEFCom2014 champion |
-| κ distribution | Bimodal; use mixture Gaussian, not Beta |
+| $\kappa$ distribution | Bimodal; use mixture Gaussian, not Beta |
 | Cloud enhancement | Upper bound ≈ 1.5 × clear-sky value |
 | Necessity of NWP | The only reliable source for forecasts beyond 4h |
 | Model Chain | Holistic optimization > stitching together individually optimal sub-models |

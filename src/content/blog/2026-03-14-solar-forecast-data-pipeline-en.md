@@ -48,13 +48,13 @@ def clear_sky_index(ghi: np.ndarray, ghi_clear: np.ndarray) -> np.ndarray:
     return kappa
 ```
 
-**Trap**: Many papers confuse clear-sky index (κ) with clearness index (kt = GHI/E₀). kt's normalization is incomplete — use κ.
+**Trap**: Many papers confuse clear-sky index ($\kappa$) with clearness index (kt = GHI/E₀). kt's normalization is incomplete — use κ.
 
 ## 3-10. (See Chinese version for full details)
 
 Key rules summarized:
 - **QC**: Use BSRN PPL tests (Long & Shi, 2008)
-- **Gap filling**: κ interpolation for short gaps, mark long gaps as unavailable. NEVER fill 0
+- **Gap filling**: $\kappa$ interpolation for short gaps, mark long gaps as unavailable. NEVER fill 0
 - **Train/test split**: Strictly chronological. NEVER shuffle time series data
 - **Features**: Every variable needs physical causal justification
 - **Baseline**: Persistence model is mandatory benchmark
@@ -68,9 +68,9 @@ Key rules summarized:
 | Step | Fatal Mistake | Correct Approach |
 |------|--------------|-----------------|
 | Irradiance | Use GHI directly | Convert to POA (Perez model) |
-| Normalization | Clearness index kt | Clear-sky index κ |
+| Normalization | Clearness index kt | Clear-sky index $\kappa$ |
 | QC | Skip it | BSRN PPL tests + visual inspection |
-| Missing data | Fill with 0 or mean | κ interpolation / mark unavailable |
+| Missing data | Fill with 0 or mean | $\kappa$ interpolation / mark unavailable |
 | Data split | Random split | Strict temporal order |
 | Features | Stack 50 variables | Physical causality required |
 | Baseline | Skip | Persistence is mandatory |

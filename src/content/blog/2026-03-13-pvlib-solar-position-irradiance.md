@@ -273,7 +273,7 @@ print(f"\n日辐照量: {daily_irradiation:.2f} kWh/m²")
 | 知识点 | 要点 |
 |-------|------|
 | **太阳位置** | pvlib 用 SPA 算法，精度 ±0.0003°，输出 zenith/azimuth |
-| **辐照度三兄弟** | GHI = DNI×cos(z) + DHI，气象站测 GHI，需要模型分解 |
+| **辐照度三兄弟** | $\text{GHI} = \text{DNI} \times \cos(z) + \text{DHI}$，气象站测 GHI，需要模型分解 |
 | **分解模型** | DISC、DIRINT — 从 GHI 拆出 DNI |
 | **POA 转换** | 水平面辐照度 → 面板倾斜面辐照度，首选 Perez 模型 |
 | **入射角 AOI** | 影响反射损失，IAM 模型修正 |

@@ -22,7 +22,7 @@ This is why forecast verification deserves an entire chapter. Based on Chapter 9
 
 ### 1.1 Why Skill Score?
 
-Raw RMSE has a fatal flaw: **different locations and periods have different forecasting difficulty**. An RMSE of 50 W/m² in a desert might be terrible (nearly always clear), while 100 W/m² in a cloudy region might be excellent.
+Raw RMSE has a fatal flaw: **different locations and periods have different forecasting difficulty**. An RMSE of $50 \text{W/m}^2$ in a desert might be terrible (nearly always clear), while $100 \text{W/m}^2$ in a cloudy region might be excellent.
 
 Skill Score compares your forecast against a "naïve" reference:
 
@@ -44,7 +44,7 @@ $$\text{MSE}_{\text{CLIPER}} \leq \min(\text{MSE}_{\text{CLIM}},\; \text{MSE}_{\
 
 **CLIPER is guaranteed to be no worse than either persistence or climatology.** Yang (2019) introduced this to the solar community, but as of 2024, most papers still use smart persistence.
 
-### 1.3 Always Operate on κ (Clear-Sky Index)
+### 1.3 Always Operate on $\kappa$ (Clear-Sky Index)
 
 - $\kappa$ = observation / clear-sky model output
 - Apply persistence/climatology/CLIPER to $\kappa$, then back-transform

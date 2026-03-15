@@ -36,7 +36,7 @@ transposition → aoi → spectral → effective_irradiance
 | `dc_model` | `sapm` | DC power (I-V curve) |
 | `dc_ohmic_model` | `no_dc_ohmic_loss` | DC ohmic losses |
 | `losses_model` | `no_extra_losses` | Custom additional losses |
-| `ac_model` | `sandia_inverter` | Inverter DC→AC |
+| `ac_model` | `sandia_inverter` | Inverter DC$\rightarrow$AC |
 
 Each node is replaceable — pass a string to use a built-in model, or pass a function for full customization.
 
@@ -119,7 +119,7 @@ print(f'Mean cell temperature: {t_cell[daytime].mean():.1f}°C')   # 48.9°C
 print(f'Inverter efficiency:   {(ac[daytime]/dc["p_mp"][daytime]).mean():.4f}')  # 0.9514
 ```
 
-Measured loss chain for the summer solstice day (28°C ambient, 700 W/m² mean POA):
+Measured loss chain for the summer solstice day (28°C ambient, $700 \text{W/m}^2$ mean POA):
 
 ```
 POA 700.2 W/m²

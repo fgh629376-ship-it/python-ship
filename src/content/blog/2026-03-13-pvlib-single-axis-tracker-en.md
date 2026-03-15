@@ -116,7 +116,7 @@ print(f'Gain:    +{gain:.1f}%')
 
 Monthly data reveals a counterintuitive phenomenon:
 
-| Month | Fixed kWh/m² | Tracker kWh/m² | Gain |
+| Month | Fixed $\text{kWh/m}^2$ | Tracker $\text{kWh/m}^2$ | Gain |
 |-------|--------------|----------------|------|
 | Jan | 194.4 | 176.1 | **-9.4%** |
 | Mar | 226.2 | 257.9 | +14.0% |
