@@ -27,9 +27,8 @@ tags: ["概率预测", "CRPS", "Brier Score", "校准", "光伏预测"]
 直觉理解：如果你发了 100 次「有 70% 概率下雨」的预测，那么实际下雨的次数应该接近 70 次。
 
 数学上，完美校准意味着 PIT（Probability Integral Transform）服从均匀分布：
-```
-p_t = F_t(y_t) ~ U(0,1)
-```
+
+$$p_t = F_t(y_t) \sim U(0,1)$$
 
 **三种校准形式**（Gneiting et al., 2007）：
 - **概率校准（Probabilistic）**：对所有 τ，F⁻¹(τ) 处的 G 值平均趋近 τ
@@ -57,9 +56,7 @@ p_t = F_t(y_t) ~ U(0,1)
 
 ### 2.1 Brier Score（二元事件）
 
-```
-bs(p, y) = (p - y)²
-```
+$$\text{bs}(p, y) = (p - y)^2$$
 
 - p = 预测概率，y = 0 或 1
 - 范围 [0, 1]，越小越好
@@ -67,9 +64,7 @@ bs(p, y) = (p - y)²
 
 ### 2.2 CRPS（连续变量的核心评分）
 
-```
-crps(F, y) = ∫_{-∞}^{∞} [F(x) - 𝟙(x ≥ y)]² dx
-```
+$$\text{crps}(F, y) = \int_{-\infty}^{\infty} [F(x) - \mathbb{1}(x \geq y)]^2 \, dx$$
 
 **关键性质**：
 - 严格适当
@@ -83,15 +78,12 @@ crps(F, y) = ∫_{-∞}^{∞} [F(x) - 𝟙(x ≥ y)]² dx
 - R 包 `scoringRules` 提供全套实现
 
 **CRPS 可分解为**：
-```
-CRPS = 可靠性 - 分辨率 + 不确定性
-```
+
+$$\text{CRPS} = \text{可靠性} - \text{分辨率} + \text{不确定性}$$
 
 ### 2.3 IGN（Ignorance Score / 对数评分）
 
-```
-ign(f, y) = -log f(y)
-```
+$$\text{ign}(f, y) = -\log f(y)$$
 
 - 只评估预测 PDF 在观测点的值（局部性质）
 - 对尾部事件不敏感（与 CRPS 的全局性互补）
@@ -99,12 +91,9 @@ ign(f, y) = -log f(y)
 
 ### 2.4 Quantile Score（分位数评分 / Pinball Loss）
 
-```
-qs_τ(F, y) = (y - q_τ) × τ        if y ≥ q_τ
-           = (q_τ - y) × (1 - τ)   if y < q_τ
-```
+$$qs_\tau(F, y) = \begin{cases} (y - q_\tau) \cdot \tau & \text{if } y \geq q_\tau \\ (q_\tau - y) \cdot (1 - \tau) & \text{if } y < q_\tau \end{cases}$$
 
-- CRPS = 2 × ∫₀¹ qs_τ dτ（对所有分位数的积分）
+- $\text{CRPS} = 2\int_0^1 qs_\tau \, d\tau$（对所有分位数的积分）
 - 可以评估分布的不同部分（尾部等）
 
 ### 2.5 一致性与适当性

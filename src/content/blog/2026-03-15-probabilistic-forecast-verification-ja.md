@@ -43,9 +43,7 @@ tags: ["確率的予測", "CRPS", "Brier Score", "校正", "太陽光予測"]
 
 ### 2.1 CRPS（連続変数の核心スコア）
 
-```
-crps(F, y) = ∫[F(x) - 𝟙(x ≥ y)]² dx
-```
+$$\text{crps}(F, y) = \int_{-\infty}^{\infty} [F(x) - \mathbb{1}(x \geq y)]^2 \, dx$$
 
 - 厳密に適正
 - 点予測の場合、MAEに退化

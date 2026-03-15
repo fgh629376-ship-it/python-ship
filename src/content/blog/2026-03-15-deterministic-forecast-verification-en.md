@@ -26,9 +26,7 @@ Raw RMSE has a fatal flaw: **different locations and periods have different fore
 
 Skill Score compares your forecast against a "naïve" reference:
 
-```
-S* = 1 - S_fcst / S_ref
-```
+$$S^* = 1 - \frac{S_{\text{fcst}}}{S_{\text{ref}}}$$
 
 ### 1.2 Three Reference Methods
 
@@ -38,19 +36,18 @@ S* = 1 - S_fcst / S_ref
 | **Climatology** | Use historical mean | Long horizons (>6h) |
 | **CLIPER** | Optimal convex combination | **All horizons (recommended)** |
 
-CLIPER's optimal weight: **α = γ_h** (lag-h autocorrelation). Mathematically proven:
+CLIPER's optimal weight: $\alpha_{\text{optimal}} = \gamma_h$ (lag-h autocorrelation). Mathematically proven:
 
-```
-MSE_CLIPER = (1 - γ²_h) × σ²_K
-MSE_CLIPER ≤ min(MSE_CLIM, MSE_PERS)  for all γ_h
-```
+$$\text{MSE}_{\text{CLIPER}} = (1 - \gamma_h^2) \cdot \sigma_K^2$$
+
+$$\text{MSE}_{\text{CLIPER}} \leq \min(\text{MSE}_{\text{CLIM}},\; \text{MSE}_{\text{PERS}}) \quad \forall \; \gamma_h$$
 
 **CLIPER is guaranteed to be no worse than either persistence or climatology.** Yang (2019) introduced this to the solar community, but as of 2024, most papers still use smart persistence.
 
 ### 1.3 Always Operate on κ (Clear-Sky Index)
 
-- κ = observation / clear-sky model output
-- Apply persistence/climatology/CLIPER to κ, then back-transform
+- $\kappa$ = observation / clear-sky model output
+- Apply persistence/climatology/CLIPER to $\kappa$, then back-transform
 - Direct application to GHI **inflates skill scores** (diurnal cycle is "free" predictability)
 
 ---
@@ -75,31 +72,31 @@ MSE_CLIPER ≤ min(MSE_CLIM, MSE_PERS)  for all γ_h
 
 ## 3. Murphy-Winkler Distribution-Oriented Framework
 
-The joint distribution f(x,y) contains **all information** needed for verification.
+The joint distribution $f(x,y)$ contains **all information** needed for verification.
 
 ### 3.1 Two Factorizations
 
-**Calibration-Refinement**: f(x,y) = f(y|x) × f(x)
-- f(y|x) → **Calibration**: E(Y|X=x) = x is perfectly calibrated
-- f(x) → **Resolution**: Higher forecast diversity = better
+**Calibration-Refinement**: $f(x,y) = f(y|x) \cdot f(x)$
+- $f(y|x)$ → **Calibration**: $E(Y|X=x) = x$ is perfectly calibrated
+- $f(x)$ → **Resolution**: Higher forecast diversity = better
 
-**Likelihood-Base Rate**: f(x,y) = f(x|y) × f(y)
-- f(x|y) → **Consistency/Type 2 bias**: E(X|Y=y) = y is perfectly consistent
-- f(y) → **Base rate**: Marginal distribution of observations
+**Likelihood-Base Rate**: $f(x,y) = f(x|y) \cdot f(y)$
+- $f(x|y)$ → **Consistency/Type 2 bias**: $E(X|Y=y) = y$ is perfectly consistent
+- $f(y)$ → **Base rate**: Marginal distribution of observations
 
 ### 3.2 MSE Decompositions
 
 **COF decomposition**:
-```
-MSE = V(Y) + E_X[X - E(Y|X)]² - E_X[E(Y|X) - E(Y)]²
-    = Obs. variance + Type 1 bias (minimize) - Resolution (maximize)
-```
+
+$$\text{MSE} = V(Y) + E_X[X - E(Y|X)]^2 - E_X[E(Y|X) - E(Y)]^2$$
+
+i.e., $\text{MSE} = \text{Obs. variance} + \text{Type 1 bias (minimize)} - \text{Resolution (maximize)}$
 
 **COX decomposition**:
-```
-MSE = V(X) + E_Y[Y - E(X|Y)]² - E_Y[E(X|Y) - E(X)]²
-    = Fcst. variance + Type 2 bias (minimize) - Discrimination (maximize)
-```
+
+$$\text{MSE} = V(X) + E_Y[Y - E(X|Y)]^2 - E_Y[E(X|Y) - E(X)]^2$$
+
+i.e., $\text{MSE} = \text{Fcst. variance} + \text{Type 2 bias (minimize)} - \text{Discrimination (maximize)}$
 
 Four dimensions, four targets — no single metric captures all.
 

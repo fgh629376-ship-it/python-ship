@@ -27,9 +27,7 @@ But verifying probabilistic forecasts is much harder than deterministic ones. Yo
 Intuition: If you issue 100 forecasts saying "70% chance of rain," it should actually rain about 70 times.
 
 Mathematically, perfect calibration means PIT follows a uniform distribution:
-```
-p_t = F_t(y_t) ~ U(0,1)
-```
+$$p_t = F_t(y_t) \sim U(0,1)$$
 
 ### 1.2 Sharpness
 
@@ -52,9 +50,7 @@ A scoring rule assigns a numerical value based on a probabilistic forecast and a
 
 ### 2.1 CRPS — The Core Score for Continuous Variables
 
-```
-crps(F, y) = ∫[F(x) - 𝟙(x ≥ y)]² dx
-```
+$$\text{crps}(F, y) = \int_{-\infty}^{\infty} [F(x) - \mathbb{1}(x \geq y)]^2 \, dx$$
 
 Key properties:
 - Strictly proper
@@ -65,17 +61,13 @@ Key properties:
 
 ### 2.2 Brier Score (Binary Events)
 
-```
-bs(p, y) = (p - y)²
-```
+$$\text{bs}(p, y) = (p - y)^2$$
 
 Decomposable into reliability + resolution + uncertainty (Murphy, 1973).
 
 ### 2.3 IGN (Ignorance Score / Log Score)
 
-```
-ign(f, y) = -log f(y)
-```
+$$\text{ign}(f, y) = -\log f(y)$$
 
 Local property: only evaluates the PDF at the observation point. Complements CRPS's global assessment.
 
