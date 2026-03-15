@@ -1,0 +1,104 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const chapters = [
+  { num: 1, title: 'Introduction', titleZh: '引言', pages: '1-5', status: 'done' },
+  { num: 2, title: 'The Governing Systems of Equations', titleZh: '控制方程', pages: '6-16', status: 'done' },
+  { num: 3, title: 'Numerical Solutions to the Equations', titleZh: '方程的数值解法', pages: '17-118', status: 'pending' },
+  { num: 4, title: 'Physical-Process Parameterizations', titleZh: '物理过程参数化', pages: '119-170', status: 'pending' },
+  { num: 5, title: 'Modeling Surface Processes', titleZh: '地表过程建模', pages: '171-197', status: 'pending' },
+  { num: 6, title: 'Model Initialization', titleZh: '模型初始化', pages: '198-251', status: 'pending' },
+  { num: 7, title: 'Ensemble Methods', titleZh: '集成方法', pages: '252-283', status: 'pending' },
+  { num: 8, title: 'Predictability', titleZh: '可预测性', pages: '284-293', status: 'pending' },
+  { num: 9, title: 'Verification Methods', titleZh: '验证方法', pages: '294-320', status: 'pending' },
+  { num: 10, title: 'Experimental Design', titleZh: '实验设计', pages: '321-342', status: 'pending' },
+  { num: 11, title: 'Analyzing Model Output', titleZh: '模型输出分析', pages: '343-357', status: 'pending' },
+  { num: 12, title: 'Operational NWP', titleZh: '业务数值预报', pages: '358-?', status: 'pending' },
+  { num: 13, title: 'Post Processing', titleZh: '后处理', pages: '?', status: 'pending' },
+  { num: 14, title: 'Coupled Applications', titleZh: '耦合应用', pages: '?', status: 'pending' },
+  { num: 15, title: 'CFD Models', titleZh: 'CFD 模型', pages: '?', status: 'pending' },
+  { num: 16, title: 'Climate Modeling', titleZh: '气候建模', pages: '?', status: 'pending' },
+];
+
+const done = chapters.filter(c => c.status === 'done').length;
+const total = chapters.length;
+const pct = Math.round(done / total * 100);
+---
+
+<!doctype html>
+<html lang="zh">
+<head>
+  <BaseHead title="NWP Warner | Python Ship" description="Numerical Weather and Climate Prediction 精读笔记" />
+  <meta name="color-scheme" content="dark" />
+  <style>
+    .book-container { max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+    .book-hero { text-align: center; padding: 2rem 0; }
+    .book-hero h1 { font-size: 2rem; font-weight: 800; background: linear-gradient(135deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .book-hero .subtitle { color: #94a3b8; margin-top: 0.3rem; }
+    .book-hero .author { color: #64748b; font-size: 0.9rem; margin-top: 0.5rem; }
+    .progress-section { margin: 1.5rem 0; text-align: center; }
+    .progress-bar { width: 100%; height: 8px; background: #2a2d3e; border-radius: 4px; overflow: hidden; margin: 0.5rem 0; }
+    .progress-fill { height: 100%; background: #38bdf8; border-radius: 4px; transition: width 0.3s; }
+    .progress-text { font-size: 0.85rem; color: #94a3b8; }
+    .chapter-list { list-style: none; padding: 0; margin: 2rem 0; }
+    .chapter-item { display: flex; align-items: center; gap: 1rem; padding: 0.8rem 1rem; background: #1a1d2e; border-radius: 8px; margin-bottom: 0.5rem; }
+    .chapter-item.done { border-left: 3px solid #4ade80; }
+    .chapter-item.pending { border-left: 3px solid #334155; opacity: 0.6; }
+    .ch-num { font-weight: 800; color: #38bdf8; min-width: 2rem; }
+    .ch-info { flex: 1; }
+    .ch-title { font-weight: 600; color: #f1f5f9; font-size: 0.95rem; }
+    .ch-title-en { font-size: 0.8rem; color: #64748b; font-style: italic; }
+    .ch-pages { font-size: 0.8rem; color: #475569; }
+    .ch-badge { font-size: 0.75rem; padding: 0.1rem 0.4rem; border-radius: 4px; }
+    .ch-badge.done { background: #166534; color: #4ade80; }
+    .ch-badge.pending { background: #1e1e2e; color: #475569; }
+    .back-link { display: inline-block; margin-top: 1rem; color: #38bdf8; text-decoration: none; font-size: 0.9rem; }
+    .back-link:hover { text-decoration: underline; }
+    .blog-link { display: inline-block; margin-left: 0.5rem; font-size: 0.8rem; color: #4ade80; text-decoration: none; }
+    .blog-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <Header />
+  <main>
+    <div class="book-container">
+      <div class="book-hero">
+        <h1>🌦️ Numerical Weather and Climate Prediction</h1>
+        <div class="subtitle">数值天气与气候预测</div>
+        <div class="author">Thomas T. Warner · Cambridge University Press · 560p</div>
+      </div>
+
+      <div class="progress-section">
+        <div class="progress-bar">
+          <div class="progress-fill" style={`width: ${pct}%`}></div>
+        </div>
+        <div class="progress-text">{done}/{total} 章完成 ({pct}%)</div>
+      </div>
+
+      <ul class="chapter-list">
+        {chapters.map(ch => (
+          <li class={`chapter-item ${ch.status}`}>
+            <span class="ch-num">{ch.num}</span>
+            <div class="ch-info">
+              <div class="ch-title">
+                {ch.titleZh}
+                {ch.status === 'done' && ch.num <= 2 && (
+                  <a href="/blog/2026-03-15-nwp-warner-ch01-02/" class="blog-link">📝 笔记</a>
+                )}
+              </div>
+              <div class="ch-title-en">{ch.title}</div>
+            </div>
+            <span class="ch-pages">{ch.pages}</span>
+            <span class={`ch-badge ${ch.status}`}>{ch.status === 'done' ? '✅' : '⏳'}</span>
+          </li>
+        ))}
+      </ul>
+
+      <a href="/textbook/" class="back-link">← 返回教材目录</a>
+    </div>
+  </main>
+  <Footer />
+</body>
+</html>
