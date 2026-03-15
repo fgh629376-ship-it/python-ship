@@ -8,7 +8,7 @@ series: solar-book
 tags: ['教材笔记', 'Ch4', '能源预测', '晴空模型', 'Model Chain']
 ---
 
-> 📖 [返回总索引](/blog/textbook-index/)
+> 📖 [返回总索引](/textbook/)
 > 📚 《Solar Irradiance and PV Power Forecasting》Chapter 4, p83-128
 
 ---
@@ -259,4 +259,4 @@ REST2 晴空模型的核心方程：
 | NWP 必要性 | >4h 预测的唯一可靠来源 |
 | Model Chain | 整体优化 > 拼接最优个体 |
 
-> 📖 [← 上一章](/blog/textbook-ch03/) | [返回总索引](/blog/textbook-index/) | [下一章 →](/blog/textbook-ch05/)
+> 📖 [← 上一章](/blog/textbook-ch03/) | [返回总索引](/textbook/) | [下一章 →](/blog/textbook-ch05/)
