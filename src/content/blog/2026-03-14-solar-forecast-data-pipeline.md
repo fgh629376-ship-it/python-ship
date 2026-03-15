@@ -99,7 +99,7 @@ for h in range(6, 19):
 # 基于模型计算，非实测
 ```
 
-**坑**：很多论文混淆 clear-sky index (κ) 和 clearness index (kt = GHI/E₀)。kt 的归一化不够彻底——地外辐照度 E₀ 不考虑大气衰减。**用 κ，别用 kt。**
+**坑**：很多论文混淆 clear-sky index ($\kappa$) 和 clearness index ($k_t = \text{GHI}/E_0$)。$k_t$ 的归一化不够彻底——地外辐照度 $E_0$ 不考虑大气衰减。**用 $\kappa$，别用 $k_t$。**
 
 ## 3. 数据质量控制 (QC)——垃圾进垃圾出
 

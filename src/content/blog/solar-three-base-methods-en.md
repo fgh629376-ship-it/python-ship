@@ -107,17 +107,18 @@ Satellite forecasting extracts current cloud motion, assumes clouds remain "froz
 ### 3.1 Reference Forecasts (Must-Beat Baselines)
 
 ```
-Persistence:      κ̂(t+h) = κ(t)
-Smart Persistence: ĜHI(t+h) = κ(t) × Ghc(t+h)
+Persistence: $\hat{\kappa}(t+h) = \kappa(t)$
+
+Smart Persistence: $\widehat{\text{GHI}}(t+h) = \kappa(t) \times G_{hc}(t+h)$
 Climatology:      κ̂(t+h) = mean(κ_historical)
-CLIPER:           κ̂(t+h) = γ_h·κ(t) + (1-γ_h)·μ_κ
+CLIPER: $\hat{\kappa}(t+h) = \gamma_h \cdot \kappa(t) + (1 - \gamma_h) \cdot \bar{\kappa}$
 ```
 
-CLIPER is the strongest simple baseline — it optimally blends persistence (short-term) and climatology (long-term) based on the autocorrelation γ_h.
+CLIPER is the strongest simple baseline — it optimally blends persistence (short-term) and climatology (long-term) based on the autocorrelation $\gamma_h$.
 
 ### 3.2 The Information-Theoretic Limit
 
-No matter how sophisticated the model (LSTM, Transformer), single-site methods hit a fundamental wall: **as forecast horizon h increases, the autocorrelation γ_h between κ(t) and κ(t+h) approaches zero.** No model can extract information from an input that contains none.
+No matter how sophisticated the model (LSTM, Transformer), single-site methods hit a fundamental wall: **as forecast horizon $h$ increases, the autocorrelation $\gamma_h$ between $\kappa(t)$ and $\kappa(t+h)$ approaches zero.** No model can extract information from an input that contains none.
 
 ### 3.3 Spatiotemporal Methods
 

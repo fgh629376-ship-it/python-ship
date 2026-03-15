@@ -142,16 +142,16 @@ $$I_x U + I_y V = -I_t$$
 
 ```python
 # 持续性（Persistence）
-κ_hat(t+h) = κ(t)
+$\hat{\kappa}(t+h) = \kappa(t)$
 
 # 智能持续性（Smart Persistence）
 GHI_hat(t+h) = κ(t) × Ghc(t+h)  # κ持续，晴空值更新
 
 # 气候学（Climatology）
-κ_hat(t+h) = mean(κ_historical)
+$\hat{\kappa}(t+h) = \bar{\kappa}$
 
 # CLIPER（最优凸组合）
-κ_hat(t+h) = γ_h × κ(t) + (1 - γ_h) × mean(κ)
+$\hat{\kappa}(t+h) = \gamma_h \cdot \kappa(t) + (1 - \gamma_h) \cdot \bar{\kappa}$
 # γ_h = autocorrelation at lag h
 ```
 

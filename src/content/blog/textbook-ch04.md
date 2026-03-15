@@ -69,7 +69,7 @@ Hong et al. (2016) 提出的成熟度四象限（确定性×概率性）：
 ### 4.3.2 风功率曲线建模
 
 - 风速→风力：非单射映射（同一风速多个功率值）
-- P = ½CₚρπR²W³（理论功率曲线）
+- $P = \frac{1}{2}C_p\rho\pi R^2 W^3$（理论功率曲线）
 - 四个区域：启动前(0) / 立方增长 / 额定功率 / 停机(0)
 - S 型曲线拟合 or 回归学习
 
@@ -94,7 +94,7 @@ Pinson (2013) 四大挑战：
 
 ### 4.4.2 短期价格预测模型
 
-- 本质是回归：Y_{d,h} = x^T_{d,h} β_h + ε_{d,h}
+- 本质是回归：$Y_{d,h} = \mathbf{x}_{d,h}^T \beta_h + \varepsilon_{d,h}$
 - 正则化回归（Lasso/Elastic Net）自动变量选择
   - Lasso: λΣ|β| → 无关变量系数缩到零
   - Elastic Net: λ₁Σ|β| + λ₂Σβ² → 兼顾选择和稳定
@@ -127,7 +127,7 @@ Pinson (2013) 四大挑战：
 REST2 晴空模型的核心方程：
 - B_{nc} = E₀ₙ × T_R × T_g × T_o × T_n × T_w × T_a
 - 六种大气衰减过程的透射率相乘
-- GHI_clear = BNI_clear × cos(Z) + DHI_clear
+- $\text{GHI}_{\text{clear}} = \text{BNI}_{\text{clear}} \times \cos(Z) + \text{DHI}_{\text{clear}}$
 
 晴空模型分类：
 - 从单一经验公式到 REST2 的完整辐射传输参数化
@@ -138,9 +138,9 @@ REST2 晴空模型的核心方程：
 
 ### 4.5.2 晴空指数分布
 
-- 乘法分解(κ = GHI/GHI_clear) > 加法分解(κ' = GHI - GHI_clear)
+- 乘法分解（$\kappa = \text{GHI}/\text{GHI}_{\text{clear}}$）> 加法分解（$\kappa' = \text{GHI} - \text{GHI}_{\text{clear}}$）
 - 加法分解后振幅仍随时间变化（失败）
-- κ 分布通常**双峰**（晴天峰 ~1.0 + 阴天峰 ~0.3-0.5）
+- $\kappa$ 分布通常**双峰**（晴天峰 ~1.0 + 阴天峰 ~0.3-0.5）
 - 干旱地区（如 Desert Rock）可能单峰
 
 ⚠️ 常见错误：
