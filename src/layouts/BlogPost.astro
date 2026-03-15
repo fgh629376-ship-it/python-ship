@@ -73,6 +73,8 @@ const { title, description, pubDate, updatedDate, tags } = Astro.props;
 				.article-body :global(td) { padding: 0.3rem 0.5rem; }
 			}
 		</style>
+		<!-- KaTeX CSS for server-rendered math (remark-math + rehype-katex) -->
+		<link rel="stylesheet" href="/katex/katex.min.css" />
 	</head>
 
 	<body>
