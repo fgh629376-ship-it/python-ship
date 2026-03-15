@@ -96,7 +96,7 @@ Insert observation into sorted ensemble members, count the rank.
 
 ### 3.2 PIT Histogram (Distributional Forecasts)
 
-PIT = F_t(y_t). Should be U(0,1) for calibrated forecasts. Continuous analog of rank histogram.
+$\text{PIT} = F_t(y_t)$. Should be $U(0,1)$ for calibrated forecasts. Continuous analog of rank histogram.
 
 ### 3.3 Reliability Diagram (Recommended)
 

@@ -31,7 +31,7 @@ tags: ["概率预测", "CRPS", "Brier Score", "校准", "光伏预测"]
 $$p_t = F_t(y_t) \sim U(0,1)$$
 
 **三种校准形式**（Gneiting et al., 2007）：
-- **概率校准（Probabilistic）**：对所有 τ，F⁻¹(τ) 处的 G 值平均趋近 τ
+- **概率校准（Probabilistic）**：对所有 $\tau$，$F^{-1}(\tau)$ 处的 $G$ 值平均趋近 $\tau$
 - **超越校准（Exceedance）**：定义在阈值而非概率上
 - **边缘校准（Marginal）**：预测 CDF 的长期平均 = 观测 CDF 的长期平均
 
@@ -68,8 +68,8 @@ $$\text{crps}(F, y) = \int_{-\infty}^{\infty} [F(x) - \mathbb{1}(x \geq y)]^2 \,
 
 **关键性质**：
 - 严格适当
-- 当 F 退化为点预测时，CRPS = MAE
-- CRPS = Brier Score 对所有阈值的积分
+- 当 $F$ 退化为点预测时，$\text{CRPS} = \text{MAE}$
+- $\text{CRPS}$ = Brier Score 对所有阈值的积分
 - 同时评估校准和锐度
 
 **计算方法**：
@@ -118,7 +118,7 @@ $$qs_\tau(F, y) = \begin{cases} (y - q_\tau) \cdot \tau & \text{if } y \geq q_\t
 
 ### 3.2 PIT 直方图（分布预测）
 
-PIT = F_t(y_t)，完美校准时服从 U(0,1)。
+$\text{PIT} = F_t(y_t)$，完美校准时服从 $U(0,1)$。
 
 - 概念上等价于 Rank 直方图的连续版本
 - 建议配合自相关图检查 PIT 序列的独立性
