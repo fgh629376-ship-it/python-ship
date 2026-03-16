@@ -1,0 +1,247 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+const chapters = [
+  {
+    id: 'ch1', num: 1, status: 'done',
+    title: 'Introduction',
+    titleZh: '引言',
+    pages: 'p1-18',
+    blogUrl: '/blog/2026-03-16-box-ch1-introduction/',
+    sections: [
+      { id: '1.1', title: '五大实际问题', note: String.raw`Box 从五个实际问题出发，每个对应一类数学模型：\n\n①时间序列预测(Forecasting)：已知 $z_t, z_{t-1}, \ldots$，预测 $z_{t+l}$，最小化 MSE $E[(z_{t+l}-\hat{z}_t(l))^2]$。需要概率置信限(50%, 95%)。\n\n②转换函数估计(Transfer Function)：输入 $X_t$ 和输出 $Y_t$ 的动态关系 $Y_t = \sum v_j X_{t-j}$。化学炉例子：空气速率→CO₂浓度。难点是噪声掩盖真实关系。\n\n③干扰分析(Intervention Analysis)：用 0/1 指示变量量化外部事件（政策变化、罢工等）对序列的影响。Box & Tiao (1975) 经典论文。\n\n④多元时间序列：$k$ 个相关序列 $\mathbf{Z}_t = (z_{1t}, \ldots, z_{kt})'$ 的联合建模。目的：①理解动态关系 ②利用相关信息提高预测精度。\n\n⑤离散控制系统：SPC(统计过程控制，Shewhart 图) vs EPC(工程过程控制，反馈/前馈)。预测和控制紧密相连——最小 MSE 预测 → 最小 MSE 控制。` },
+      { id: '1.2', title: '随机与确定性动态数学模型', note: String.raw`核心数学框架：\n\n【线性滤波模型】$z_t = \mu + \psi(B)a_t$，白噪声 $a_t$ 经过线性滤波器。$\psi(B) = 1 + \psi_1 B + \psi_2 B^2 + \cdots$\n\n【AR(p)】$\phi(B)\tilde{z}_t = a_t$，$\phi(B) = 1 - \phi_1 B - \cdots - \phi_p B^p$\n平稳条件：$\phi(B)=0$ 的根在单位圆外。AR 是线性滤波的特例：$\psi(B) = \phi^{-1}(B)$。\n\n【MA(q)】$\tilde{z}_t = \theta(B)a_t$，$\theta(B) = 1 - \theta_1 B - \cdots - \theta_q B^q$\n\n【ARMA(p,q)】$\phi(B)\tilde{z}_t = \theta(B)a_t$\n\n【ARIMA(p,d,q)】差分 $d$ 次使非平稳变平稳：$\phi(B)\nabla^d z_t = \theta(B)a_t$\n"Integrated" = 平稳 ARMA 经 $d$ 次求和得到非平稳过程。\n\n【转换函数模型(带噪声)】$Y_t = v(B)X_t + \psi(B)a_t$\n\n【控制方程】$x_t = \zeta_1 x_{t-1} + \cdots + \chi_0 \varepsilon_t + \chi_1 \varepsilon_{t-1} + \cdots$` },
+      { id: '1.3', title: '模型构建基本思想', note: String.raw`【简约原则(Parsimony)】用尽可能少的参数获取充分表示。Box 举例：2 参数模型 $(1-\delta B)Y_t = \omega_0 X_t$ 足够时，不要用 $s+1$ 参数的多项式拟合。\n\n【迭代三步法(Box-Jenkins 方法论)】\n1. 识别(Identification)：用 ACF/PACF 确定模型结构 $(p, d, q)$\n2. 估计(Estimation)：MLE 或 最小二乘法估计参数\n3. 诊断检验(Diagnostic Checking)：残差分析\n\n不合格就回到第 1 步循环。至少需要 50 个观测值，最好 100+。` },
+    ],
+  },
+  {
+    id: 'ch2', num: 2, status: 'done',
+    title: 'Autocorrelation Function and Spectrum of Stationary Processes',
+    titleZh: '平稳过程的自相关函数与谱',
+    pages: 'p21-46',
+    blogUrl: '/blog/2026-03-16-box-ch2-acf-spectrum/',
+    sections: [
+      { id: '2.1.1-2', title: '时间序列、随机过程与平稳性', note: String.raw`离散时间序列 $z_1, z_2, \ldots, z_N$ 是随机过程的一次实现(sample realization)。\n\n严格平稳：任意 $m$ 个时点的联合分布只依赖时间差。\n弱平稳（二阶）：均值常数 $\mu = E[z_t]$，自协方差只依赖滞后 $\gamma_k = \text{cov}[z_t, z_{t+k}]$。\n\n自相关系数 $\rho_k = \gamma_k / \gamma_0$，$\rho_0 = 1$，$\rho_k = \rho_{-k}$。\n\n高斯过程：弱平稳 → 严格平稳（正态分布由一二阶矩完全决定）。\n白噪声：$\gamma_k = \sigma_a^2$ ($k=0$)，$\gamma_k = 0$ ($k \neq 0$)。` },
+      { id: '2.1.3', title: '正定性与自协方差矩阵', note: String.raw`$n$ 个连续观测的协方差矩阵是 Toeplitz 矩阵（对角线相同），必须正定。\n\n正定性约束 $\rho_k$ 的取值范围：\n- $n=2$：$|\rho_1| < 1$\n- $n=3$：$-1 < (\rho_2 - \rho_1^2)/(1-\rho_1^2) < 1$\n\n线性运算保平稳：$y_t = \sum \psi_i z_{t-i}$（$\sum|\psi_i|<\infty$）也平稳。这是 ARMA 合法性的基础。\n\n差分 $\nabla^d z_t$ 也平稳——Ch4 非平稳模型的关键前提。` },
+      { id: '2.1.5-6', title: 'ACF 估计与 Bartlett 标准误差', note: String.raw`样本 ACF：$r_k = c_k / c_0$，$c_k = \frac{1}{N}\sum_{t=1}^{N-k}(z_t - \bar{z})(z_{t+k} - \bar{z})$\n\n用 $1/N$ 而非 $1/(N-k)$ 作分母——保证估计矩阵半正定。\n\nBartlett 大滞后近似：若 $\rho_v = 0$ ($v > q$)，则 $\text{var}[r_k] \approx \frac{1}{N}(1 + 2\sum_{v=1}^{q} \rho_v^2)$ ($k > q$)\n\n白噪声：$\text{se}[r_k] \approx 1/\sqrt{N}$ → ACF 图上的 $\pm 2/\sqrt{N}$ 显著性带。\n\n重要警告：相邻 $r_k$ 可能高度相关，不能只看单个值。` },
+      { id: '2.2', title: '谱性质', note: String.raw`周期图：$I(f_i) = \frac{N}{2}(a_i^2 + b_i^2)$，方差分解到各频率。\n\n样本谱与 ACF 的傅里叶变换关系：$I(f) = 2(c_0 + 2\sum c_k \cos 2\pi fk)$\n\n理论功率谱：$p(f) = 2(\gamma_0 + 2\sum \gamma_k \cos 2\pi fk)$\n\n谱密度：$g(f) = p(f)/\sigma_z^2$，$\int_0^{1/2} g(f)df = 1$\n\n核心定理：$\gamma_k$ 正定 $\Leftrightarrow$ $p(f) \geq 0$ （Herglotz 定理）\n\n样本谱剧烈波动（$\chi^2(2)$ 方差不随 $N$ 减小）→ 需要平滑估计（lag window / spectral window）。\n\n两个 MA(1) 例子：正系数→低频主导（光滑），负系数→高频主导（锯齿）。` },
+    ],
+  },
+  {
+    id: 'ch3', num: 3, status: 'pending',
+    title: 'Linear Stationary Models',
+    titleZh: '线性平稳模型',
+    pages: 'p47-91',
+    sections: [],
+  },
+  {
+    id: 'ch4', num: 4, status: 'pending',
+    title: 'Linear Nonstationary Models',
+    titleZh: '线性非平稳模型',
+    pages: 'p93-135',
+    sections: [],
+  },
+  {
+    id: 'ch5', num: 5, status: 'pending',
+    title: 'Forecasting',
+    titleZh: '预测',
+    pages: 'p137-192',
+    sections: [],
+  },
+  {
+    id: 'ch6', num: 6, status: 'pending',
+    title: 'Model Identification',
+    titleZh: '模型识别',
+    pages: 'p195-239',
+    sections: [],
+  },
+  {
+    id: 'ch7', num: 7, status: 'pending',
+    title: 'Model Estimation',
+    titleZh: '模型估计',
+    pages: 'p241-327',
+    sections: [],
+  },
+  {
+    id: 'ch8', num: 8, status: 'pending',
+    title: 'Model Diagnostic Checking',
+    titleZh: '模型诊断检验',
+    pages: 'p329-373',
+    sections: [],
+  },
+  {
+    id: 'ch9', num: 9, status: 'pending',
+    title: 'Seasonal Models',
+    titleZh: '季节性模型',
+    pages: 'p375-424',
+    sections: [],
+  },
+  {
+    id: 'ch10', num: 10, status: 'pending',
+    title: 'Nonlinear and Long Memory Models',
+    titleZh: '非线性与长记忆模型',
+    pages: 'p425-470',
+    sections: [],
+  },
+  {
+    id: 'ch11', num: 11, status: 'pending',
+    title: 'Transfer Function Models',
+    titleZh: '转换函数模型',
+    pages: 'p471-515',
+    sections: [],
+  },
+  {
+    id: 'ch12', num: 12, status: 'pending',
+    title: 'Transfer Function Model Building',
+    titleZh: '转换函数模型的建立',
+    pages: 'p517-564',
+    sections: [],
+  },
+  {
+    id: 'ch13', num: 13, status: 'pending',
+    title: 'Intervention Analysis and Outlier Detection',
+    titleZh: '干扰分析与异常值检测',
+    pages: 'p565-603',
+    sections: [],
+  },
+  {
+    id: 'ch14', num: 14, status: 'pending',
+    title: 'Multivariate Time Series Analysis',
+    titleZh: '多元时间序列分析',
+    pages: 'p605-674',
+    sections: [],
+  },
+  {
+    id: 'ch15', num: 15, status: 'pending',
+    title: 'Aspects of Process Control',
+    titleZh: '过程控制',
+    pages: 'p675-717',
+    sections: [],
+  },
+];
+
+const done = chapters.filter(c => c.status === 'done').length;
+const total = chapters.length;
+const pct = Math.round(done / total * 100);
+---
+
+<!doctype html>
+<html lang="zh">
+<head>
+  <BaseHead title="Box 时间序列分析精读笔记 | Python Ship" description="Box, Jenkins & Reinsel《Time Series Analysis: Forecasting and Control》精读笔记——ARIMA、转换函数、干扰分析、多元时序、离散控制" />
+  <meta name="color-scheme" content="dark" />
+  <link rel="stylesheet" href="/katex/katex.min.css" />
+  <style>
+    .book-container { max-width: 860px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+    .book-hero { text-align: center; padding: 2rem 0 1rem; }
+    .book-hero h1 { font-size: 2rem; font-weight: 800; background: linear-gradient(135deg, #a78bfa, #c084fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: .3rem; }
+    .book-hero .subtitle { color: #94a3b8; font-size: 1.1rem; }
+    .book-hero .author { color: #64748b; font-size: .9rem; margin-top: .4rem; }
+    .progress-section { margin: 1.2rem 0; text-align: center; }
+    .progress-bar { width: 100%; height: 8px; background: #2a2d3e; border-radius: 4px; overflow: hidden; margin: .5rem 0; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, #a78bfa, #c084fc); border-radius: 4px; transition: width .4s; }
+    .progress-text { font-size: .85rem; color: #94a3b8; }
+    .ch-card { background: #1a1d2e; border-radius: 10px; margin-bottom: 1rem; overflow: hidden; border: 1px solid #2a2d3e; }
+    .ch-card.done { border-left: 3px solid #4ade80; }
+    .ch-card.pending { border-left: 3px solid #334155; opacity: .55; }
+    .ch-header { display: flex; align-items: center; padding: .8rem 1rem; cursor: pointer; gap: .8rem; user-select: none; }
+    .ch-header:hover { background: #222640; }
+    .ch-num { font-weight: 800; font-size: 1.1rem; color: #a78bfa; min-width: 2.2rem; }
+    .ch-info { flex: 1; }
+    .ch-title-zh { font-weight: 700; color: #f1f5f9; }
+    .ch-title-en { font-size: .82rem; color: #64748b; font-style: italic; }
+    .ch-meta { display: flex; gap: .6rem; align-items: center; }
+    .ch-pages { font-size: .78rem; color: #475569; }
+    .ch-badge { font-size: .72rem; padding: .12rem .45rem; border-radius: 4px; }
+    .ch-badge.done { background: #166534; color: #4ade80; }
+    .ch-badge.pending { background: #1e1e2e; color: #475569; }
+    .ch-toggle { font-size: .85rem; color: #64748b; transition: transform .2s; }
+    .ch-card.open .ch-toggle { transform: rotate(90deg); }
+    .ch-body { display: none; padding: 0 1rem 1rem; }
+    .ch-card.open .ch-body { display: block; }
+    .blog-link { display: inline-block; margin-bottom: .8rem; font-size: .85rem; color: #4ade80; text-decoration: none; }
+    .blog-link:hover { text-decoration: underline; }
+    .section { margin-bottom: .8rem; }
+    .section-id { color: #a78bfa; font-weight: 700; font-size: .85rem; margin-right: .4rem; }
+    .section-title { color: #e2e8f0; font-weight: 600; font-size: .95rem; cursor: pointer; }
+    .section-title:hover { color: #a78bfa; }
+    .note { display: none; background: #13152a; border-radius: 6px; padding: .8rem 1rem; margin-top: .4rem; font-size: .88rem; color: #cbd5e1; line-height: 1.7; white-space: pre-wrap; }
+    .section.open .note { display: block; }
+    .back-link { display: inline-block; margin-top: 1.5rem; color: #a78bfa; text-decoration: none; font-size: .9rem; }
+    .back-link:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <Header />
+  <main>
+    <div class="book-container">
+      <div class="book-hero">
+        <h1>📈 Time Series Analysis: Forecasting and Control</h1>
+        <div class="subtitle">时间序列分析：预测与控制</div>
+        <div class="author">George E.P. Box, G.M. Jenkins, G.C. Reinsel · Wiley, 4th Ed. (2008) · 765p · 15 章</div>
+      </div>
+      <div class="progress-section">
+        <div class="progress-bar">
+          <div class="progress-fill" style={`width: ${pct}%`}></div>
+        </div>
+        <div class="progress-text">{done}/{total} 章完成 ({pct}%)</div>
+      </div>
+
+      {chapters.map(ch => (
+        <div class={`ch-card ${ch.status}`} id={ch.id}>
+          <div class="ch-header" onclick="this.parentElement.classList.toggle('open')">
+            <span class="ch-num">{ch.num}</span>
+            <div class="ch-info">
+              <div class="ch-title-zh">{ch.titleZh}</div>
+              <div class="ch-title-en">{ch.title}</div>
+            </div>
+            <div class="ch-meta">
+              {ch.pages && <span class="ch-pages">{ch.pages}</span>}
+              <span class={`ch-badge ${ch.status}`}>{ch.status === 'done' ? '✅' : '⏳'}</span>
+              {ch.sections.length > 0 && <span class="ch-toggle">▶</span>}
+            </div>
+          </div>
+          {ch.sections.length > 0 && (
+            <div class="ch-body">
+              {ch.blogUrl && <a href={ch.blogUrl} class="blog-link">📝 感悟博客 →</a>}
+              {ch.sections.map(sec => (
+                <div class="section">
+                  <div onclick="this.parentElement.classList.toggle('open')">
+                    <span class="section-id">{sec.id}</span>
+                    <span class="section-title">{sec.title}</span>
+                  </div>
+                  {sec.note && <div class="note" set:html={sec.note.replace(/\\n/g, '<br/>')} />}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      ))}
+
+      <div style="margin-top: 2rem; padding: 1rem; background: #1a1d2e; border-radius: 8px; border-left: 3px solid #a78bfa;">
+        <a href="/blog/box-timeseries-thinking/" style="color: #a78bfa; text-decoration: none; font-weight: 700; font-size: 1rem;">🧠 思维训练 — Box 时间序列逻辑串联 →</a>
+        <div style="color: #94a3b8; font-size: .85rem; margin-top: .3rem;">推理链、跨教材知识网络、已解决的困惑</div>
+      </div>
+
+      <a href="/textbook/" class="back-link">← 返回教材目录</a>
+    </div>
+  </main>
+  <Footer />
+  <script src="/katex/katex.min.js" defer></script>
+  <script src="/katex/auto-render.min.js" defer></script>
+  <script is:inline>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof renderMathInElement === 'function') {
+        renderMathInElement(document.body, {
+          delimiters: [
+            { left: '$$', right: '$$', display: true },
+            { left: '$', right: '$', display: false },
+          ],
+        });
+      }
+    });
+  </script>
+</body>
+</html>
