@@ -177,4 +177,4 @@ DFT  =  循环矩阵的特征分解  =  Box 的功率谱
 
 ---
 
-*📖 [MIT 课程系列](/blog/tags/MIT) | [Part 3: 特征值与 SVD](/blog/2026-03-16-mit-1806-part3-eigen-svd) | 🧠 MIT 18.06 Spring 2025 全课程完成*
+*📖 [MIT 课程系列](/blog/) | [Part 3: 特征值与 SVD](/blog/2026-03-16-mit-1806-part3-eigen-svd) | 🧠 MIT 18.06 Spring 2025 全课程完成*

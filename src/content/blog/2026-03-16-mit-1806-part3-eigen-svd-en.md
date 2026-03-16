@@ -210,4 +210,4 @@ Each step generalizes the previous. SVD is the final form — applicable to any 
 
 ---
 
-*📖 [MIT Course Series](/blog/tags/MIT) | [Part 2: Projection and Least Squares](/blog/2026-03-16-mit-1806-part2-projection-leastsquares) | 🧠 MIT 18.06 Spring 2025*
+*📖 [MIT Course Series](/blog/) | [Part 2: Projection and Least Squares](/blog/2026-03-16-mit-1806-part2-projection-leastsquares) | 🧠 MIT 18.06 Spring 2025*

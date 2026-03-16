@@ -120,4 +120,4 @@ Ch8 = Quality control. Three main tools:
 
 ---
 
-*📖 [Ch7 Notes](/blog/2026-03-16-box-ch7-estimation) | [Back to Textbook Index](/textbook/) | 📝 [Box Time Series Series](/blog/tags/time-series)*
+*📖 [Ch7 Notes](/blog/2026-03-16-box-ch7-estimation) | [Back to Textbook Index](/textbook/) | 📝 [Box Time Series Series](/blog/)*

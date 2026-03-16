@@ -119,4 +119,4 @@ The **multiplicative structure** allows a small number of parameters to describe
 
 ---
 
-*📖 [Ch8 Notes](/blog/2026-03-16-box-ch8-diagnostics) | [Back to Textbook Index](/textbook/) | 📝 [Box Time Series Series](/blog/tags/time-series)*
+*📖 [Ch8 Notes](/blog/2026-03-16-box-ch8-diagnostics) | [Back to Textbook Index](/textbook/) | 📝 [Box Time Series Series](/blog/)*

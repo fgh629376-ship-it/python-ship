@@ -130,4 +130,4 @@ Lecture 1-7 建立了线性代数的核心框架：
 
 ---
 
-*📖 [MIT 课程系列](/blog/tags/MIT) | [返回教材目录](/textbook/) | 🧠 MIT 18.06 Spring 2025*
+*📖 [MIT 课程系列](/blog/) | [返回教材目录](/textbook/) | 🧠 MIT 18.06 Spring 2025*

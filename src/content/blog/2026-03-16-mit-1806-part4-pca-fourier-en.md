@@ -177,4 +177,4 @@ Based on the full MIT 18.06 course, concrete recommendations for the future sola
 
 ---
 
-*📖 [MIT Course Series](/blog/tags/MIT) | [Part 3: Eigenvalues and SVD](/blog/2026-03-16-mit-1806-part3-eigen-svd) | 🧠 MIT 18.06 Spring 2025 — Full Course Complete*
+*📖 [MIT Course Series](/blog/) | [Part 3: Eigenvalues and SVD](/blog/2026-03-16-mit-1806-part3-eigen-svd) | 🧠 MIT 18.06 Spring 2025 — Full Course Complete*

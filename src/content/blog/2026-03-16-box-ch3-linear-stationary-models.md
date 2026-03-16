@@ -198,4 +198,4 @@ Ch3 建立了 ARMA 模型族的完整理论：
 
 ---
 
-*📖 [Ch2 笔记](/blog/2026-03-16-box-ch2-acf-spectrum) | [返回教材目录](/textbook/) | 📝 [Box 时间序列系列](/blog/tags/时间序列)*
+*📖 [Ch2 笔记](/blog/2026-03-16-box-ch2-acf-spectrum) | [返回教材目录](/textbook/) | 📝 [Box 时间序列系列](/blog/)*

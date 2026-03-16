@@ -224,4 +224,4 @@ Ch2 は時系列分析の記述ツールを確立した：
 
 ---
 
-*📖 [Ch1 ノート](/blog/2026-03-16-box-ch1-introduction) | [教科書目次に戻る](/textbook/) | 📝 [Box 時系列シリーズ](/blog/tags/時系列)*
+*📖 [Ch1 ノート](/blog/2026-03-16-box-ch1-introduction) | [教科書目次に戻る](/textbook/) | 📝 [Box 時系列シリーズ](/blog/)*

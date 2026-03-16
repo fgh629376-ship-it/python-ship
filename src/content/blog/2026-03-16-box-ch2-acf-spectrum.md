@@ -224,4 +224,4 @@ Ch2 建立了时序分析的描述工具：
 
 ---
 
-*📖 [Ch1 笔记](/blog/2026-03-16-box-ch1-introduction) | [返回教材目录](/textbook/) | 📝 [Box 时间序列系列](/blog/tags/时间序列)*
+*📖 [Ch1 笔记](/blog/2026-03-16-box-ch1-introduction) | [返回教材目录](/textbook/) | 📝 [Box 时间序列系列](/blog/)*

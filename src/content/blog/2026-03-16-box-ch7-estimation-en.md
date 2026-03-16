@@ -137,4 +137,4 @@ Core conclusions:
 
 ---
 
-*📖 [Ch6 Notes](/blog/2026-03-16-box-ch6-model-identification) | [Back to Textbook Index](/textbook/) | 📝 [Box Time Series Series](/blog/tags/time-series)*
+*📖 [Ch6 Notes](/blog/2026-03-16-box-ch6-model-identification) | [Back to Textbook Index](/textbook/) | 📝 [Box Time Series Series](/blog/)*

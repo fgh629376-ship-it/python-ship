@@ -142,4 +142,4 @@ $$\text{Data} \xrightarrow{\text{ACF/PACF patterns}} \text{Candidate model} \xri
 
 ---
 
-*📖 [Ch5 Notes](/blog/2026-03-16-box-ch5-forecasting) | [Back to Textbook Index](/textbook/) | 📝 [Box Time Series Series](/blog/tags/time-series)*
+*📖 [Ch5 Notes](/blog/2026-03-16-box-ch5-forecasting) | [Back to Textbook Index](/textbook/) | 📝 [Box Time Series Series](/blog/)*

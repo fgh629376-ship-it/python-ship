@@ -88,4 +88,4 @@ When $d$ is non-integer, $(1-B)^d = \sum_{k=0}^{\infty} \binom{d}{k}(-B)^k$
 
 ---
 
-*📖 [Ch9 Notes](/blog/2026-03-16-box-ch9-seasonal) | [Back to Textbook Index](/textbook/) | 📝 [Box Time Series Series](/blog/tags/time-series)*
+*📖 [Ch9 Notes](/blog/2026-03-16-box-ch9-seasonal) | [Back to Textbook Index](/textbook/) | 📝 [Box Time Series Series](/blog/)*

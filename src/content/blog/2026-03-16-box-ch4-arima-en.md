@@ -137,4 +137,4 @@ But its power is immense — almost all non-seasonal time series can be describe
 
 ---
 
-*📖 [Ch3 Notes](/blog/2026-03-16-box-ch3-linear-stationary-models) | [Back to Textbook Index](/textbook/) | 📝 [Box Time Series Series](/blog/tags/time-series)*
+*📖 [Ch3 Notes](/blog/2026-03-16-box-ch3-linear-stationary-models) | [Back to Textbook Index](/textbook/) | 📝 [Box Time Series Series](/blog/)*

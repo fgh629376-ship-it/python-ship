@@ -187,4 +187,4 @@ Lecture 8-14 是 18.06 的精华——投影和最小二乘是理解一切回归
 
 ---
 
-*📖 [MIT 课程系列](/blog/tags/MIT) | [Part 1: 向量空间](/blog/2026-03-16-mit-1806-part1-foundations) | 🧠 MIT 18.06 Spring 2025*
+*📖 [MIT 课程系列](/blog/) | [Part 1: 向量空间](/blog/2026-03-16-mit-1806-part1-foundations) | 🧠 MIT 18.06 Spring 2025*

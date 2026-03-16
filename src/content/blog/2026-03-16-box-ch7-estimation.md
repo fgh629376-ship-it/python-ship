@@ -137,4 +137,4 @@ $$\text{Ch6 初始估计} \xrightarrow{\text{Marquardt 迭代}} \hat{\phi}_{MLE}
 
 ---
 
-*📖 [Ch6 笔记](/blog/2026-03-16-box-ch6-model-identification) | [返回教材目录](/textbook/) | 📝 [Box 时间序列系列](/blog/tags/时间序列)*
+*📖 [Ch6 笔记](/blog/2026-03-16-box-ch6-model-identification) | [返回教材目录](/textbook/) | 📝 [Box 时间序列系列](/blog/)*

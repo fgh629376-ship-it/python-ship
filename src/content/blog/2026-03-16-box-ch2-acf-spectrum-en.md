@@ -224,4 +224,4 @@ Ch2 establishes the descriptive tools for time series analysis:
 
 ---
 
-*📖 [Ch1 Notes](/blog/2026-03-16-box-ch1-introduction) | [Back to Textbook Index](/textbook/) | 📝 [Box Time Series Series](/blog/tags/time-series)*
+*📖 [Ch1 Notes](/blog/2026-03-16-box-ch1-introduction) | [Back to Textbook Index](/textbook/) | 📝 [Box Time Series Series](/blog/)*

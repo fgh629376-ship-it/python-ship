@@ -210,4 +210,4 @@ $$\underbrace{\det(A-\lambda I) = 0}_{\text{特征方程}} \to \underbrace{A = E
 
 ---
 
-*📖 [MIT 课程系列](/blog/tags/MIT) | [Part 2: 投影与最小二乘](/blog/2026-03-16-mit-1806-part2-projection-leastsquares) | 🧠 MIT 18.06 Spring 2025*
+*📖 [MIT 课程系列](/blog/) | [Part 2: 投影与最小二乘](/blog/2026-03-16-mit-1806-part2-projection-leastsquares) | 🧠 MIT 18.06 Spring 2025*

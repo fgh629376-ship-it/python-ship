@@ -182,4 +182,4 @@ $$\boxed{\text{最优预测} = E_t[z_{t+l}], \quad \text{预测误差方差} = \
 
 ---
 
-*📖 [Ch4 笔记](/blog/2026-03-16-box-ch4-arima) | [返回教材目录](/textbook/) | 📝 [Box 时间序列系列](/blog/tags/时间序列)*
+*📖 [Ch4 笔记](/blog/2026-03-16-box-ch4-arima) | [返回教材目录](/textbook/) | 📝 [Box 时间序列系列](/blog/)*

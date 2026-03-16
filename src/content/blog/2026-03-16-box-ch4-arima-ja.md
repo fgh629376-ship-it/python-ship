@@ -137,4 +137,4 @@ $$\phi(B)(1-B)^d z_t = \theta_0 + \theta(B)a_t$$
 
 ---
 
-*📖 [Ch3 ノート](/blog/2026-03-16-box-ch3-linear-stationary-models) | [教科書目次に戻る](/textbook/) | 📝 [Box 時系列シリーズ](/blog/tags/時系列)*
+*📖 [Ch3 ノート](/blog/2026-03-16-box-ch3-linear-stationary-models) | [教科書目次に戻る](/textbook/) | 📝 [Box 時系列シリーズ](/blog/)*

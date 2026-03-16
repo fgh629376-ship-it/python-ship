@@ -128,4 +128,4 @@ $$n = \dim C(A) + \dim N(A) = \text{rank}(A) + \text{nullity}(A)$$
 
 ---
 
-*📖 [MITコースシリーズ](/blog/tags/MIT) | [教科書目次に戻る](/textbook/) | 🧠 MIT 18.06 Spring 2025*
+*📖 [MITコースシリーズ](/blog/) | [教科書目次に戻る](/textbook/) | 🧠 MIT 18.06 Spring 2025*

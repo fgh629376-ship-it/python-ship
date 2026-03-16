@@ -120,4 +120,4 @@ Ch8 = 品質管理。3つの主要なツール：
 
 ---
 
-*📖 [Ch7ノート](/blog/2026-03-16-box-ch7-estimation) | [教材目次に戻る](/textbook/) | 📝 [Box時系列シリーズ](/blog/tags/時系列)*
+*📖 [Ch7ノート](/blog/2026-03-16-box-ch7-estimation) | [教材目次に戻る](/textbook/) | 📝 [Box時系列シリーズ](/blog/)*

@@ -185,4 +185,4 @@ Lectures 8-14 are the heart of 18.06 — projection and least squares are the ge
 
 ---
 
-*📖 [MIT Course Series](/blog/tags/MIT) | [Part 1: Vector Spaces](/blog/2026-03-16-mit-1806-part1-foundations) | 🧠 MIT 18.06 Spring 2025*
+*📖 [MIT Course Series](/blog/) | [Part 1: Vector Spaces](/blog/2026-03-16-mit-1806-part1-foundations) | 🧠 MIT 18.06 Spring 2025*

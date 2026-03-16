@@ -272,4 +272,4 @@ $H$ 正定 → 局部最小值；$H$ 不定 → 鞍点
 
 ---
 
-*📖 [MIT 课程系列](/blog/tags/MIT) | [18.06 线性代数](/blog/2026-03-16-mit-1806-part1-foundations) | 🧠 MIT 18.063 Matrix Calculus 全课程完成*
+*📖 [MIT 课程系列](/blog/) | [18.06 线性代数](/blog/2026-03-16-mit-1806-part1-foundations) | 🧠 MIT 18.063 Matrix Calculus 全课程完成*

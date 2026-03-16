@@ -119,4 +119,4 @@ $$\phi(B)\Phi(B^s)\nabla^d\nabla_s^D z_t = \theta(B)\Theta(B^s) a_t$$
 
 ---
 
-*📖 [Ch8 笔记](/blog/2026-03-16-box-ch8-diagnostics) | [返回教材目录](/textbook/) | 📝 [Box 时间序列系列](/blog/tags/时间序列)*
+*📖 [Ch8 笔记](/blog/2026-03-16-box-ch8-diagnostics) | [返回教材目录](/textbook/) | 📝 [Box 时间序列系列](/blog/)*

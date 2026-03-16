@@ -140,4 +140,4 @@ Box-Jenkinsアプローチ：まずモデルを構築（伝達関数＋ノイズ
 
 ---
 
-*📖 [Ch10ノート](/blog/2026-03-16-box-ch10-nonlinear) | [教材目次に戻る](/textbook/) | 📝 [Box時系列シリーズ](/blog/tags/時系列)*
+*📖 [Ch10ノート](/blog/2026-03-16-box-ch10-nonlinear) | [教材目次に戻る](/textbook/) | 📝 [Box時系列シリーズ](/blog/)*

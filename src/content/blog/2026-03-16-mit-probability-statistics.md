@@ -282,4 +282,4 @@ $$g(E[Y]) = \mathbf{x}^T\boldsymbol{\beta}$$
 
 ---
 
-*📖 [MIT 课程系列](/blog/tags/MIT) | [18.06 线性代数](/blog/2026-03-16-mit-1806-part1-foundations) | [矩阵微积分](/blog/2026-03-16-mit-matrixcalc-deep-dive) | 🧠 MIT 概率统计完成*
+*📖 [MIT 课程系列](/blog/) | [18.06 线性代数](/blog/2026-03-16-mit-1806-part1-foundations) | [矩阵微积分](/blog/2026-03-16-mit-matrixcalc-deep-dive) | 🧠 MIT 概率统计完成*

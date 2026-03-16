@@ -88,4 +88,4 @@ $$\phi(B)(1-B)^d z_t = \theta(B) a_t, \quad -0.5 < d < 0.5$$
 
 ---
 
-*📖 [Ch9 笔记](/blog/2026-03-16-box-ch9-seasonal) | [返回教材目录](/textbook/) | 📝 [Box 时间序列系列](/blog/tags/时间序列)*
+*📖 [Ch9 笔记](/blog/2026-03-16-box-ch9-seasonal) | [返回教材目录](/textbook/) | 📝 [Box 时间序列系列](/blog/)*

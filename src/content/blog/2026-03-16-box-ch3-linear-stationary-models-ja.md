@@ -198,4 +198,4 @@ Ch3 は ARMA モデル族の完全な理論を確立した：
 
 ---
 
-*📖 [Ch2 ノート](/blog/2026-03-16-box-ch2-acf-spectrum) | [教科書目次に戻る](/textbook/) | 📝 [Box 時系列シリーズ](/blog/tags/時系列)*
+*📖 [Ch2 ノート](/blog/2026-03-16-box-ch2-acf-spectrum) | [教科書目次に戻る](/textbook/) | 📝 [Box 時系列シリーズ](/blog/)*

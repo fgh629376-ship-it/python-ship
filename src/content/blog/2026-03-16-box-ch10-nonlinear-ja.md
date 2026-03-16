@@ -88,4 +88,4 @@ $d$ が非整数のとき、$(1-B)^d = \sum_{k=0}^{\infty} \binom{d}{k}(-B)^k$
 
 ---
 
-*📖 [Ch9ノート](/blog/2026-03-16-box-ch9-seasonal) | [教材目次に戻る](/textbook/) | 📝 [Box時系列シリーズ](/blog/tags/時系列)*
+*📖 [Ch9ノート](/blog/2026-03-16-box-ch9-seasonal) | [教材目次に戻る](/textbook/) | 📝 [Box時系列シリーズ](/blog/)*

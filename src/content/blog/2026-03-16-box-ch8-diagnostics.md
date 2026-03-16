@@ -120,4 +120,4 @@ Ch8 = 质量控制。三大工具：
 
 ---
 
-*📖 [Ch7 笔记](/blog/2026-03-16-box-ch7-estimation) | [返回教材目录](/textbook/) | 📝 [Box 时间序列系列](/blog/tags/时间序列)*
+*📖 [Ch7 笔记](/blog/2026-03-16-box-ch7-estimation) | [返回教材目录](/textbook/) | 📝 [Box 时间序列系列](/blog/)*

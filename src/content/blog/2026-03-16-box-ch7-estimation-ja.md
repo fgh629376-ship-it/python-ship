@@ -137,4 +137,4 @@ $$\text{Ch6初期推定} \xrightarrow{\text{Marquardt反復}} \hat{\phi}_{MLE}, 
 
 ---
 
-*📖 [Ch6ノート](/blog/2026-03-16-box-ch6-model-identification) | [教材目次に戻る](/textbook/) | 📝 [Box時系列シリーズ](/blog/tags/時系列)*
+*📖 [Ch6ノート](/blog/2026-03-16-box-ch6-model-identification) | [教材目次に戻る](/textbook/) | 📝 [Box時系列シリーズ](/blog/)*

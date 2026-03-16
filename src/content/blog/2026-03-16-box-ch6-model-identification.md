@@ -142,4 +142,4 @@ $$\text{数据} \xrightarrow{\text{ACF/PACF 模式}} \text{候选模型} \xright
 
 ---
 
-*📖 [Ch5 笔记](/blog/2026-03-16-box-ch5-forecasting) | [返回教材目录](/textbook/) | 📝 [Box 时间序列系列](/blog/tags/时间序列)*
+*📖 [Ch5 笔记](/blog/2026-03-16-box-ch5-forecasting) | [返回教材目录](/textbook/) | 📝 [Box 时间序列系列](/blog/)*

@@ -185,4 +185,4 @@ $$A^+ : \mathbb{R}^m \to \mathbb{R}^n$$
 
 ---
 
-*📖 [MITコースシリーズ](/blog/tags/MIT) | [Part 1: ベクトル空間](/blog/2026-03-16-mit-1806-part1-foundations) | 🧠 MIT 18.06 Spring 2025*
+*📖 [MITコースシリーズ](/blog/) | [Part 1: ベクトル空間](/blog/2026-03-16-mit-1806-part1-foundations) | 🧠 MIT 18.06 Spring 2025*

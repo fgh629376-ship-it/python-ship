@@ -140,4 +140,4 @@ Box-Jenkins approach: build the model first (transfer function + noise model) �
 
 ---
 
-*📖 [Ch10 Notes](/blog/2026-03-16-box-ch10-nonlinear) | [Back to Textbook Index](/textbook/) | 📝 [Box Time Series Series](/blog/tags/time-series)*
+*📖 [Ch10 Notes](/blog/2026-03-16-box-ch10-nonlinear) | [Back to Textbook Index](/textbook/) | 📝 [Box Time Series Series](/blog/)*

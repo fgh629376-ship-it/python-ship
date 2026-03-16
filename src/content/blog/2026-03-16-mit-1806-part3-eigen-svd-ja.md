@@ -210,4 +210,4 @@ $$\underbrace{\det(A-\lambda I) = 0}_{\text{特性方程式}} \to \underbrace{A 
 
 ---
 
-*📖 [MITコースシリーズ](/blog/tags/MIT) | [Part 2: 射影と最小二乗法](/blog/2026-03-16-mit-1806-part2-projection-leastsquares) | 🧠 MIT 18.06 Spring 2025*
+*📖 [MITコースシリーズ](/blog/) | [Part 2: 射影と最小二乗法](/blog/2026-03-16-mit-1806-part2-projection-leastsquares) | 🧠 MIT 18.06 Spring 2025*

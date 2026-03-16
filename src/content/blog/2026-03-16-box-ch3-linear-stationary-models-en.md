@@ -198,4 +198,4 @@ Ch3 establishes the complete theory for the ARMA model family:
 
 ---
 
-*📖 [Ch2 Notes](/blog/2026-03-16-box-ch2-acf-spectrum) | [Back to Textbook Index](/textbook/) | 📝 [Box Time Series Series](/blog/tags/time-series)*
+*📖 [Ch2 Notes](/blog/2026-03-16-box-ch2-acf-spectrum) | [Back to Textbook Index](/textbook/) | 📝 [Box Time Series Series](/blog/)*

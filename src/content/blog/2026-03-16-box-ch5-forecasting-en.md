@@ -182,4 +182,4 @@ $$\boxed{\text{Optimal forecast} = E_t[z_{t+l}], \quad \text{Forecast error vari
 
 ---
 
-*📖 [Ch4 Notes](/blog/2026-03-16-box-ch4-arima) | [Back to Textbook Index](/textbook/) | 📝 [Box Time Series Series](/blog/tags/time-series)*
+*📖 [Ch4 Notes](/blog/2026-03-16-box-ch4-arima) | [Back to Textbook Index](/textbook/) | 📝 [Box Time Series Series](/blog/)*

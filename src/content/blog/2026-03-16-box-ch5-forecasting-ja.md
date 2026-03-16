@@ -182,4 +182,4 @@ $$\boxed{\text{最適予測} = E_t[z_{t+l}], \quad \text{予測誤差分散} = \
 
 ---
 
-*📖 [Ch4ノート](/blog/2026-03-16-box-ch4-arima) | [教材目次に戻る](/textbook/) | 📝 [Box時系列シリーズ](/blog/tags/時系列)*
+*📖 [Ch4ノート](/blog/2026-03-16-box-ch4-arima) | [教材目次に戻る](/textbook/) | 📝 [Box時系列シリーズ](/blog/)*

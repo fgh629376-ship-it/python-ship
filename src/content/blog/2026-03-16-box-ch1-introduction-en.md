@@ -240,4 +240,4 @@ Ch1 is a roadmap. In 18 pages, Box tells you:
 
 ---
 
-*📖 [Back to Textbook Index](/textbook/) | 📝 [Box Time Series Series](/blog/tags/time-series)*
+*📖 [Back to Textbook Index](/textbook/) | 📝 [Box Time Series Series](/blog/)*

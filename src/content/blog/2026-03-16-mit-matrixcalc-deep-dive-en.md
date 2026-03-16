@@ -272,4 +272,4 @@ Calculus of variations → Euler-Lagrange → optimal control / PINN
 
 ---
 
-*📖 [MIT Course Series](/blog/tags/MIT) | [18.06 Linear Algebra](/blog/2026-03-16-mit-1806-part1-foundations) | 🧠 MIT 18.063 Matrix Calculus — Full Course Complete*
+*📖 [MIT Course Series](/blog/) | [18.06 Linear Algebra](/blog/2026-03-16-mit-1806-part1-foundations) | 🧠 MIT 18.063 Matrix Calculus — Full Course Complete*

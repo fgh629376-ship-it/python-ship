@@ -128,4 +128,4 @@ Lectures 1-7 establish the core framework of linear algebra. Below is a summary 
 
 ---
 
-*📖 [MIT Course Series](/blog/tags/MIT) | [Back to Textbook Index](/textbook/) | 🧠 MIT 18.06 Spring 2025*
+*📖 [MIT Course Series](/blog/) | [Back to Textbook Index](/textbook/) | 🧠 MIT 18.06 Spring 2025*

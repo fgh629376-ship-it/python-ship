@@ -418,4 +418,4 @@ Both Box and Granger were clear about this limitation. True causal inference req
 
 ---
 
-*📖 [Box Time Series Series](/blog/tags/time-series) | 🧠 Thought training for all 15 chapters complete*
+*📖 [Box Time Series Series](/blog/) | 🧠 Thought training for all 15 chapters complete*
