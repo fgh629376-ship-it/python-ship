@@ -55,11 +55,17 @@ const chapters = [
     ],
   },
   {
-    id: 'ch5', num: 5, status: 'pending',
+    id: 'ch5', num: 5, status: 'done',
     title: 'Forecasting',
     titleZh: '预测',
-    pages: 'p137-192',
-    sections: [],
+    pages: 'p137-195',
+    blogUrl: '/blog/2026-03-16-box-ch5-forecasting/',
+    sections: [
+      { id: '5.1', title: '最小 MSE 预测 = 条件期望', note: String.raw`核心定理：$\hat{z}_t(l) = E_t[z_{t+l}]$（条件期望 = 最优线性预测）\n\n预测误差：$e_t(l) = a_{t+l} + \psi_1 a_{t+l-1} + \cdots + \psi_{l-1}a_{t+1}$\n方差：$V(l) = (1 + \psi_1^2 + \cdots + \psi_{l-1}^2)\sigma_a^2$\n\n一步预测误差 $e_t(1) = a_{t+1}$（冲击 = 预测残差）` },
+      { id: '5.2', title: '三种预测形式与更新公式', note: String.raw`①差分方程形式（实际计算最方便）\n②ψ 权重形式（计算误差方差）\n③π 权重形式（加权平均）\n\n更新公式：$\hat{z}_{t+1}(l) = \hat{z}_t(l+1) + \psi_l a_{t+1}$\n每当新数据到达，所有预测按 ψ 比例修正——实时系统核心` },
+      { id: '5.3', title: '预测函数的本质', note: String.raw`最终预测函数由 AR 算子决定：$\varphi(B)\hat{z}_t(l) = 0$ ($l > q-p-d$)\n通解 = $d-1$ 阶多项式 + 衰减项\n\nIMA(0,1,1) → 常数（EWMA）\nIMA(0,2,2) → 直线（Holt 方法）\n\nMA 算子决定预测函数如何"锚定"到数据` },
+      { id: '5.4-5', title: 'IMA 预测 = 指数平滑 + 状态空间', note: String.raw`IMA(0,1,1) = 简单指数平滑，$\alpha = 1-\theta_1$\nIMA(0,2,2) = Holt 双参数线性趋势\nARIMA(1,1,1) = EWMA 的线性插值\n\n状态空间形式连接 Box-Jenkins ↔ Kalman 滤波` },
+    ],
   },
   {
     id: 'ch6', num: 6, status: 'pending',
