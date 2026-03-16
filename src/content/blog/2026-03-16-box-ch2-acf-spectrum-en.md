@@ -152,10 +152,15 @@ Satisfying $\int_0^{1/2} g(f)\,df = 1$ (analogous to a probability density).
 
 ### 2.2.4 Two Simple Examples
 
-| Model | ACF | Spectrum | Series Appearance |
-|-------|-----|----------|-------------------|
-| $z_t = 10 + a_t + a_{t-1}$ | $\rho_1 = 0.5$, $\rho_k = 0$ ($k \geq 2$) | $g(f) = 2[1 + \cos(2\pi f)]$ (low-frequency dominant) | Smooth |
-| $z_t = 10 + a_t - a_{t-1}$ | $\rho_1 = -0.5$, $\rho_k = 0$ ($k \geq 2$) | $g(f) = 2[1 - \cos(2\pi f)]$ (high-frequency dominant) | Sawtooth |
+**Model 1:** $z_t = 10 + a_t + a_{t-1}$
+- ACF: $\rho_1 = 0.5$, $\rho_k = 0$ ($k \geq 2$)
+- Spectrum: $g(f) = 2[1 + \cos(2\pi f)]$ (low-frequency dominant)
+- Series appearance: Smooth
+
+**Model 2:** $z_t = 10 + a_t - a_{t-1}$
+- ACF: $\rho_1 = -0.5$, $\rho_k = 0$ ($k \geq 2$)
+- Spectrum: $g(f) = 2[1 - \cos(2\pi f)]$ (high-frequency dominant)
+- Series appearance: Sawtooth
 
 These two MA(1) models perfectly demonstrate:
 - **Positive autocorrelation → energy concentrated at low frequencies → smooth series**
@@ -208,12 +213,10 @@ The numerical filters in Warner Ch4 spectral analysis (Robert-Asselin filter, im
 
 Ch2 establishes the descriptive tools for time series analysis:
 
-| Tool | Time Domain | Frequency Domain |
-|------|-------------|------------------|
-| Theory | Autocovariance $\gamma_k$ / Autocorrelation $\rho_k$ | Power spectrum $p(f)$ / Spectral density $g(f)$ |
-| Estimation | Sample ACF $r_k$ | Sample spectrum $I(f)$ / Smoothed spectrum $\hat{p}(f)$ |
-| Precision | Bartlett standard error | Spectral window width |
-| Relationship | Fourier transform pair | |
+- **Theory**: Time domain — Autocovariance $\gamma_k$ / Autocorrelation $\rho_k$; Frequency domain — Power spectrum $p(f)$ / Spectral density $g(f)$
+- **Estimation**: Time domain — Sample ACF $r_k$; Frequency domain — Sample spectrum $I(f)$ / Smoothed spectrum $\hat{p}(f)$
+- **Precision**: Time domain — Bartlett standard error; Frequency domain — Spectral window width
+- **Relationship**: Fourier transform pair
 
 **Core theorem**: Autocovariance sequence $\{\gamma_k\}$ is positive definite $\Leftrightarrow$ spectrum $p(f) \geq 0$
 

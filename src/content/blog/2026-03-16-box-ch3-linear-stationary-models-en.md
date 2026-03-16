@@ -45,10 +45,8 @@ Output spectrum = white noise spectrum × squared filter gain.
 
 ### Stationarity and Invertibility
 
-| Condition | Requirement | Equivalent Statement |
-|-----------|-------------|----------------------|
-| **Stationary** | $\sum|\psi_j| < \infty$ | $\psi(B)$ converges for $|B| \leq 1$ |
-| **Invertible** | $\sum|\pi_j| < \infty$ | $\pi(B)$ converges for $|B| \leq 1$ |
+- **Stationary**: requires $\sum|\psi_j| < \infty$; equivalent to $\psi(B)$ converges for $|B| \leq 1$
+- **Invertible**: requires $\sum|\pi_j| < \infty$; equivalent to $\pi(B)$ converges for $|B| \leq 1$
 
 **Physical meaning of invertibility**: the current value can be expressed using past values (not future values). If $|\theta| \geq 1$, the π-weights of the MA model diverge — the current value depends on the infinitely distant past with ever-increasing weights, which is physically unreasonable.
 
@@ -128,13 +126,11 @@ $$\rho_k = \begin{cases} \frac{-\theta_k + \theta_1\theta_{k+1} + \cdots + \thet
 
 ### The Perfect Duality of AR ↔ MA
 
-| Property | AR(p) | MA(q) |
-|----------|-------|-------|
-| ACF | Tails off (exponential decay / damped sinusoid) | **Cuts off after lag $q$** |
-| PACF | **Cuts off after lag $p$** | Tails off (exponential decay / damped sinusoid) |
-| Stationarity | Roots of $\phi(B) = 0$ outside circle | Always stationary |
-| Invertibility | Always invertible | Roots of $\theta(B) = 0$ outside circle |
-| Spectrum | $p(f) \propto 1/|\phi(e^{-i2\pi f})|^2$ | $p(f) \propto |\theta(e^{-i2\pi f})|^2$ |
+- **ACF**: AR(p) tails off (exponential decay / damped sinusoid); MA(q) **cuts off after lag $q$**
+- **PACF**: AR(p) **cuts off after lag $p$**; MA(q) tails off (exponential decay / damped sinusoid)
+- **Stationarity**: AR(p) requires roots of $\phi(B) = 0$ outside circle; MA(q) always stationary
+- **Invertibility**: AR(p) always invertible; MA(q) requires roots of $\theta(B) = 0$ outside circle
+- **Spectrum**: AR(p) $p(f) \propto 1/|\phi(e^{-i2\pi f})|^2$; MA(q) $p(f) \propto |\theta(e^{-i2\pi f})|^2$
 
 This duality is the core tool for model identification (Ch6):
 - **ACF cuts off → MA model**
@@ -175,12 +171,10 @@ Ch3 answers "why is ARMA sufficient":
 
 ### 2. ACF/PACF Cutoff = Model Identification Fingerprints
 
-| Observed Pattern | Diagnosis |
-|-----------------|-----------|
-| ACF cuts off at lag $q$, PACF tails off | MA(q) |
-| ACF tails off, PACF cuts off at lag $p$ | AR(p) |
-| Both tail off | ARMA(p,q) |
-| Both cut off | Impossible (contradiction) |
+- ACF cuts off at lag $q$, PACF tails off → **MA(q)**
+- ACF tails off, PACF cuts off at lag $p$ → **AR(p)**
+- Both tail off → **ARMA(p,q)**
+- Both cut off → Impossible (contradiction)
 
 ### 3. Specific Guidance for Solar PV Forecasting
 

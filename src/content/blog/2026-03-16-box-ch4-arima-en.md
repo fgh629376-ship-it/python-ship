@@ -96,11 +96,9 @@ The optimal forecast evolves along a **straight line** (level + slope continuous
 
 ### 1. Differencing vs. Detrending
 
-| Method | Principle | Assumption | Applicable Scenarios |
-|--------|-----------|------------|----------------------|
-| Differencing $\nabla^d$ | Removes degree-$d$ polynomial trend | Trend is stochastic | Most economic/industrial series |
-| Regression detrending | $z_t = f(t) + \epsilon_t$ | Trend is deterministic | Series with physical trends |
-| Physical model detrending | $z_t - \text{clearsky}_t$ | Physical model is known | Solar PV irradiance |
+- **Differencing $\nabla^d$**: Removes degree-$d$ polynomial trend; assumes trend is stochastic; applies to most economic/industrial series
+- **Regression detrending**: $z_t = f(t) + \epsilon_t$; assumes trend is deterministic; applies to series with physical trends
+- **Physical model detrending**: $z_t - \text{clearsky}_t$; assumes physical model is known; applies to solar PV irradiance
 
 **For solar PV**: first detrend physically with a clear-sky model (Yang Ch7); if residuals are still non-stationary, difference once more.
 
