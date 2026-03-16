@@ -43,11 +43,16 @@ const chapters = [
     ],
   },
   {
-    id: 'ch4', num: 4, status: 'pending',
+    id: 'ch4', num: 4, status: 'done',
     title: 'Linear Nonstationary Models',
     titleZh: '线性非平稳模型',
-    pages: 'p93-135',
-    sections: [],
+    pages: 'p93-157',
+    blogUrl: '/blog/2026-03-16-box-ch4-arima/',
+    sections: [
+      { id: '4.1', title: 'ARIMA 过程的定义', note: String.raw`ARIMA(p,d,q)：$\phi(B)\nabla^d z_t = \theta_0 + \theta(B)a_t$\n\n非平稳的三种情况：\n- 根在圆外：平稳（ARMA）\n- 根在圆内：爆炸性（排除）\n- 根在圆上（=1）：齐次非平稳（ARIMA）\n\n$d=1$：水平漂移（最常见），$d=2$：趋势漂移\n$\theta_0 \neq 0$ 引入确定性趋势\n\n实践中 $p, d, q$ 很少 > 2` },
+      { id: '4.2', title: '三种显式形式', note: String.raw`①差分方程形式：$z_t = \varphi_1 z_{t-1} + \cdots + a_t - \theta_1 a_{t-1} - \cdots$（计算预测）\n②随机冲击形式：$z_t = \psi(B)a_t$（计算预测误差方差）\n③反转形式：$z_t = \pi_1 z_{t-1} + \cdots + a_t$（EWMA 等价形式）\n\nψ 权重递推：$\varphi(B)\psi(B) = \theta(B)$` },
+      { id: '4.3', title: 'IMA 过程与指数平滑', note: String.raw`IMA(0,1,1)：$\nabla z_t = (1-\theta_1 B)a_t$\n反转形式 = EWMA（指数加权移动平均），权重 $(1-\theta_1)\theta_1^j$\n\nIMA(0,2,2)：最优预测沿直线（Holt 双参数指数平滑）\n\nBox 证明：Holt/Brown/Winters 的经验方法是特定 IMA 过程的最优预测——统计基础！` },
+    ],
   },
   {
     id: 'ch5', num: 5, status: 'pending',
