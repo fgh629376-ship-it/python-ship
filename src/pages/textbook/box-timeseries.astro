@@ -68,11 +68,16 @@ const chapters = [
     ],
   },
   {
-    id: 'ch6', num: 6, status: 'pending',
+    id: 'ch6', num: 6, status: 'done',
     title: 'Model Identification',
     titleZh: '模型识别',
     pages: 'p195-239',
-    sections: [],
+    blogUrl: '/blog/2026-03-16-box-ch6-model-identification/',
+    sections: [
+      { id: '6.1-2', title: '识别策略与工具', note: String.raw`两步策略：①ACF 缓慢衰减 → 差分 → 直到快速衰减（确定 d）②ACF/PACF 模式 → 查 Table 6.1 匹配（确定 p,q）\n\n标准误差带：ACF 用 Bartlett 公式，PACF 用 $1/\sqrt{n}$\n$\pm 2\hat{\sigma}$ 以内 → 视为不显著\n\nBox 强调：识别是判断（judgment），不是纯数学——多个模型可能都值得考虑` },
+      { id: '6.3', title: '初步参数估计', note: String.raw`MA 矩估计：$\rho_1 = -\theta_1/(1+\theta_1^2)$ 代入 $r_1$，解方程取可逆解\n⚠️ MA 矩估计不高效，只是起始值\n\nAR Yule-Walker 估计：$\hat{\phi} = R_p^{-1} r_p$\n✅ AR 的 YW 估计近似高效\n\n混合模型：先利用 ACF 高 lag 的 AR 行为估 $\phi$，再估 $\theta$` },
+      { id: '6.4-5', title: '可逆性约束 + 六个实例', note: String.raw`MA(q) 的矩方程有 $2^q$ 组解，只取满足可逆性的那组\n\n六个经典序列识别结果：\nA(化学浓度)→IMA(0,1,1) B(IBM股价)→IMA(0,1,1)\nC(温度)→ARI(1,1,0) D(粘度)→IMA(0,1,1)\nE(太阳黑子)→AR(2) F(批量产率)→MA(1)` },
+    ],
   },
   {
     id: 'ch7', num: 7, status: 'pending',
