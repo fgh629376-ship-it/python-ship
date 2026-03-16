@@ -62,12 +62,10 @@ Use **Kolmogorov-Smirnov** bands to test whether deviations are significant.
 
 ### Residual ACF Has Structure → Modify the Model
 
-| Residual ACF Pattern | Possible Cause | Modification |
-|---------------------|---------------|--------------|
-| $r_1(\hat{a})$ significant | Missing MA(1) term | Add $\theta_1$ |
-| $r_1, r_2$ significant | Missing AR(2) or MA(2) | Add AR or MA term |
-| Lag 12 significant | Seasonality not handled | Ch9 seasonal model |
-| Multiple lags significant | Serious model inadequacy | Re-identify |
+- $r_1(\hat{a})$ significant → Missing MA(1) term, add $\theta_1$
+- $r_1, r_2$ significant → Missing AR(2) or MA(2), add AR or MA term
+- Lag 12 significant → Seasonality not handled, use Ch9 seasonal model
+- Multiple lags significant → Serious model inadequacy, re-identify
 
 ### Parameters Change Over Time
 

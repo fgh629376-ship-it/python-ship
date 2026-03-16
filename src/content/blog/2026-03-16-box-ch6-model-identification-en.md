@@ -26,11 +26,9 @@ Box explicitly states: identification is **rough and imprecise** — it only pro
 
 **Core criterion**: Does the ACF "decay quickly"?
 
-| Phenomenon | Diagnosis |
-|-----------|-----------|
-| $r_k$ declines slowly and linearly | Differencing needed, $d \geq 1$ |
-| $r_k$ of $\nabla z_t$ decays quickly | $d = 1$ is sufficient |
-| $r_k$ of $\nabla z_t$ still decays slowly | Difference again, $d = 2$ |
+- $r_k$ declines slowly and linearly → Differencing needed, $d \geq 1$
+- $r_k$ of $\nabla z_t$ decays quickly → $d = 1$ is sufficient
+- $r_k$ of $\nabla z_t$ still decays slowly → Difference again, $d = 2$
 
 **Mathematical explanation**: When the roots $G$ of $\phi(B) = 0$ approach 1, $\rho_k \approx A(1-k\delta)$ decreases slowly and linearly.
 
@@ -38,11 +36,9 @@ Box explicitly states: identification is **rough and imprecise** — it only pro
 
 Recall the "fingerprint table" from Ch3:
 
-| ACF Pattern | PACF Pattern | Diagnosis |
-|-------------|-------------|-----------|
-| Cuts off after lag $q$ | Tails off (exponential decay) | MA(q) |
-| Tails off (exponential/sinusoidal) | Cuts off after lag $p$ | AR(p) |
-| Both tail off | Both tail off | ARMA(p,q) |
+- ACF cuts off after lag $q$, PACF tails off (exponential decay) → **MA(q)**
+- ACF tails off (exponential/sinusoidal), PACF cuts off after lag $p$ → **AR(p)**
+- Both ACF and PACF tail off → **ARMA(p,q)**
 
 ---
 
@@ -91,14 +87,17 @@ For MA(q) models, the moment equations have $2^q$ solutions (since both $\theta$
 
 ## 6.5 Summary of Case Studies
 
-| Series | Original ACF | ACF after Differencing | Identification Result |
-|--------|-------------|----------------------|----------------------|
-| A (chemical concentration) | Slow decay | $\nabla z$: $r_1 \approx -0.4$, then cut off | IMA(0,1,1), $\hat{\theta}_1 \approx 0.5$ |
-| B (IBM stock price) | Slow decay | $\nabla z$: $r_1 \approx 0.09$, then cut off | IMA(0,1,1), $\hat{\theta}_1 \approx -0.1$ |
-| C (temperature) | Slow decay | $\nabla z$: PACF cuts off at lag 1 | ARI(1,1,0), $\hat{\phi}_1 \approx 0.8$ |
-| D (viscosity) | Slow decay | $\nabla z$: $r_1 \approx -0.05$, then cut off | IMA(0,1,1), $\hat{\theta}_1 \approx 0.1$ |
-| E (sunspots) | Pseudo-periodic decay | No differencing needed | AR(2), $\hat{\phi}_1 \approx 1.32, \hat{\phi}_2 \approx -0.63$ |
-| F (batch yield) | Cuts off at lag 1 | — | MA(1), $\hat{\theta}_1 \approx 0.5$ |
+**Series A (chemical concentration)**: original ACF slow decay; after differencing $\nabla z$: $r_1 \approx -0.4$, then cut off; identified as IMA(0,1,1), $\hat{\theta}_1 \approx 0.5$
+
+**Series B (IBM stock price)**: original ACF slow decay; after differencing $\nabla z$: $r_1 \approx 0.09$, then cut off; identified as IMA(0,1,1), $\hat{\theta}_1 \approx -0.1$
+
+**Series C (temperature)**: original ACF slow decay; after differencing $\nabla z$: PACF cuts off at lag 1; identified as ARI(1,1,0), $\hat{\phi}_1 \approx 0.8$
+
+**Series D (viscosity)**: original ACF slow decay; after differencing $\nabla z$: $r_1 \approx -0.05$, then cut off; identified as IMA(0,1,1), $\hat{\theta}_1 \approx 0.1$
+
+**Series E (sunspots)**: original ACF pseudo-periodic decay; no differencing needed; identified as AR(2), $\hat{\phi}_1 \approx 1.32, \hat{\phi}_2 \approx -0.63$
+
+**Series F (batch yield)**: original ACF cuts off at lag 1; no differencing needed; identified as MA(1), $\hat{\theta}_1 \approx 0.5$
 
 ---
 

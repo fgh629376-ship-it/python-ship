@@ -40,14 +40,12 @@ A natural approach: model each scale separately, then **multiply them together**
 
 $$\phi_p(B) \Phi_P(B^s) \nabla^d \nabla_s^D z_t = \theta_q(B) \Theta_Q(B^s) a_t$$
 
-| Symbol | Meaning | Example |
-|--------|---------|---------|
-| $\phi_p(B)$ | Non-seasonal AR(p) | $(1 - \phi_1 B)$ |
-| $\Phi_P(B^s)$ | Seasonal AR(P) | $(1 - \Phi_1 B^{12})$ |
-| $\nabla^d = (1-B)^d$ | Non-seasonal differencing | $d = 1$ |
-| $\nabla_s^D = (1-B^s)^D$ | Seasonal differencing | $D = 1, s = 12$ |
-| $\theta_q(B)$ | Non-seasonal MA(q) | $(1 - \theta_1 B)$ |
-| $\Theta_Q(B^s)$ | Seasonal MA(Q) | $(1 - \Theta_1 B^{12})$ |
+- $\phi_p(B)$: Non-seasonal AR(p), e.g. $(1 - \phi_1 B)$
+- $\Phi_P(B^s)$: Seasonal AR(P), e.g. $(1 - \Phi_1 B^{12})$
+- $\nabla^d = (1-B)^d$: Non-seasonal differencing, e.g. $d = 1$
+- $\nabla_s^D = (1-B^s)^D$: Seasonal differencing, e.g. $D = 1, s = 12$
+- $\theta_q(B)$: Non-seasonal MA(q), e.g. $(1 - \theta_1 B)$
+- $\Theta_Q(B^s)$: Seasonal MA(Q), e.g. $(1 - \Theta_1 B^{12})$
 
 Denoted **ARIMA$(p,d,q) \times (P,D,Q)_s$**.
 

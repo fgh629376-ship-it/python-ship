@@ -268,7 +268,7 @@ const pct = Math.round(done / total * 100);
                     <span class="section-id">{sec.id}</span>
                     <span class="section-title">{sec.title}</span>
                   </div>
-                  {sec.note && <div class="note" set:html={sec.note.replace(/\\n/g, '<br/>')} />}
+                  {sec.note && <div class="note" set:html={sec.note.replace(/\\n(?![a-zA-Z{])/g, '<br/>')} />}
                 </div>
               ))}
             </div>

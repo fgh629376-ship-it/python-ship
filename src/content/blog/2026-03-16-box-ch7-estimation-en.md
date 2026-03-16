@@ -34,10 +34,8 @@ $$S^*(\phi, \theta) = \sum_{t=1}^{n} a_t^2(\phi, \theta | w^*, a^*, w)$$
 
 ### Conditional vs. Unconditional
 
-| Method | Handling of Initial Values | When to Use |
-|--------|--------------------------|-------------|
-| **Conditional likelihood** | Set $a^* = 0$, $w^*$ = actual values | Long series ($n > 50$), simple and fast |
-| **Unconditional likelihood** | Integrate over/backcast initial values | Short series or AR roots near unit circle |
+- **Conditional likelihood**: Set $a^* = 0$, $w^*$ = actual values; for long series ($n > 50$), simple and fast
+- **Unconditional likelihood**: Integrate over/backcast initial values; for short series or AR roots near unit circle
 
 Box recommends: **conditional likelihood is usually sufficient**, but seasonal models (Ch9) must use unconditional likelihood.
 
