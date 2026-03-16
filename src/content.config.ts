@@ -15,7 +15,7 @@ const blog = defineCollection({
 			updatedDate: z.coerce.date().optional(),
 			heroImage: z.optional(image()),
 			category: z.enum(['python', 'solar', 'algorithm', 'timeseries']).default('python'),
-			series: z.enum(['pvlib', 'solar-book', 'cross-industry', 'python-basics', 'nwp-warner', 'solar-engineering', 'box-timeseries']).optional(),
+			series: z.enum(['pvlib', 'solar-book', 'cross-industry', 'python-basics', 'nwp-warner', 'solar-engineering', 'box-timeseries', 'mit-courses']).optional(),
 			lang: z.enum(['zh', 'en', 'ja']).default('zh'),
 			tags: z.array(z.string()).optional(),
 		}),
