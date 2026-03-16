@@ -104,11 +104,16 @@ const chapters = [
     ],
   },
   {
-    id: 'ch9', num: 9, status: 'pending',
+    id: 'ch9', num: 9, status: 'done',
     title: 'Seasonal Models',
     titleZh: '季节性模型',
-    pages: 'p375-424',
-    sections: [],
+    pages: 'p353-424',
+    blogUrl: '/blog/2026-03-16-box-ch9-seasonal/',
+    sections: [
+      { id: '9.1', title: '为什么需要季节模型', note: String.raw`拟合 vs 预测的陷阱：确定性拟合可能预测很差\n\n两种时间关系：相邻时间点（$B$） + 相隔一个周期的时间点（$B^s$）\n乘积模型：分别建模然后相乘` },
+      { id: '9.2', title: '乘积 SARIMA 模型', note: String.raw`$\phi(B)\Phi(B^s)\nabla^d\nabla_s^D z_t = \theta(B)\Theta(B^s)a_t$\n\n航空旅客经典例：$(0,1,1)\times(0,1,1)_{12}$\n$\hat{\theta}=0.40, \hat{\Theta}=0.60$，仅 3 参数描述月内+年际动态\n\n乘积 MA 展开：$a_t - \theta a_{t-1} - \Theta a_{t-12} + \theta\Theta a_{t-13}$` },
+      { id: '9.3', title: '识别/估计/变换', note: String.raw`识别：①季节差分 $\nabla_s$ ②再看非季节差分 $\nabla$ ③lag $s,2s$的ACF→$P,Q$ ④lag $1,2$的ACF→$p,q$\n\nBox-Cox 变换：$z^{(\lambda)} = (z^\lambda-1)/\lambda$\n航空旅客用 $\lambda=0$（对数），因方差随水平成比例` },
+    ],
   },
   {
     id: 'ch10', num: 10, status: 'pending',
