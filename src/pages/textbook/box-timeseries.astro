@@ -30,11 +30,17 @@ const chapters = [
     ],
   },
   {
-    id: 'ch3', num: 3, status: 'pending',
+    id: 'ch3', num: 3, status: 'done',
     title: 'Linear Stationary Models',
     titleZh: '线性平稳模型',
     pages: 'p47-91',
-    sections: [],
+    blogUrl: '/blog/2026-03-16-box-ch3-linear-stationary-models/',
+    sections: [
+      { id: '3.1', title: '一般线性过程与 Wold 分解', note: String.raw`Wold 分解定理：任何零均值纯非确定性平稳过程都可表示为 $\tilde{z}_t = \sum \psi_j a_{t-j}$。\n\nψ 权重（MA 表示）↔ π 权重（AR 表示）：$\psi(B)\pi(B) = 1$\n\n自协方差生成函数：$\gamma(B) = \sigma_a^2 \psi(B)\psi(B^{-1})$\n\n谱 = 白噪声谱 × 滤波器增益²：$p(f) = 2\sigma_a^2|\psi(e^{-i2\pi f})|^2$\n\n平稳条件：$\psi(B)$ 在 $|B| \leq 1$ 收敛\n可逆条件：$\pi(B)$ 在 $|B| \leq 1$ 收敛` },
+      { id: '3.2', title: 'AR(p) 自回归过程', note: String.raw`$\phi(B)\tilde{z}_t = a_t$，平稳条件：$\phi(B)=0$ 根在单位圆外\n\nACF 差分方程：$\rho_k = \phi_1\rho_{k-1} + \cdots + \phi_p\rho_{k-p}$\n通解：衰减指数 + 阻尼正弦波\n\nYule-Walker 方程：$\mathbf{P}_p\boldsymbol{\phi} = \boldsymbol{\rho}_p$（线性，可直接求解）\n\nPACF 关键性质：AR(p) 的 PACF 在 lag p 后截断为零\n\nAR(1)：$\rho_k = \phi_1^k$，马尔可夫过程\nAR(2)：复数根时有伪周期行为，$D = \sqrt{-\phi_2}$，$f_0 = \cos^{-1}(\phi_1/2\sqrt{-\phi_2})/(2\pi)$` },
+      { id: '3.3', title: 'MA(q) 移动平均过程', note: String.raw`$\tilde{z}_t = \theta(B)a_t$，恒平稳，可逆条件：$\theta(B)=0$ 根在圆外\n\nACF 关键性质：MA(q) 的 ACF 在 lag q 后截断为零\n\nMA(1)：$\rho_1 = -\theta_1/(1+\theta_1^2)$，$|\rho_1| \leq 0.5$\n给定 $\rho_1$ 有两个解，取可逆解 $|\theta_1| < 1$\n\nAR↔MA 对偶：ACF截断→MA，PACF截断→AR，谱互为倒数` },
+      { id: '3.4', title: 'ARMA(p,q) 混合过程', note: String.raw`$\phi(B)\tilde{z}_t = \theta(B)a_t$\n\n平稳 + 可逆条件：$\phi(B)=0$ 和 $\theta(B)=0$ 的根都在圆外\n\nACF：前 $q-p+1$ 个受 $\theta$ 直接影响，之后按差分方程 $\phi(B)\rho_k = 0$ 衰减\nPACF：前 $p-q+1$ 个受 $\phi$ 影响，之后按 MA 型衰减\n\nARMA(1,1)：$\rho_k = \phi_1\rho_{k-1}$ ($k \geq 2$)，从 $\rho_1$ 开始指数衰减\n$\psi_j = (\phi_1-\theta_1)\phi_1^{j-1}$ ($j \geq 1$)` },
+    ],
   },
   {
     id: 'ch4', num: 4, status: 'pending',

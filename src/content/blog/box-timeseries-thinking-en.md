@@ -88,6 +88,51 @@ The two forms are perfectly symmetric, and $\phi(B)\tilde{z}_t = \theta(B)a_t$ b
 
 Even in the deep learning era of 2026, when you have only 3 years of 15-minute data from a single power plant (~100,000 data points), ARIMA(1,1,1)'s 5 parameters may be more reliable than a model with 100,000 parameters.
 
+### Reasoning Chain 3: Two Sides of Positive Definiteness — Time-Domain Constraint and Frequency-Domain Guarantee
+**Ch2.1.3 Positive Definite Autocovariance Matrix ↔ Ch2.2.3 Non-negative Spectrum**
+
+1. The autocovariance matrix $\boldsymbol{\Gamma}_n$ must be positive definite (because the variance of any linear combination $L_t$ must be > 0)
+2. Positive definiteness constrains the range of $\rho_k$ (they can't take arbitrary values!)
+3. Equivalent condition: spectral density $p(f) \geq 0$ for all $f$
+4. This is the content of Herglotz's theorem
+
+**Key reasoning**: Positive definiteness is the necessary and sufficient condition for a "legitimate ACF." If you arbitrarily construct a sequence $\{\rho_k\}$, it doesn't necessarily correspond to any real stochastic process — you must verify positive definiteness. In programming, this means truncated ACF estimated from data requires positive-definite correction.
+
+### Reasoning Chain 4: Why Does Bartlett's Formula Need the True ρ?
+**Ch2.1.6 Standard Error → Ch6 Difficulties in Model Identification**
+
+1. The formula for $\text{var}[r_k]$ contains the true $\rho_v$ (unknown!)
+2. In practice, we can only substitute estimates $r_v$ → introducing additional uncertainty
+3. For white noise ($q=0$) there's a clean formula $1/\sqrt{N}$, but for non-white noise we need bootstrapping
+4. **This is why model identification is "art" rather than pure science** — the uncertainty in ACF makes precise determination of $p, q$ very difficult
+
+### Reasoning Chain 5: Periodogram → Analysis of Variance → Spectral Estimation Evolution
+**Ch2.2.1–2.2.3 From Discrete to Continuous**
+
+1. Periodogram: decomposes variance into $N/2$ discrete frequencies (Fourier series)
+2. Analysis of variance: each frequency accounts for 2 degrees of freedom, $\chi^2(2)$ distribution (if white noise)
+3. Sample spectrum: allows continuous frequencies, but **fluctuates wildly** (essentially using too narrow a frequency window)
+4. Smoothed spectral estimate: introduces window functions $\lambda_k$ or $W(f_j)$, trading resolution for stability
+
+**Parallel with NWP**: This directly parallels Warner Ch4's spectral analysis — NWP uses FFT to analyze the frequency characteristics of numerical solutions, detecting computational noise; Box uses the same tools to analyze frequency characteristics of time series, identifying periodic components.
+
+---
+
+## III-B. Resolved Confusions (Ch2)
+
+### Confusion 4: Why Does ACF Estimation Use $1/N$ Instead of $1/(N-k)$? (Ch2.1.5)
+**Question**: $c_k = \frac{1}{N}\sum_{t=1}^{N-k}(z_t-\bar{z})(z_{t+k}-\bar{z})$ uses $N$ as the denominator, but the actual summation has only $N-k$ terms.
+
+**Answer**: Using $1/N$ has two advantages:
+1. It guarantees the estimated ACF matrix is positive semi-definite ($1/(N-k)$ does not guarantee this)
+2. For large samples, the two are asymptotically equivalent
+3. Box cites Jenkins & Watts [170]'s systematic comparison, concluding that $1/N$ is superior
+
+### Confusion 5: Why Does the Sample Spectrum "Fluctuate Wildly"? (Ch2.2.3)
+**Question**: Why is $I(f)$ a poor estimate of the spectrum?
+
+**Answer**: The variance of $I(f)$ **does not decrease as $N$ increases** (this is counter-intuitive!). The reason is that each $I(f_i) \sim \sigma^2\chi^2(2)$, and the coefficient of variation of $\chi^2(2)$ is 100%, regardless of how large $N$ is. The solution is smoothing — averaging $I(f)$ across adjacent frequencies, which is equivalent to increasing degrees of freedom but at the cost of frequency resolution.
+
 ---
 
 ## IV. Open Questions (To Be Answered in Later Chapters)
